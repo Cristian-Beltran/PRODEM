@@ -1,13 +1,13 @@
 <template>
   <nav
-    class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
+    class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-blue-900 flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
   >
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
     >
       <!-- Toggler -->
       <button
-        class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+        class="cursor-pointer text-white opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
         type="button"
         v-on:click="toggleCollapseShow('bg-white m-2 py-3 px-6')"
       >
@@ -15,10 +15,13 @@
       </button>
       <!-- Brand -->
       <router-link
-        class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+        class="md:block text-left md:pb-2 text-white mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
         to="/"
       >
-        Banco prodem
+        <div class="lg:hidden">Banco prodem</div>
+        <div class="hidden lg:block">
+          <img :src="logo" alt="" class="w-full h-auto" />
+        </div>
       </router-link>
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
@@ -32,13 +35,11 @@
         v-bind:class="collapseShow"
       >
         <!-- Collapse header -->
-        <div
-          class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200"
-        >
+        <div class="md:min-w-full md:hidden block pb-4 mb-4">
           <div class="flex flex-wrap">
             <div class="w-6/12">
               <router-link
-                class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+                class="md:block text-left md:pb-2 text-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                 to="/"
               >
                 Home
@@ -56,16 +57,11 @@
           </div>
         </div>
 
-        <!-- Divider -->
-        <hr class="my-4 md:min-w-full" />
-        <!-- Heading -->
         <h6
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+          class="md:min-w-full text-gray-400 lg:text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
         >
-          {{ $store.getters.type }}
+          Rol: {{ $store.getters.type }}
         </h6>
-        <!-- Navigation -->
-
         <ul class="md:flex-col md:min-w-full flex flex-col list-none">
           <li class="items-center">
             <router-link
@@ -83,8 +79,8 @@
                 class="text-xs uppercase py-3 font-bold block"
                 :class="[
                   isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
                 ]"
               >
                 <i
@@ -95,6 +91,385 @@
               </a>
             </router-link>
           </li>
+
+          <!-- Divider -->
+          <hr class="my-4 md:min-w-full" />
+          <!-- Heading -->
+          <h6
+            class="md:min-w-full text-gray-400 lg:text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+          >
+            Personal
+          </h6>
+          <li class="items-center">
+            <router-link
+              to="/admin/manager"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-user-cog mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Administradores
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/admin/manager"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-user-tie mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Gerentes
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/admin/driver"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-truck mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Conductores
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/admin/manager"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-user-alt mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Transportadores de valor
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/admin/guard"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-user-shield mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Guardias
+              </a>
+            </router-link>
+          </li>
+          <hr class="my-4 md:min-w-full" />
+          <h6
+            class="md:min-w-full text-gray-400 lg:text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+          >
+            Transporte
+          </h6>
+
+          <li class="items-center">
+            <router-link to="/admin/paf" v-slot="{ href, navigate, isActive }">
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-university mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                PAF
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link to="/admin/paf" v-slot="{ href, navigate, isActive }">
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-file-import mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Remesas
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link to="/admin/paf" v-slot="{ href, navigate, isActive }">
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-route mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Rutas
+              </a>
+            </router-link>
+          </li>
+          <hr class="my-4 md:min-w-full" />
+          <h6
+            class="md:min-w-full text-gray-400 lg:text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+          >
+            Vehiculos
+          </h6>
+
+          <li class="items-center">
+            <router-link
+              to="/admin/vehicles"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-truck mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Vehiculos
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/admin/fueling"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-gas-pump mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Cargas de combustible
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/admin/fueling"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-wrench mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Mantenimiento
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/admin/fueling"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-eye mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Verificaciones
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/admin/fueling"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-exclamation-triangle mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Incidentes
+              </a>
+            </router-link>
+          </li>
+          
         </ul>
       </div>
     </div>
@@ -103,11 +478,13 @@
 
 <script>
 import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
+import logo from "@/assets/img/Logo.png";
 
 export default {
   data() {
     return {
       collapseShow: "hidden",
+      logo,
     };
   },
   methods: {
