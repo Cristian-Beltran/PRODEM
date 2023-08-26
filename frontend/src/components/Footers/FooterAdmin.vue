@@ -1,30 +1,32 @@
 <template>
-    <div>
-      <navbar />
-      <main>
-        <section class="relative w-full h-full py-40 min-h-screen">
+  <footer class="block py-4">
+    <div class="container mx-auto px-4">
+      <hr class="mb-4 border-b-1 border-blueGray-200" />
+      <div
+        class="flex flex-wrap items-center md:justify-between justify-center"
+      >
+        <div class="w-full md:w-4/12 px-4">
           <div
-            class="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full"
-            :style="`background-image: url('${registerBg2}');`"
-          ></div>
-          <router-view />
-        </section>
-      </main>
+            class="text-sm text-blueGray-500 font-semibold py-1 text-center md:text-left"
+          >
+            Copyright © {{ date }}
+            <a
+              class="text-blueGray-500 hover:text-blueGray-700 text-sm font-semibold py-1"
+            >
+              Machine Learning
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-  </template>
-  <script>
-  import Navbar from "@/components/Navbars/AuthNavbar.vue";
-  
-  import registerBg2 from "@/assets/img/register_bg_2.png";
-  
-  export default {
-    data() {
-      return {
-        registerBg2,
-      };
-    },
-    components: {
-      Navbar,
-    },
-  };
-  </script>
+  </footer>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      date: new Date().getFullYear(),
+    };
+  },
+};
+</script>

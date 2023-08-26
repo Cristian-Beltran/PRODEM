@@ -1,30 +1,14 @@
 <template>
-    <div>
-      <navbar />
-      <main>
-        <section class="relative w-full h-full py-40 min-h-screen">
-          <div
-            class="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full"
-            :style="`background-image: url('${registerBg2}');`"
-          ></div>
-          <router-view />
-        </section>
-      </main>
+  <!-- Header -->
+  <div class="relative bg-green-600 md:pt-30 pb-32 pt-12">
+    <div class="px-4 md:px-10 mx-auto w-full">
+      <div></div>
     </div>
-  </template>
-  <script>
-  import Navbar from "@/components/Navbars/AuthNavbar.vue";
-  
-  import registerBg2 from "@/assets/img/register_bg_2.png";
-  
-  export default {
-    data() {
-      return {
-        registerBg2,
-      };
-    },
-    components: {
-      Navbar,
-    },
-  };
-  </script>
+  </div>
+</template>
+
+<script>
+export default {
+  components: {},
+};
+</script>

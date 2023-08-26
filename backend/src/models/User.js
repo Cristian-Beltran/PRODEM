@@ -33,7 +33,6 @@ export const User = sequelize.define("users", {
   },
   ci: {
     type: DataTypes.STRING,
-    unique: true,
   },
   address: {
     type: DataTypes.TEXT,
@@ -43,7 +42,6 @@ export const User = sequelize.define("users", {
   },
   birthdate: {
     type: DataTypes.DATE,
-    require: true
   },
   status: {
     type: DataTypes.BOOLEAN,

@@ -44,20 +44,24 @@ export const store = new Vuex.Store({
     dataUser(state) {
       return {
         email: state.user.email,
+        username: state.user.username,
         first_name: state.user.first_name,
         last_name: state.user.last_name,
         address: state.user.address,
         telf: state.user.telf,
         cel: state.user.cel,
         ci: state.user.ci,
-        birthdate: state.user.birthdate,
+        birthdate: new Date(state.user.birthdate).toISOString().slice(0, 10),
       };
     },
     fullNameUser(state) {
-      return state.user.user.first_name + " " + state.user.user.last_name;
+      return state.user.first_name + " " + state.user.last_name;
     },
     isLogin(state) {
       return state.isAuthenticated;
+    },
+    type(state) {
+      return state.user.type;
     },
   },
   modules: {},

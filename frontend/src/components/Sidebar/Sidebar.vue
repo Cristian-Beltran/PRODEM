@@ -18,7 +18,7 @@
         class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
         to="/"
       >
-        Envibol
+        Banco prodem
       </router-link>
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
@@ -62,7 +62,7 @@
         <h6
           class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
         >
-          Administracion
+          {{ $store.getters.type }}
         </h6>
         <!-- Navigation -->
 

@@ -7,6 +7,16 @@
         <h6 class="text-blueGray-700 text-xl font-bold">Mi cuenta</h6>
       </div>
 
+      <div v-if="errorAlertOpen">
+        <div
+          v-for="(item, index) in errors"
+          :key="index"
+          className="bg-red-500 p-2 text-white rounded-lg mb-2 text-center"
+        >
+          {{ item }}
+        </div>
+      </div>
+
       <div
         v-if="alertOpen"
         class="text-white px-6 py-4 border-0 rounded relative bg-lightBlue-500"
@@ -30,7 +40,7 @@
         </h6>
 
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-full px-4">
+          <div class="w-6/12 lg:w-full px-4">
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -40,6 +50,22 @@
               </label>
               <input
                 v-model="v$.formData.email.$model"
+                disabled
+                type="email"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              />
+            </div>
+          </div>
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <label
+                class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                htmlFor="grid-password"
+              >
+                Nombre de usuario
+              </label>
+              <input
+                v-model="v$.formData.username.$model"
                 disabled
                 type="email"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -138,22 +164,20 @@
               />
             </div>
           </div>
-
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
               >
-                Celular
+                Fecha de cumpleaños
               </label>
               <input
-                v-model="v$.formData.cel.$model"
-                type="number"
+                type="date"
+                v-model="v$.formData.birthdate.$model"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
             </div>
           </div>
-
           <div class="w-full mx-auto p-4 md:py-8">
             <div class="flex items-center justify-between">
               <div class="text-center flex items-center mb-4">
@@ -186,28 +210,35 @@ export default {
       formData: this.$store.getters.dataUser,
       errors: [],
       alertOpen: false,
+      errorAlertOpen: false,
     };
   },
   validations() {
     return {
       formData: {
         email: {},
+        username: {},
         first_name: {
-          required: helpers.withMessage("El correo es requerido", required),
+          required: helpers.withMessage("Esta campo es requerido", required),
         },
         last_name: {
-          required: helpers.withMessage("El password es requerido", required),
+          required: helpers.withMessage("Esta campo es requerido", required),
         },
         address: {},
         telf: {},
-        cel: {},
-        ci: {
-          required: helpers.withMessage("El ci es requerido", required),
-        },
+        birthdate: {},
+        ci: {},
       },
     };
   },
   methods: {
+    errorsNotification() {
+      this.errorAlertOpen = true;
+      const timer = setTimeout(() => {
+        this.errorAlertOpen = false;
+      }, 3000);
+      return () => clearTimeout(timer);
+    },
     notification() {
       this.alertOpen = true;
       const timer = setTimeout(() => {
@@ -225,7 +256,8 @@ export default {
             this.$store.commit("SET_USER", res.data);
             this.notification();
           } catch (error) {
-            console.log(error);
+            this.errors = error.response.data.errors;
+            this.errorsNotification();
           }
         };
         request();

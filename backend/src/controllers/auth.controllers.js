@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { createdAccessToken } from "../libs/jwt.js";
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
+import { Op } from "sequelize";
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -45,7 +46,7 @@ export const login = async (req, res) => {
       ci: userFound.ci,
       address: userFound.address,
       telf: userFound.telf,
-      cel: userFound.cel,
+      birthdate: userFound.birthdate,
       type: userFound.type,
       token: token,
     });
@@ -93,9 +94,8 @@ export const profile = async (req, res) => {
       ci: userFound.ci,
       address: userFound.address,
       telf: userFound.telf,
-      cel: userFound.cel,
+      birthdate: userFound.birthdate,
       type: userFound.type,
-      token: token,
     });
   } catch (error) {
     res.status(500).json({
@@ -123,9 +123,8 @@ export const verifyToken = async (req, res) => {
         ci: userFound.ci,
         address: userFound.address,
         telf: userFound.telf,
-        cel: userFound.cel,
+        birthdate: userFound.birthdate,
         type: userFound.type,
-        token: token,
       });
     });
   } catch (error) {
@@ -143,6 +142,12 @@ export const updateProfile = async (req, res) => {
     if (!user)
       return res.status(400).json({ errors: ["Usuario no encontrado"] });
 
+    const userCi = await User.findOne({
+      where: { ci, id: { [Op.ne]: req.user.id } },
+    });
+    if (userCi)
+      res.status(500).json({ errors: ["Carnet de identidad ya ingresado"] });
+
     user.first_name = first_name;
     user.last_name = last_name;
     user.ci = ci;
@@ -151,19 +156,19 @@ export const updateProfile = async (req, res) => {
     user.birthdate = birthdate;
     await user.save();
     res.json({
-      id: userFound.id,
-      email: userFound.email,
-      first_name: userFound.first_name,
-      last_name: userFound.last_name,
-      username: userFound.username,
-      ci: userFound.ci,
-      address: userFound.address,
-      telf: userFound.telf,
-      cel: userFound.cel,
-      type: userFound.type,
-      token: token,
+      id: user.id,
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      username: user.username,
+      ci: user.ci,
+      address: user.address,
+      telf: user.telf,
+      birthdate: user.birthdate,
+      type: user.type,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       errors: [error.message],
     });

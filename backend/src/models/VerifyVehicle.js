@@ -14,159 +14,159 @@ export const VerifyVehicle = sequelize.define("verifyVehicles", {
     require: true,
   },
   lightParking: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   lightLow: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   lightHigh: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   lightReverse: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   lightTravel: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   equipmentFlasher: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   equipmentHooter: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   equipmentMailbox: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   equipmentGlass: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   equipmentPI: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   brakeHand: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   brakeFoot: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   brakeOther: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   communicationGPS: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   communicationGSM: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   communicationContingency: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   tireFR: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   tireFL: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   tireBR: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   tireBL: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   tireReplace: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   contingenciesMask: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   contingenciesOxigen: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   contingenciesTriangles: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   contingenciesKit: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   contingenciesExtinguisher1: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   }, // Vigente, no vigente
   contingenciesExtinguisher2: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   }, // Vigente, no vigente
   daHydraulicjack: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   daWheelwrench: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   daSeatbelt: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   daMirrors: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   daBhorn: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   daLocks: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   bulletproofdriver: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   bulletproofP1: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   bulletproofP2: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   bulletproofG1: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   bulletproofG2: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   },
   fuel: {
-    type: DataTypes.varchar,
+    type: DataTypes.STRING,
     require: true,
   }, // lleno, 3/4, 1/2 ,1/4
   observations: {
