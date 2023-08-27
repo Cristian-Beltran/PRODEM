@@ -102,7 +102,7 @@
           </h6>
           <li class="items-center">
             <router-link
-              to="/admin/manager"
+              to="/admin/admin"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -186,7 +186,7 @@
           </li>
           <li class="items-center">
             <router-link
-              to="/admin/manager"
+              to="/admin/carrier"
               v-slot="{ href, navigate, isActive }"
             >
               <a

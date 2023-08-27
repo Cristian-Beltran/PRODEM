@@ -6,10 +6,13 @@ import { TOKEN_SECRET } from "../config.js";
 import { Op } from "sequelize";
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { emailOrUser, password } = req.body;
   try {
     const userFound = await User.findOne({
-      where: { email, status: true },
+      where: {
+        [Op.or]: [{ email: emailOrUser }, { username: emailOrUser }],
+        status: true,
+      },
       attributes: [
         "id",
         "email",

@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
+import driverRoutes from "./routes/driver.routes.js";
 
 const app = express();
 //Config
@@ -17,10 +19,13 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 // Routes
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
+app.use("/api", driverRoutes);
 
 export default app;

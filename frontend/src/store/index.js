@@ -26,7 +26,6 @@ export const store = new Vuex.Store({
       }
       try {
         const res = await verifyTokenRequest(cookies.token);
-        console.log(res.data);
         if (!res.data) {
           commit("SET_USER", null);
           commit("SET_ISAUTHENTICATED", false);

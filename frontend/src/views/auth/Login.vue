@@ -27,18 +27,17 @@
                   class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  Email
+                  Email o Usuario
                 </label>
                 <div
                   class="p-1 mb-1"
-                  v-for="(error, index) of v$.formData.email.$errors"
+                  v-for="(error, index) of v$.formData.emailOrUser.$errors"
                   :key="index"
                 >
                   <p class="text-sm text-red-500">{{ error.$message }}</p>
                 </div>
                 <input
-                  v-model="v$.formData.email.$model"
-                  type="email"
+                  v-model="v$.formData.emailOrUser.$model"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Email"
                 />
@@ -97,7 +96,7 @@ export default {
   data() {
     return {
       formData: {
-        email: "",
+        emailOrUser: "",
         password: "",
       },
       errors: [],
@@ -107,9 +106,11 @@ export default {
   validations() {
     return {
       formData: {
-        email: {
-          required: helpers.withMessage("El correo es requerido", required),
-          email: helpers.withMessage("El correo no es valido", email),
+        emailOrUser: {
+          required: helpers.withMessage(
+            "El usuario o correo es requerido",
+            required
+          ),
         },
         password: {
           required: helpers.withMessage("El password es requerido", required),

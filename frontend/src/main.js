@@ -17,16 +17,26 @@ import { store } from "./store/index.js";
 
 // layouts
 
-import Admin from "@/layouts/Admin.vue";
-import Auth from "@/layouts/Auth.vue";
+import AdminLayout from "@/layouts/Admin.vue";
+import AuthLayout from "@/layouts/Auth.vue";
 
 //views
+// Admin
 import Dashboard from "@/views/admin/Dashboard.vue";
-import Settings from "@/views/admin/Settings.vue";
+import Admin from "@/views/admin/Admin.vue";
+import Carrier from "@/views/admin/Carrier.vue";
+import Driver from "@/views/admin/Driver.vue";
+import Guard from "@/views/admin/Guard.vue";
+import Manager from "@/views/admin/Manager.vue";
 
 // Forms
 //import CardForms from "@/views/forms/CardForms.vue";
 import UpdatePassword from "@/views/forms/UpdatePassword.vue";
+import Settings from "@/views/forms/Settings.vue";
+
+// Admin
+import UserForms from "@/views/admin/forms/UserForms.vue";
+import DriverForms from "@/views/admin/forms/DriverForms.vue";
 
 // views for Auth layout
 import Login from "@/views/auth/Login.vue";
@@ -37,7 +47,7 @@ const routes = [
   {
     path: "/",
     redirect: "/admin/dashboard",
-    component: Admin,
+    component: AdminLayout,
     meta: { requiresAuth: true },
     children: [
       {
@@ -53,12 +63,49 @@ const routes = [
         path: "/admin/updatePassword",
         component: UpdatePassword,
       },
+      //Usuraios
+      {
+        path: "/admin/admin",
+        component: Admin,
+      },
+      {
+        path: "/admin/carrier",
+        component: Carrier,
+      },
+      {
+        path: "/admin/driver",
+        component: Driver,
+      },
+      {
+        path: "/admin/guard",
+        component: Guard,
+      },
+      {
+        path: "/admin/manager",
+        component: Manager,
+      },
+      {
+        path: "/admin/addUser",
+        component: UserForms,
+      },
+      {
+        path: "/admin/updateUser",
+        component: UserForms,
+      },
+      {
+        path: "/admin/addDriver",
+        component: DriverForms,
+      },
+      {
+        path: "/admin/updateDriver",
+        component: DriverForms,
+      },
     ],
   },
   {
     path: "/auth",
     redirect: "/auth/login",
-    component: Auth,
+    component: AuthLayout,
     meta: { notAuthenticated: true },
     children: [
       {
