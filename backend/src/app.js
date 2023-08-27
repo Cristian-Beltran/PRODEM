@@ -6,6 +6,8 @@ import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import driverRoutes from "./routes/driver.routes.js";
+import pafRoutes from "./routes/paf.routes.js";
+import incidentRoutes from "./routes/incident.routes.js";
 
 const app = express();
 //Config
@@ -27,5 +29,7 @@ app.use(cookieParser());
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", driverRoutes);
+app.use("/api", pafRoutes);
+app.use("/api", incidentRoutes);
 
 export default app;

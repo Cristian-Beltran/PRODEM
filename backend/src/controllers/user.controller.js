@@ -30,7 +30,7 @@ export const getUsers = async (req, res) => {
 export const getManagers = async (req, res) => {
   try {
     const users = await User.findAll({
-      where: { type: "gerente", id: { [Op.ne]: req.user.id } },
+      where: { type: "gerente" },
       attributes: [
         "id",
         "email",
@@ -54,6 +54,78 @@ export const getManagers = async (req, res) => {
     }));
     res.json(usersModify);
   } catch (error) {
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
+};
+
+export const getManagersPaf = async (req, res) => {
+  try {
+    const users = await User.findAll({
+      where: { type: "gerente", "$paf.userId$": { [Op.eq]: null } },
+      attributes: [
+        "id",
+        "email",
+        "first_name",
+        "last_name",
+        "username",
+        "status",
+        "createdAt",
+      ],
+      include: [{ model: Paf }],
+    });
+    const usersModify = users.map((user) => ({
+      id: user.id,
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      username: user.username,
+      status: user.status,
+      createdAt: user.createdAt,
+      paf: user.paf ? user.paf.name : "",
+    }));
+    res.json(usersModify);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
+};
+
+export const getManagerPaf = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const users = await User.findAll({
+      where: {
+        type: "gerente",
+        "$paf.userId$": { [Op.or]: { [Op.eq]: null, [Op.eq]: id } },
+      },
+      attributes: [
+        "id",
+        "email",
+        "first_name",
+        "last_name",
+        "username",
+        "status",
+        "createdAt",
+      ],
+      include: [{ model: Paf }],
+    });
+    const usersModify = users.map((user) => ({
+      id: user.id,
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      username: user.username,
+      status: user.status,
+      createdAt: user.createdAt,
+      paf: user.paf ? user.paf.name : "",
+    }));
+    res.json(usersModify);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({
       errors: [error.message],
     });

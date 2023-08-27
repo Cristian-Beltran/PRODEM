@@ -6,13 +6,13 @@
       >
         <div class="rounded-t bg-white mb-0 px-6 py-6">
           <div class="text-center flex justify-between">
-            <h6 class="text-blueGray-700 text-xl font-bold">Conductor</h6>
+            <h6 class="text-blueGray-700 text-xl font-bold">Incidente</h6>
           </div>
         </div>
         <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
           <form :onSubmit="handleSubmit">
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Datos de conductor
+              Datos de incidente
             </h6>
             <div v-if="alertOpen">
               <div
@@ -24,23 +24,46 @@
               </div>
             </div>
             <div class="flex flex-wrap">
+              <div class="w-full lg:w-full px-4">
+                <div class="relative w-full mb-3">
+                  <label
+                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Descripción del incidente
+                  </label>
+                  <div
+                    class="p-1 mb-1"
+                    v-for="(error, index) of v$.formData.description.$errors"
+                    :key="index"
+                  >
+                    <p class="text-sm text-red-500">{{ error.$message }}</p>
+                  </div>
+                  <textarea
+                    v-model="v$.formData.description.$model"
+                    rows="4"
+                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  >
+                  </textarea>
+                </div>
+              </div>
               <div class="w-full lg:w-6/12 px-4">
                 <div class="relative w-full mb-3">
                   <label
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Correo electronico
+                    Incidente informado por
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.email.$errors"
+                    v-for="(error, index) of v$.formData.informedBy.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <input
-                    v-model="v$.formData.email.$model"
+                    v-model="v$.formData.informedBy.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   />
                 </div>
@@ -51,17 +74,17 @@
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Nombre de usuario
+                    Incidente asignado a
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.username.$errors"
+                    v-for="(error, index) of v$.formData.assignedTo.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <input
-                    v-model="v$.formData.username.$model"
+                    v-model="v$.formData.assignedTo.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   />
                 </div>
@@ -72,20 +95,25 @@
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Nombre/s
+                    Prioridad
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.first_name.$errors"
+                    v-for="(error, index) of v$.formData.priority.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
-                  <input
-                    v-model="v$.formData.first_name.$model"
+                  <select
+                    v-model="v$.formData.priority.$model"
                     type="text"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
+                  >
+                    <option disabled value="">Selecione una opcion</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Media">Media</option>
+                    <option value="Baja">Baja</option>
+                  </select>
                 </div>
               </div>
 
@@ -94,80 +122,17 @@
                   <label
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                   >
-                    Apellidos
+                    Comentario
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.last_name.$errors"
+                    v-for="(error, index) of v$.formData.comments.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <input
-                    v-model="v$.formData.last_name.$model"
-                    type="text"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    CI
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.ci.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <input
-                    v-model="v$.formData.ci.$model"
-                    type="text"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    Fecha de cumpleaños
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.birthdate.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <input
-                    v-model="v$.formData.birthdate.$model"
-                    type="date"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-              <div class="w-full lg:w-12/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    Licencia
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.license.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <input
-                    v-model="v$.formData.license.$model"
+                    v-model="v$.formData.comments.$model"
                     type="text"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   />
@@ -175,47 +140,6 @@
               </div>
             </div>
             <hr class="mt-6 border-b-1 border-blueGray-300" />
-
-            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Informacion de contacto
-            </h6>
-            <div class="flex flex-wrap">
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    Direccion
-                  </label>
-                  <input
-                    type="text"
-                    v-model="v$.formData.address.$model"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    Telefono
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.telf.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <input
-                    type="number"
-                    v-model="v$.formData.telf.$model"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-            </div>
 
             <div class="w-full mx-auto p-4 md:py-8">
               <div class="flex items-center justify-between">
@@ -246,13 +170,12 @@
 </template>
 <script>
 import { useVuelidate } from "@vuelidate/core";
-import { required, helpers, minLength, email } from "@vuelidate/validators";
-
+import { required, helpers } from "@vuelidate/validators";
 import {
-  createDriverRequest,
-  getDriverRequest,
-  updateDriverRequest,
-} from "../../../api/driver";
+  createIncidentRequest,
+  updateIncidentRequest,
+} from "../../../api/incident";
+import { getIncidentRequest } from "../../../api/incident";
 
 export default {
   setup() {
@@ -262,16 +185,11 @@ export default {
   data() {
     return {
       formData: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        username: "",
-        ci: "",
-        telf: "",
-        address: "",
-        type: "",
-        birthdate: "",
-        license: "",
+        description: "",
+        priority: "",
+        informedBy: "",
+        assignedTo: "",
+        comments: "",
       },
       errors: [],
       roles: [],
@@ -281,35 +199,19 @@ export default {
   validations() {
     return {
       formData: {
-        email: {
-          required: helpers.withMessage("Campo requerido", required),
-          email: helpers.withMessage("El correo no es valido", email),
-        },
-        first_name: {
+        description: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        last_name: {
+        priority: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        username: {
+        informedBy: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        ci: {
+        assignedTo: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        license: {
-          required: helpers.withMessage("Campo requerido", required),
-        },
-        address: {},
-        telf: {
-          required: helpers.withMessage("Campo requerido", required),
-          minLength: helpers.withMessage(
-            ({ $params }) => `Ingrese un numero valido`,
-            minLength(8)
-          ),
-        },
-        type: {},
-        birthdate: {
+        comments: {
           required: helpers.withMessage("Campo requerido", required),
         },
       },
@@ -330,9 +232,9 @@ export default {
         const request = async () => {
           try {
             if (!this.$route.query.id) {
-              await createDriverRequest(this.formData);
+              await createIncidentRequest(this.formData);
             } else
-              await updateDriverRequest(this.$route.query.id, this.formData);
+              await updateIncidentRequest(this.$route.query.id, this.formData);
             this.$router.go(-1);
           } catch (error) {
             this.errors = error.response.data.errors;
@@ -345,12 +247,8 @@ export default {
   },
   async created() {
     if (this.$route.query.id) {
-      const res = await getDriverRequest(this.$route.query.id);
+      const res = await getIncidentRequest(this.$route.query.id);
       this.formData = res.data;
-      this.formData.telf = parseInt(this.formData.telf);
-      this.formData.birthdate = new Date(this.formData.birthdate)
-        .toISOString()
-        .slice(0, 10);
     }
   },
 };

@@ -16,7 +16,7 @@ export const Incident = sequelize.define("incidents", {
     type: DataTypes.STRING,
     required: true,
   },
-  decription: {
+  description: {
     type: DataTypes.TEXT,
     required: true,
   },
@@ -27,7 +27,7 @@ export const Incident = sequelize.define("incidents", {
   assignedTo: {
     type: DataTypes.STRING,
   },
-  completeAt: {
+  completedAt: {
     type: DataTypes.DATE,
   },
   comments: {

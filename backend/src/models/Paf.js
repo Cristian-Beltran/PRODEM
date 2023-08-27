@@ -12,7 +12,17 @@ export const Paf = sequelize.define("pafs", {
     type: DataTypes.STRING,
     requierd: true,
   },
-  loaction: {
+  lat: {
+    // alta baja media
+    type: DataTypes.STRING,
+    required: true,
+  },
+  log: {
+    // alta baja media
+    type: DataTypes.STRING,
+    required: true,
+  },
+  address: {
     // alta baja media
     type: DataTypes.STRING,
     required: true,

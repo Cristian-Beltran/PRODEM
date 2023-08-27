@@ -273,7 +273,7 @@
             </router-link>
           </li>
           <li class="items-center">
-            <router-link to="/admin/paf" v-slot="{ href, navigate, isActive }">
+            <router-link to="/admin/remesa" v-slot="{ href, navigate, isActive }">
               <a
                 :href="href"
                 @click="
@@ -298,7 +298,7 @@
             </router-link>
           </li>
           <li class="items-center">
-            <router-link to="/admin/paf" v-slot="{ href, navigate, isActive }">
+            <router-link to="/admin/route" v-slot="{ href, navigate, isActive }">
               <a
                 :href="href"
                 @click="
@@ -387,7 +387,7 @@
           </li>
           <li class="items-center">
             <router-link
-              to="/admin/fueling"
+              to="/admin/maintenance"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -415,7 +415,7 @@
           </li>
           <li class="items-center">
             <router-link
-              to="/admin/fueling"
+              to="/admin/verify"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -443,7 +443,7 @@
           </li>
           <li class="items-center">
             <router-link
-              to="/admin/fueling"
+              to="/admin/incident"
               v-slot="{ href, navigate, isActive }"
             >
               <a

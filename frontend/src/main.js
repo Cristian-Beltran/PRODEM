@@ -23,11 +23,15 @@ import AuthLayout from "@/layouts/Auth.vue";
 //views
 // Admin
 import Dashboard from "@/views/admin/Dashboard.vue";
+//Users
 import Admin from "@/views/admin/Admin.vue";
 import Carrier from "@/views/admin/Carrier.vue";
 import Driver from "@/views/admin/Driver.vue";
 import Guard from "@/views/admin/Guard.vue";
 import Manager from "@/views/admin/Manager.vue";
+
+import Paf from "@/views/admin/Paf.vue";
+import Incident from "@/views/admin/Incident.vue";
 
 // Forms
 //import CardForms from "@/views/forms/CardForms.vue";
@@ -37,6 +41,8 @@ import Settings from "@/views/forms/Settings.vue";
 // Admin
 import UserForms from "@/views/admin/forms/UserForms.vue";
 import DriverForms from "@/views/admin/forms/DriverForms.vue";
+import PafForms from "@/views/admin/forms/PafForms.vue";
+import IncidentForms from "@/views/admin/forms/IncidentForms.vue";
 
 // views for Auth layout
 import Login from "@/views/auth/Login.vue";
@@ -92,6 +98,7 @@ const routes = [
         path: "/admin/updateUser",
         component: UserForms,
       },
+      // Conductores
       {
         path: "/admin/addDriver",
         component: DriverForms,
@@ -99,6 +106,32 @@ const routes = [
       {
         path: "/admin/updateDriver",
         component: DriverForms,
+      },
+      // paf
+      {
+        path: "/admin/paf",
+        component: Paf,
+      },
+      {
+        path: "/admin/addPaf",
+        component: PafForms,
+      },
+      {
+        path: "/admin/updatePaf",
+        component: PafForms,
+      },
+      // Incidentes
+      {
+        path: "/admin/incident",
+        component: Incident,
+      },
+      {
+        path: "/admin/addIncident",
+        component: IncidentForms,
+      },
+      {
+        path: "/admin/updateIncident",
+        component: IncidentForms,
       },
     ],
   },

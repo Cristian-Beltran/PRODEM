@@ -14,7 +14,7 @@
                   color === 'light' ? 'text-blueGray-700' : 'text-white',
                 ]"
               >
-                Administradores
+                PAFs
               </h3>
             </div>
           </div>
@@ -57,38 +57,18 @@
           </form>
           <div class="relative flex flex-wrap items-stretch mb-3">
             <router-link
-              to="/admin/addUser/?type=administrador"
+              to="/admin/addPaf"
               v-slot="{ href, navigate }"
             >
               <a :href="href" @click="navigate">
                 <button
                   class="bg-grayBlue-800 text-sm border border-gray-300 px-2 py-2 rounded-md"
                 >
-                  Agregar administrador
+                  Agregar paf
                   <i class="fas fa-plus text-sm ml-2"></i>
                 </button>
               </a>
             </router-link>
-          </div>
-        </div>
-
-        <div class="w-full px-12 flex flex-wrap gap-2 justify-between">
-          <div class="relative flex flex-wrap items-stretch mb-3">
-            <label
-              class="py-2 text-sm font-normal text-blueGray-600 mr-2"
-              for="items"
-              >Habilitados</label
-            >
-            <select
-              v-model="status"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400"
-              name="items"
-              id="items"
-            >
-              <option value="all" selected>Todos</option>
-              <option value="1">Habilitados</option>
-              <option value="0">Deshabilitados</option>
-            </select>
           </div>
         </div>
 
@@ -108,10 +88,8 @@
 <script>
 import Table from "@/components/Tables/Table.vue";
 import {
-  getUsersRequest,
-  changeStatusUserRequest,
-  udpatePasswordRequest,
-} from "../../api/user";
+  getPafsRequest
+} from "../../api/paf";
 
 export default {
   data() {
@@ -125,26 +103,13 @@ export default {
       load: true,
       columnas: [
         { key: "id", label: "ID" },
-        { key: "first_name", label: "Nombre/s" },
-        { key: "last_name", label: "Apellidos" },
-        { key: "email", label: "Correo electronico" },
-        { key: "username", label: "Usuario" },
-        { key: "status", label: "Habilitado", check: true },
+        { key: "name", label: "Nombre" },
+        { key: "address", label: "Direccion" },
+        { key: "type", label: "Tipo" },
+        { key: "manager", label: "Gerente" },
         { key: "createdAt", label: "Creado", date: true },
       ],
-      options: [
-        { id: "update", name: "Actualizar", icon: "fas fa-plus" },
-        {
-          id: "changeStatus",
-          name: "Cambiar estado de usuario",
-          icon: "fas fa-exchange-alt",
-        },
-        {
-          id: "updatePassword",
-          name: "Actualizar contraseña",
-          icon: "fas fa-eraser",
-        },
-      ],
+      options: [{ id: "update", name: "Actualizar", icon: "fas fa-plus" }],
     };
   },
   components: {
@@ -153,16 +118,11 @@ export default {
   created() {
     this.loadData();
   },
-  watch: {
-    status() {
-      this.searchItems();
-    },
-  },
   methods: {
     async loadData() {
       this.load = true;
       try {
-        const res = await getUsersRequest("administrador");
+        const res = await getPafsRequest();
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;
@@ -174,44 +134,19 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          (item.first_name
-            .toLowerCase()
-            .includes(this.searchQuery.toLowerCase()) ||
-            item.last_name
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()) ||
-            item.username
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()) ||
-            item.email
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase())) &&
-          (this.status === "all" || item.status == this.status)
+          item.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.address.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.type.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.manager.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
       this.itemsDisplay = filteredItems;
     },
     async action(action) {
       if (action.action === "update") {
         this.$router.push({
-          path: "/admin/updateUser",
+          path: "/admin/updatePaf",
           query: { id: action.id },
         });
-      } else if (action.action === "changeStatus") {
-        try {
-          await changeStatusUserRequest(action.id);
-          this.items = [];
-          this.loadData();
-        } catch (error) {
-          console.log(error);
-        }
-      } else if (action.action === "updatePassword") {
-        try {
-          await udpatePasswordRequest(action.id);
-          this.items = [];
-          this.loadData();
-        } catch (error) {
-          console.log(error);
-        }
       }
     },
   },

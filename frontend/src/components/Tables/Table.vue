@@ -141,6 +141,7 @@ export default {
       this.$emit("action", action);
     },
     date(value) {
+      if(!value) return ""; 
       var date = new Date(value);
       function agregarCeros(numero) {
         return numero < 10 ? "0" + numero : numero;

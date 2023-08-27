@@ -12,7 +12,7 @@
           class="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
           to="/"
         >
-          Sistema control de vehiculos y remesas
+          Sistema control de vehiculos y remesas del Banco PRODEM
         </router-link>
       </div>
     </div>

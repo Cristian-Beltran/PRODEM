@@ -6,13 +6,13 @@
       >
         <div class="rounded-t bg-white mb-0 px-6 py-6">
           <div class="text-center flex justify-between">
-            <h6 class="text-blueGray-700 text-xl font-bold">Conductor</h6>
+            <h6 class="text-blueGray-700 text-xl font-bold">PAF</h6>
           </div>
         </div>
         <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
           <form :onSubmit="handleSubmit">
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Datos de conductor
+              Datos de Paf
             </h6>
             <div v-if="alertOpen">
               <div
@@ -30,17 +30,17 @@
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Correo electronico
+                    Nombre de PAF
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.email.$errors"
+                    v-for="(error, index) of v$.formData.name.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <input
-                    v-model="v$.formData.email.$model"
+                    v-model="v$.formData.name.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   />
                 </div>
@@ -51,144 +51,16 @@
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Nombre de usuario
+                    Direccion de PAF
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.username.$errors"
+                    v-for="(error, index) of v$.formData.address.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <input
-                    v-model="v$.formData.username.$model"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Nombre/s
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.first_name.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <input
-                    v-model="v$.formData.first_name.$model"
-                    type="text"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    Apellidos
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.last_name.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <input
-                    v-model="v$.formData.last_name.$model"
-                    type="text"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    CI
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.ci.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <input
-                    v-model="v$.formData.ci.$model"
-                    type="text"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    Fecha de cumpleaños
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.birthdate.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <input
-                    v-model="v$.formData.birthdate.$model"
-                    type="date"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-              <div class="w-full lg:w-12/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    Licencia
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.license.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <input
-                    v-model="v$.formData.license.$model"
-                    type="text"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-            </div>
-            <hr class="mt-6 border-b-1 border-blueGray-300" />
-
-            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Informacion de contacto
-            </h6>
-            <div class="flex flex-wrap">
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    Direccion
-                  </label>
-                  <input
-                    type="text"
                     v-model="v$.formData.address.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   />
@@ -198,21 +70,69 @@
                 <div class="relative w-full mb-3">
                   <label
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
                   >
-                    Telefono
+                    Tipo de PAF
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.telf.$errors"
+                    v-for="(error, index) of v$.formData.type.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
-                  <input
-                    type="number"
-                    v-model="v$.formData.telf.$model"
+                  <select
+                    v-model="v$.formData.type.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
+                  >
+                    <option value="" selected>Seleccione una opcion</option>
+                    <option value="Tesoreria">Tesoreria</option>
+                    <option value="Ventanilla">Ventanilla</option>
+                    <option value="Agencia">Agencia</option>
+                    <option value="Cajero">Cajero</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label
+                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                  >
+                    Gerente de PAF
+                  </label>
+                  <div
+                    class="p-1 mb-1"
+                    v-for="(error, index) of v$.formData.manager.$errors"
+                    :key="index"
+                  >
+                    <p class="text-sm text-red-500">{{ error.$message }}</p>
+                  </div>
+                  <select
+                    v-model="v$.formData.manager.$model"
+                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  >
+                    <option value="" selected>Seleccione una opcion</option>
+                    <option
+                      v-for="item in managers"
+                      :value="item.id"
+                      :key="item.id"
+                    >
+                      {{ item.first_name }} {{ item.last_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Ubicacion
+            </h6>
+            <div class="flex flex-wrap">
+              <div class="w-full lg:w-12/12 px-4">
+                <div class="relative w-full mb-3">
+                  <div id="map" style="height: 400px"></div>
                 </div>
               </div>
             </div>
@@ -246,13 +166,14 @@
 </template>
 <script>
 import { useVuelidate } from "@vuelidate/core";
-import { required, helpers, minLength, email } from "@vuelidate/validators";
+import { required, helpers } from "@vuelidate/validators";
 
 import {
-  createDriverRequest,
-  getDriverRequest,
-  updateDriverRequest,
-} from "../../../api/driver";
+  createPafRequest,
+  getPafRequest,
+  updatePafRequest,
+} from "../../../api/paf";
+import { getManagerPafRequest, getManagersPafRequest } from "../../../api/user";
 
 export default {
   setup() {
@@ -262,56 +183,35 @@ export default {
   data() {
     return {
       formData: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        username: "",
-        ci: "",
-        telf: "",
+        lat: -16.489689,
+        log: -68.119293,
+        name: "",
         address: "",
         type: "",
-        birthdate: "",
-        license: "",
+        manager: "",
       },
       errors: [],
-      roles: [],
+      managers: [],
       alertOpen: false,
     };
   },
   validations() {
     return {
       formData: {
-        email: {
-          required: helpers.withMessage("Campo requerido", required),
-          email: helpers.withMessage("El correo no es valido", email),
-        },
-        first_name: {
+        name: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        last_name: {
+        address: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        username: {
+        type: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        ci: {
+        manager: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        license: {
-          required: helpers.withMessage("Campo requerido", required),
-        },
-        address: {},
-        telf: {
-          required: helpers.withMessage("Campo requerido", required),
-          minLength: helpers.withMessage(
-            ({ $params }) => `Ingrese un numero valido`,
-            minLength(8)
-          ),
-        },
-        type: {},
-        birthdate: {
-          required: helpers.withMessage("Campo requerido", required),
-        },
+        log: {},
+        lat: {},
       },
     };
   },
@@ -330,9 +230,8 @@ export default {
         const request = async () => {
           try {
             if (!this.$route.query.id) {
-              await createDriverRequest(this.formData);
-            } else
-              await updateDriverRequest(this.$route.query.id, this.formData);
+              await createPafRequest(this.formData);
+            } else await updatePafRequest(this.$route.query.id, this.formData);
             this.$router.go(-1);
           } catch (error) {
             this.errors = error.response.data.errors;
@@ -342,16 +241,45 @@ export default {
         request();
       }
     },
+    initMap() {
+      // Inicializar el mapa de Google usando la API Key
+      this.map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: this.formData.lat, lng: this.formData.log },
+        zoom: 12,
+      });
+
+      // Agregar un marcador que se puede mover en el mapa
+      this.marker = new google.maps.Marker({
+        position: { lat: this.formData.lat, lng: this.formData.log },
+        map: this.map,
+        draggable: true,
+      });
+
+      // Actualizar las coordenadas cuando se mueve el marcador
+      this.marker.addListener("dragend", () => {
+        console.log(this.formData);
+        const position = this.marker.getPosition();
+        this.formData.lat = position.lat();
+        this.formData.log = position.lng();
+      });
+    },
   },
   async created() {
     if (this.$route.query.id) {
-      const res = await getDriverRequest(this.$route.query.id);
+      const res = await getPafRequest(this.$route.query.id);
+      const managers = await getManagerPafRequest(res.data.manager);
+      this.managers = managers.data;
+      console.log(res.data);
       this.formData = res.data;
-      this.formData.telf = parseInt(this.formData.telf);
-      this.formData.birthdate = new Date(this.formData.birthdate)
-        .toISOString()
-        .slice(0, 10);
+      this.formData.lat = parseFloat(res.data.lat);
+      this.formData.log = parseFloat(res.data.log);
+    } else {
+      const res = await getManagersPafRequest(0);
+      console.log(res.data);
+      this.managers = res.data;
     }
+
+    this.initMap();
   },
 };
 </script>
