@@ -8,6 +8,7 @@ import userRoutes from "./routes/user.routes.js";
 import driverRoutes from "./routes/driver.routes.js";
 import pafRoutes from "./routes/paf.routes.js";
 import incidentRoutes from "./routes/incident.routes.js";
+import fuelingRoutes from "./routes/fueling.routes.js";
 
 const app = express();
 //Config
@@ -31,5 +32,6 @@ app.use("/api", userRoutes);
 app.use("/api", driverRoutes);
 app.use("/api", pafRoutes);
 app.use("/api", incidentRoutes);
+app.use("/api", fuelingRoutes);
 
 export default app;
