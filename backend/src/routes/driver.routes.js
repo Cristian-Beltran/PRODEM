@@ -2,7 +2,9 @@ import { Router } from "express";
 import {
   createDriver,
   getDriver,
+  getDriverVehicle,
   getDrivers,
+  getDriversVehicle,
   updateDriver,
 } from "../controllers/driver.controller.js";
 
@@ -20,6 +22,14 @@ router.post(
   validateSchema(DriverSchema),
   createDriver
 );
-router.put("/driver/:id", validateSchema(DriverSchema), authRequired, updateDriver);
+router.put(
+  "/driver/:id",
+  authRequired,
+  validateSchema(DriverSchema),
+  updateDriver
+);
+
+router.get("/drivervehicle/", authRequired, getDriversVehicle);
+router.get("/drivervehicle/:id", authRequired, getDriverVehicle);
 
 export default router;

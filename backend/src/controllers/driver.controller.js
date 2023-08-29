@@ -1,5 +1,7 @@
 import { Driver, User } from "../models/User.js";
 import bcrypt from "bcryptjs";
+import { Vehicle } from "../models/Vehicle.js";
+import { Op } from "sequelize";
 
 export const getDrivers = async (req, res) => {
   try {
@@ -136,7 +138,11 @@ export const updateDriver = async (req, res) => {
       return res.status(400).json({ errors: ["El email ya esta ingresado"] });
     if (userCi && userCi.ci === user.ci && userCi.id != user.id)
       return res.status(400).json({ errors: ["El ci ya esta ingresado"] });
-    if (userUsername &&userUsername.username === user.email && userUsername.id != user.id)
+    if (
+      userUsername &&
+      userUsername.username === user.email &&
+      userUsername.id != user.id
+    )
       return res
         .status(400)
         .json({ errors: ["El nombre de usario ya esta ingresado"] });
@@ -156,5 +162,50 @@ export const updateDriver = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ errors: [error] });
+  }
+};
+
+export const getDriversVehicle = async (req, res) => {
+  try {
+    const drivers = await Driver.findAll({
+      where: {
+        "$vehicle.driverId$": { [Op.eq]: null },
+      },
+      include: [{ model: Vehicle }, { model: User }],
+    });
+    const driversModify = drivers.map((driver) => ({
+      id: driver.id,
+      first_name: driver.user.first_name,
+      last_name: driver.user.last_name,
+    }));
+    res.json(driversModify);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
+};
+
+export const getDriverVehicle = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const drivers = await Driver.findAll({
+      where: {
+        "$vehicle.driverId$": { [Op.or]: { [Op.eq]: null, [Op.eq]: id } },
+      },
+      include: [{ model: Vehicle }, { model: User }],
+    });
+    const driversModify = drivers.map((driver) => ({
+      id: driver.id,
+      first_name: driver.user.first_name,
+      last_name: driver.user.last_name,
+    }));
+    res.json(driversModify);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      errors: [error.message],
+    });
   }
 };

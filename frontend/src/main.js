@@ -1,13 +1,17 @@
 import { createApp } from "vue";
 import VueCookies from "vue-cookies";
 import { createWebHistory, createRouter } from "vue-router";
-
+import { createVfm } from "vue-final-modal";
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 //import "@/assets/styles/tailwind.css";
 import "@/assets/styles/style.css";
 import "@/assets/styles/index.css";
+
+// import css from vue-modal-final
+import "vue-final-modal/style.css";
+
 // mouting point for the whole app
 
 import App from "@/App.vue";
@@ -32,6 +36,7 @@ import Manager from "@/views/admin/Manager.vue";
 
 import Paf from "@/views/admin/Paf.vue";
 import Incident from "@/views/admin/Incident.vue";
+import Vehicle from "@/views/admin/Vehicle.vue";
 
 // Forms
 //import CardForms from "@/views/forms/CardForms.vue";
@@ -43,6 +48,7 @@ import UserForms from "@/views/admin/forms/UserForms.vue";
 import DriverForms from "@/views/admin/forms/DriverForms.vue";
 import PafForms from "@/views/admin/forms/PafForms.vue";
 import IncidentForms from "@/views/admin/forms/IncidentForms.vue";
+import VehicleForms from "@/views/admin/forms/VehicleForms.vue";
 
 // views for Auth layout
 import Login from "@/views/auth/Login.vue";
@@ -133,6 +139,19 @@ const routes = [
         path: "/admin/updateIncident",
         component: IncidentForms,
       },
+      // Vehiculos
+      {
+        path: "/admin/vehicle",
+        component: Vehicle,
+      },
+      {
+        path: "/admin/addVehicle",
+        component: VehicleForms,
+      },
+      {
+        path: "/admin/updateVehicle",
+        component: VehicleForms,
+      },
     ],
   },
   {
@@ -192,8 +211,10 @@ router.beforeEach(async (to, from, next) => {
   }
 });
 
+const vfm = createVfm();
 createApp(App)
   .use(router)
   .use(store)
+  .use(vfm)
   .use(VueCookies, { expires: "7d" })
   .mount("#app");

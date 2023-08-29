@@ -331,7 +331,7 @@
 
           <li class="items-center">
             <router-link
-              to="/admin/vehicles"
+              to="/admin/vehicle"
               v-slot="{ href, navigate, isActive }"
             >
               <a

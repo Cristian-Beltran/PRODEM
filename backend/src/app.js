@@ -2,12 +2,14 @@ import express from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path";
 
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import driverRoutes from "./routes/driver.routes.js";
 import pafRoutes from "./routes/paf.routes.js";
 import incidentRoutes from "./routes/incident.routes.js";
+import vehicleRoutes from "./routes/vehicle.routes.js";
 
 const app = express();
 //Config
@@ -25,11 +27,17 @@ app.use(
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
-// Routes
+
+const staticFolderPath = new URL("uploads", import.meta.url).pathname;
+
+app.use("/api/static", express.static(staticFolderPath)); // Ruta a la carpeta de imágenes
+// Middleware para depuración de la ruta estática
+
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", driverRoutes);
 app.use("/api", pafRoutes);
 app.use("/api", incidentRoutes);
+app.use("/api", vehicleRoutes);
 
 export default app;

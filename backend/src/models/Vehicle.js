@@ -18,7 +18,6 @@ export const Vehicle = sequelize.define("vehicles", {
   },
   photo: {
     type: DataTypes.STRING,
-    require: true,
   },
 });
 
