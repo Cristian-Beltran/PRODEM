@@ -2,7 +2,6 @@ import express from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import path from "path";
 
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
@@ -10,6 +9,7 @@ import driverRoutes from "./routes/driver.routes.js";
 import pafRoutes from "./routes/paf.routes.js";
 import incidentRoutes from "./routes/incident.routes.js";
 import vehicleRoutes from "./routes/vehicle.routes.js";
+import fuelingRoutes from "./routes/fueling.routes.js";
 
 const app = express();
 //Config
@@ -39,5 +39,6 @@ app.use("/api", driverRoutes);
 app.use("/api", pafRoutes);
 app.use("/api", incidentRoutes);
 app.use("/api", vehicleRoutes);
+app.use("/api", fuelingRoutes);
 
 export default app;
