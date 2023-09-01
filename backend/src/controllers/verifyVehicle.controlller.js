@@ -5,6 +5,10 @@ export const getVerifyVehicles = async (req, res) => {
     try {
         const verifyVehicles = await VerifyVehicle.findAll(
             {
+                include: [
+                    { model: User },
+                    { model: Driver },
+                    { model: Vehicle }],
                 attibutes: [
                     "id",
                     "km",
@@ -48,16 +52,76 @@ export const getVerifyVehicles = async (req, res) => {
                     "bulletproofG2",
                     "fuel",
                     "observations",
-                ]
-            }
-        );
-        res.json(verifyVehicles);
+                ],
+                order: ["createdAt", "DESC"],
+            });
+
+        const guardUser = await User.findOne({
+            where: { Type: "guard" },
+            attributes: ["first_name", "last_name"],
+        });
+
+        // Formatear los resultados antes de enviarlos
+        const formattedVerifyVehicles = verifyVehicles.map((verifyVehicles) => ({
+            id: verifyVehicles.id,
+            nInvoce: verifyVehicles.nInvoce,
+            detail: verifyVehicles.detail,
+            amount: verifyVehicles.amount,
+            createdAt: verifyVehicles.createdAt,
+            km: verifyVehicles.km,
+            lightParking: verifyVehicles.lightParking,
+            lightLow: verifyVehicles.lightLow,
+            lightHigh: verifyVehicles.lightHigh,
+            lightReverse: verifyVehicles.lightReverse,
+            lightTravel: verifyVehicles.lightTravel,
+            equipmentFlasher: verifyVehicles.equipmentFlasher,
+            equipmentHooter: verifyVehicles.equipmentHooter,
+            equipmentMailbox: verifyVehicles.equipmentMailbox,
+            equipmentGlass: verifyVehicles.equipmentGlass,
+            equipmentPI: verifyVehicles.equipmentPI,
+            brakeHand: verifyVehicles.brakeHand,
+            brakeFoot: verifyVehicles.brakeFoot,
+            brakeOther: verifyVehicles.brakeOther,
+            communicationGPS: verifyVehicles.communicationGPS,
+            communicationGSM: verifyVehicles.communicationGSM,
+            communicationContingency: verifyVehicles.communicationContingency,
+            tireFR: verifyVehicles.tireFR,
+            tireFL: verifyVehicles.tireFL,
+            tireBR: verifyVehicles.tireBR,
+            tireBL: verifyVehicles.tireBL,
+            tireReplace: verifyVehicles.tireReplace,
+            contingenciesMask: verifyVehicles.contingenciesMask,
+            contingenciesOxigen: verifyVehicles.contingenciesOxigen,
+            contingenciesTriangles: verifyVehicles.contingenciesTriangles,
+            contingenciesKit: verifyVehicles.contingenciesKit,
+            contingenciesExtinguisher1: verifyVehicles.contingenciesExtinguisher1,
+            contingenciesExtinguisher2: verifyVehicles.contingenciesExtinguisher2,
+            daHydraulicjack: verifyVehicles.daHydraulicjack,
+            daWheelwrench: verifyVehicles.daWheelwrench,
+            daSeatbelt: verifyVehicles.daSeatbelt,
+            daMirrors: verifyVehicles.daMirrors,
+            daBhorn: verifyVehicles.daBhorn,
+            daLocks: verifyVehicles.daLocks,
+            bulletproofdriver: verifyVehicles.bulletproofdriver,
+            bulletproofP1: verifyVehicles.bulletproofP1,
+            bulletproofP2: verifyVehicles.bulletproofP2,
+            bulletproofG1: verifyVehicles.bulletproofG1,
+            bulletproofG2: verifyVehicles.bulletproofG2,
+            fuel: verifyVehicles.fuel,
+            observations: verifyVehicles.observations,
+            guardName: guardUser ? `${guardUser.first_name} ${guardUser.last_name}` : null,
+            driverName: verifyVehicles.Driver ? `${verifyVehicles.Driver.user.first_name} ${verifyVehicles.Driver.user.last_name}` : null,
+            vehicleModel: verifyVehicles.vehicle.model,
+            vehiclePlate: verifyVehicles.vehicle.plate,
+        }));
+
+        res.json(formattedVerifyVehicles);
     } catch (error) {
         res.status(500).json({
             errors: [error.message],
         });
     }
-}
+};
 
 //get verifyVehicle by id
 export const getVerifyVehicle = async (req, res) => {
@@ -65,6 +129,10 @@ export const getVerifyVehicle = async (req, res) => {
         const { id } = req.params;
         const verifyVehicle = await VerifyVehicle.findOne({
             where: { id },
+            include: [
+                { model: User },
+                { model: Driver },
+                { model: Vehicle }],
             attributes: [
                 "id",
                 "km",
@@ -110,7 +178,68 @@ export const getVerifyVehicle = async (req, res) => {
                 "observations",
             ]
         });
-        res.json(verifyVehicle);
+
+        const guardUser = await User.findOne({
+            where: { Type: "guard" },
+            attributes: ["first_name", "last_name"],
+        });
+
+        // Formatear los resultados antes de enviarlos
+        const formattedVerifyVehicles = verifyVehicle.map((verifyVehicles) => ({
+            id: verifyVehicles.id,
+            nInvoce: verifyVehicles.nInvoce,
+            detail: verifyVehicles.detail,
+            amount: verifyVehicles.amount,
+            createdAt: verifyVehicles.createdAt,
+            km: verifyVehicles.km,
+            lightParking: verifyVehicles.lightParking,
+            lightLow: verifyVehicles.lightLow,
+            lightHigh: verifyVehicles.lightHigh,
+            lightReverse: verifyVehicles.lightReverse,
+            lightTravel: verifyVehicles.lightTravel,
+            equipmentFlasher: verifyVehicles.equipmentFlasher,
+            equipmentHooter: verifyVehicles.equipmentHooter,
+            equipmentMailbox: verifyVehicles.equipmentMailbox,
+            equipmentGlass: verifyVehicles.equipmentGlass,
+            equipmentPI: verifyVehicles.equipmentPI,
+            brakeHand: verifyVehicles.brakeHand,
+            brakeFoot: verifyVehicles.brakeFoot,
+            brakeOther: verifyVehicles.brakeOther,
+            communicationGPS: verifyVehicles.communicationGPS,
+            communicationGSM: verifyVehicles.communicationGSM,
+            communicationContingency: verifyVehicles.communicationContingency,
+            tireFR: verifyVehicles.tireFR,
+            tireFL: verifyVehicles.tireFL,
+            tireBR: verifyVehicles.tireBR,
+            tireBL: verifyVehicles.tireBL,
+            tireReplace: verifyVehicles.tireReplace,
+            contingenciesMask: verifyVehicles.contingenciesMask,
+            contingenciesOxigen: verifyVehicles.contingenciesOxigen,
+            contingenciesTriangles: verifyVehicles.contingenciesTriangles,
+            contingenciesKit: verifyVehicles.contingenciesKit,
+            contingenciesExtinguisher1: verifyVehicles.contingenciesExtinguisher1,
+            contingenciesExtinguisher2: verifyVehicles.contingenciesExtinguisher2,
+            daHydraulicjack: verifyVehicles.daHydraulicjack,
+            daWheelwrench: verifyVehicles.daWheelwrench,
+            daSeatbelt: verifyVehicles.daSeatbelt,
+            daMirrors: verifyVehicles.daMirrors,
+            daBhorn: verifyVehicles.daBhorn,
+            daLocks: verifyVehicles.daLocks,
+            bulletproofdriver: verifyVehicles.bulletproofdriver,
+            bulletproofP1: verifyVehicles.bulletproofP1,
+            bulletproofP2: verifyVehicles.bulletproofP2,
+            bulletproofG1: verifyVehicles.bulletproofG1,
+            bulletproofG2: verifyVehicles.bulletproofG2,
+            fuel: verifyVehicles.fuel,
+            observations: verifyVehicles.observations,
+            guardName: guardUser ? `${guardUser.first_name} ${guardUser.last_name}` : null,
+            driverName: verifyVehicles.Driver ? `${verifyVehicles.Driver.user.first_name} ${verifyVehicles.Driver.user.last_name}` : null,
+            vehicleModel: verifyVehicles.vehicle.model,
+            vehiclePlate: verifyVehicles.vehicle.plate,
+        }));
+
+        res.json(formattedVerifyVehicles);
+
     } catch (error) {
         res.status(500).json({
             errors: [error.message],
@@ -122,6 +251,9 @@ export const getVerifyVehicle = async (req, res) => {
 export const createVerifyVehicle = async (req, res) => {
     try {
         const {
+            vehicleId,
+            driverId,
+            guardId,
             km,
             lightParking,
             lightLow,
@@ -166,6 +298,9 @@ export const createVerifyVehicle = async (req, res) => {
         } = req.body;
 
         const verifyVehicle = await VerifyVehicle.create({
+            vehicleId,
+            driverId,
+            guardId,
             km,
             lightParking,
             lightLow,
@@ -222,6 +357,9 @@ export const updateVerifyVehicle = async (req, res) => {
     try {
         const { id } = req.params
         const {
+            vehicleId,
+            driverId,
+            guardId,
             km,
             lightParking,
             lightLow,
@@ -264,7 +402,11 @@ export const updateVerifyVehicle = async (req, res) => {
             fuel,
             observations,
         } = req.body;
+
         const verifyVehicle = await VerifyVehicle.findByPk(id)
+        verifyVehicle.vehicleId = vehicleId
+        verifyVehicle.driverId = driverId
+        verifyVehicle.guardId = guardId
         verifyVehicle.km = km
         verifyVehicle.lightParking = lightParking
         verifyVehicle.lightLow = lightLow
@@ -306,7 +448,7 @@ export const updateVerifyVehicle = async (req, res) => {
         verifyVehicle.bulletproofG2 = bulletproofG2
         verifyVehicle.fuel = fuel
         verifyVehicle.observations = observations
-        await fueling.save()
+        await VerifyVehicle.save()
         return res.sendStatus(204)
     } catch (error) {
         console.log(error)
