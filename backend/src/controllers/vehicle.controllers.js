@@ -44,7 +44,8 @@ export const getVehicle = async (req, res) => {
       plate: vehicle.plate,
       driver: vehicle.driver.id,
       photo: `/static/${vehicle.photo}`,
-      driverUsername: vehicle.driver.id,
+      driverFullName:
+        vehicle.driver.user.first_name + " " + vehicle.driver.user.last_name,
       createdAt: vehicle.createdAt,
     };
     res.json(data);

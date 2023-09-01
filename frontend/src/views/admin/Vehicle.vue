@@ -98,7 +98,11 @@
           </div>
           <!-- Modal body -->
           <div class="p-6 space-y-6 grid place-content-center">
-            <img class="w-full h-auto max-w-xl rounded-lg" :src="vehicle.photo" alt="" />
+            <img
+              class="w-full h-auto max-w-xl rounded-lg"
+              :src="vehicle.photo"
+              alt=""
+            />
           </div>
         </vue-final-modal>
         <vue-final-modal
@@ -194,6 +198,11 @@ export default {
         { id: "update", name: "Actualizar", icon: "fas fa-plus" },
         { id: "upload", name: "Cargar foto", icon: "fas fa-upload" },
         { id: "view", name: "Ver vehiculo", icon: "fas fa-eye" },
+        {
+          id: "fueling",
+          name: "Cargas de combustible",
+          icon: "fas fa-gas-pump",
+        },
       ],
       vehicle: {},
       vehicleId: null,
@@ -258,6 +267,10 @@ export default {
       } else if (action.action === "upload") {
         this.uploadVehicle = true;
         this.vehicleId = action.id;
+      } else if (action.action === "fueling") {
+        this.$router.push({
+          path: "/admin/fueling/" + action.id,
+        });
       }
     },
   },

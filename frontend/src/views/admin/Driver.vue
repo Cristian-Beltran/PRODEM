@@ -139,6 +139,7 @@ export default {
           name: "Actualizar contraseña",
           icon: "fas fa-eraser",
         },
+        
       ],
     };
   },

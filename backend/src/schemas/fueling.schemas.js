@@ -4,6 +4,9 @@ export const FuelingSchema = z.object({
     nInvoce: z.string({
         required_error: "Se requiere una factura de abastecimiento",
     }),
+    partialFull: z.string({
+        required_error: "Se requiere el tipo de llenado",
+    }),
     kmStart: z.number({
         required_error: "Se requiere el kilometraje inicial",
     }),

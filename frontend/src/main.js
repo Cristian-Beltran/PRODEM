@@ -33,11 +33,13 @@ import Carrier from "@/views/admin/Carrier.vue";
 import Driver from "@/views/admin/Driver.vue";
 import Guard from "@/views/admin/Guard.vue";
 import Manager from "@/views/admin/Manager.vue";
-
-import Paf from "@/views/admin/Paf.vue";
+//Vehicle
 import Incident from "@/views/admin/Incident.vue";
 import Vehicle from "@/views/admin/Vehicle.vue";
+import Fueling from "@/views/admin/Fueling.vue";
+// Transport Paf
 
+import Paf from "@/views/admin/Paf.vue";
 // Forms
 //import CardForms from "@/views/forms/CardForms.vue";
 import UpdatePassword from "@/views/forms/UpdatePassword.vue";
@@ -49,6 +51,7 @@ import DriverForms from "@/views/admin/forms/DriverForms.vue";
 import PafForms from "@/views/admin/forms/PafForms.vue";
 import IncidentForms from "@/views/admin/forms/IncidentForms.vue";
 import VehicleForms from "@/views/admin/forms/VehicleForms.vue";
+import FuelingForms from "@/views/admin/forms/FuelingForms.vue";
 
 // views for Auth layout
 import Login from "@/views/auth/Login.vue";
@@ -151,6 +154,19 @@ const routes = [
       {
         path: "/admin/updateVehicle",
         component: VehicleForms,
+      },
+      // Fueling
+      {
+        path: "/admin/fueling/:id",
+        component: Fueling,
+      },
+      {
+        path: "/admin/addFueling/:id",
+        component: FuelingForms,
+      },
+      {
+        path: "/admin/updateFueling/:id",
+        component: FuelingForms,
       },
     ],
   },

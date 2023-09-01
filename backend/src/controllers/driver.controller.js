@@ -9,6 +9,7 @@ export const getDrivers = async (req, res) => {
       include: [{ model: User }],
     });
     const driversJson = drivers.map((driver) => ({
+      driverId: driver.id,
       id: driver.user.id,
       email: driver.user.email,
       first_name: driver.user.first_name,

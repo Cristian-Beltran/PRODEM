@@ -52,7 +52,7 @@ Vehicle.hasMany(Fueling, {
 });
 
 Fueling.belongsTo(Vehicle, {
-  foreignKey: "vehicleID",
+  foreignKey: "vehicleId",
   targetKey: "id",
   allowNull: false,
 });
