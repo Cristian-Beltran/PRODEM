@@ -59,8 +59,7 @@ export const getMaintenance = async (req, res) => {
                 "typeMaintenanceId",
                 "vehicleId",
                 "createdAt",
-            ],
-            order: ["createdAt", "DESC"],
+            ]
         });
 
         const guardUser = await User.findOne({
