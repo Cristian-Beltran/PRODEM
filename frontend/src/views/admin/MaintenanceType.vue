@@ -57,7 +57,7 @@
           </form>
           <div class="relative flex flex-wrap items-stretch mb-3">
             <router-link
-              to="/admin/addUser/?type=gerente"
+              to="/admin/addMaintenanceType/"
               v-slot="{ href, navigate }"
             >
               <a :href="href" @click="navigate">
@@ -69,26 +69,6 @@
                 </button>
               </a>
             </router-link>
-          </div>
-        </div>
-
-        <div class="w-full px-12 flex flex-wrap gap-2 justify-between">
-          <div class="relative flex flex-wrap items-stretch mb-3">
-            <label
-              class="py-2 text-sm font-normal text-blueGray-600 mr-2"
-              for="items"
-              >Habilitados</label
-            >
-            <select
-              v-model="status"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400"
-              name="items"
-              id="items"
-            >
-              <option value="all" selected>Todos</option>
-              <option value="1">Habilitados</option>
-              <option value="0">Deshabilitados</option>
-            </select>
           </div>
         </div>
 
@@ -107,11 +87,7 @@
 </template>
 <script>
 import Table from "@/components/Tables/Table.vue";
-import {
-  getManagersRequest,
-  changeStatusUserRequest,
-  udpatePasswordRequest,
-} from "../../api/user";
+import { getMaintenanceTypesRequest } from "../../api/maintenanceType";
 
 export default {
   data() {
@@ -125,27 +101,11 @@ export default {
       load: true,
       columnas: [
         { key: "id", label: "ID" },
-        { key: "first_name", label: "Nombre/s" },
-        { key: "last_name", label: "Apellidos" },
-        { key: "email", label: "Correo electronico" },
-        { key: "username", label: "Usuario" },
-        { key: "status", label: "Habilitado", check: true },
-        { key: "paf", label: "PAF" },
+        { key: "name", label: "Nombre" },
+        { key: "detail", label: "Detalle" },
         { key: "createdAt", label: "Creado", date: true },
       ],
-      options: [
-        { id: "update", name: "Actualizar", icon: "fas fa-plus" },
-        {
-          id: "changeStatus",
-          name: "Cambiar estado de usuario",
-          icon: "fas fa-exchange-alt",
-        },
-        {
-          id: "updatePassword",
-          name: "Actualizar contraseña",
-          icon: "fas fa-eraser",
-        },
-      ],
+      options: [{ id: "update", name: "Actualizar", icon: "fas fa-plus" }],
     };
   },
   components: {
@@ -163,7 +123,7 @@ export default {
     async loadData() {
       this.load = true;
       try {
-        const res = await getManagersRequest();
+        const res = await getMaintenanceTypesRequest();
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;
@@ -175,44 +135,17 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          (item.first_name
-            .toLowerCase()
-            .includes(this.searchQuery.toLowerCase()) ||
-            item.last_name
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()) ||
-            item.username
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()) ||
-            item.email
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase())) &&
-          (this.status === "all" || item.status == this.status)
+          item.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.detail.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
       this.itemsDisplay = filteredItems;
     },
     async action(action) {
       if (action.action === "update") {
         this.$router.push({
-          path: "/admin/updateUser",
+          path: "/admin/updateMaintenanceType",
           query: { id: action.id },
         });
-      } else if (action.action === "changeStatus") {
-        try {
-          await changeStatusUserRequest(action.id);
-          this.items = [];
-          this.loadData();
-        } catch (error) {
-          console.log(error);
-        }
-      } else if (action.action === "updatePassword") {
-        try {
-          await udpatePasswordRequest(action.id);
-          this.items = [];
-          this.loadData();
-        } catch (error) {
-          console.log(error);
-        }
       }
     },
   },

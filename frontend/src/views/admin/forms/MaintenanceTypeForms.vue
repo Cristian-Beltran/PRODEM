@@ -6,13 +6,15 @@
       >
         <div class="rounded-t bg-white mb-0 px-6 py-6">
           <div class="text-center flex justify-between">
-            <h6 class="text-blueGray-700 text-xl font-bold">Incidente</h6>
+            <h6 class="text-blueGray-700 text-xl font-bold">
+              Tipo de mantenimiento
+            </h6>
           </div>
         </div>
         <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
           <form :onSubmit="handleSubmit">
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Datos de incidente
+              Datos de tipo de mantenimiento
             </h6>
             <div v-if="alertOpen">
               <div
@@ -24,46 +26,23 @@
               </div>
             </div>
             <div class="flex flex-wrap">
-              <div class="w-full lg:w-full px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Descripción del incidente
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.description.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <textarea
-                    v-model="v$.formData.description.$model"
-                    rows="4"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  >
-                  </textarea>
-                </div>
-              </div>
               <div class="w-full lg:w-6/12 px-4">
                 <div class="relative w-full mb-3">
                   <label
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Incidente informado por
+                    Nombre
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.informedBy.$errors"
+                    v-for="(error, index) of v$.formData.name.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <input
-                    v-model="v$.formData.informedBy.$model"
+                    v-model="v$.formData.name.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   />
                 </div>
@@ -74,66 +53,17 @@
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Incidente asignado a
+                    Descripción
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.assignedTo.$errors"
+                    v-for="(error, index) of v$.formData.detail.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <input
-                    v-model="v$.formData.assignedTo.$model"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  />
-                </div>
-              </div>
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Prioridad
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.priority.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <select
-                    v-model="v$.formData.priority.$model"
-                    type="text"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  >
-                    <option disabled value="">Selecione una opcion</option>
-                    <option value="Alta">Alta</option>
-                    <option value="Media">Media</option>
-                    <option value="Baja">Baja</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >
-                    Comentario
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.comments.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <input
-                    v-model="v$.formData.comments.$model"
-                    type="text"
+                    v-model="v$.formData.detail.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   />
                 </div>
@@ -172,10 +102,10 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
 import {
-  createIncidentRequest,
-  updateIncidentRequest,
-} from "../../../api/incident";
-import { getIncidentRequest } from "../../../api/incident";
+  createMaintenanceTypeRequest,
+  updateMaintenanceTypeRequest,
+  getMaintenanceTypeRequest,
+} from "../../../api/maintenanceType";
 
 export default {
   setup() {
@@ -185,11 +115,8 @@ export default {
   data() {
     return {
       formData: {
-        description: "",
-        priority: "",
-        informedBy: "",
-        assignedTo: "",
-        comments: "",
+        name: "",
+        detail: "",
       },
       errors: [],
       roles: [],
@@ -199,19 +126,10 @@ export default {
   validations() {
     return {
       formData: {
-        description: {
+        detail: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        priority: {
-          required: helpers.withMessage("Campo requerido", required),
-        },
-        informedBy: {
-          required: helpers.withMessage("Campo requerido", required),
-        },
-        assignedTo: {
-          required: helpers.withMessage("Campo requerido", required),
-        },
-        comments: {
+        name: {
           required: helpers.withMessage("Campo requerido", required),
         },
       },
@@ -232,9 +150,12 @@ export default {
         const request = async () => {
           try {
             if (!this.$route.query.id) {
-              await createIncidentRequest(this.formData);
+              await createMaintenanceTypeRequest(this.formData);
             } else
-              await updateIncidentRequest(this.$route.query.id, this.formData);
+              await updateMaintenanceTypeRequest(
+                this.$route.query.id,
+                this.formData
+              );
             this.$router.go(-1);
           } catch (error) {
             this.errors = error.response.data.errors;
@@ -247,7 +168,7 @@ export default {
   },
   async created() {
     if (this.$route.query.id) {
-      const res = await getIncidentRequest(this.$route.query.id);
+      const res = await getMaintenanceTypeRequest(this.$route.query.id);
       this.formData = res.data;
     }
   },
