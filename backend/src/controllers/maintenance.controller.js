@@ -1,135 +1,153 @@
-import { TypeMaintenances, Maintenances } from "../models/Maintenance.js";
+import { TypeMaintenances, Maintenance } from "../models/Maintenance.js";
 import { User, Driver } from "../models/User.js";
-import { Vehicle } from "../models/Vehicle.js"
+import { Vehicle } from "../models/Vehicle.js";
+import { Op, literal } from "sequelize";
 
 //get maintenances
 export const getMaintenances = async (req, res) => {
-    try {
-        const maintenances = await Maintenances.findAll({
-            include: [{ model: User }, { model: Driver }, { model: TypeMaintenances }, { model: Vehicle }],
-            attributes: [
-                "id",
-                "nInvoce",
-                "detail",
-                "amount",
-                "createdAt",
-            ],
-            order: ["createdAt", "DESC"],
-        });
+  try {
+    const maintenances = await Maintenance.findAll({
+      include: [{ model: TypeMaintenances }, { model: Vehicle }],
+      order: ["createdAt", "DESC"],
+    });
 
-        const guardUser = await User.findOne({
-            where: { Type: "guard" },
-            attributes: ["first_name", "last_name"],
-        });
-
-        const formattedMaintenances = maintenances.map((maintenance) => ({
-            id: maintenance.id,
-            nInvoce: maintenance.nInvoce,
-            detail: maintenance.detail,
-            amount: maintenance.amount,
-            createdAt: maintenance.createdAt,
-            guardName: guardUser ? `${guardUser.first_name} ${guardUser.last_name}` : null,
-            driverName: maintenance.Driver ? `${maintenance.Driver.user.first_name} ${maintenance.Driver.user.last_name}` : null,
-            vehicleModel: maintenance.vehicle.model,
-            vehiclePlate: maintenance.vehicle.plate,
-            typeMaintenanceName: maintenance.TypeMaintenance ? maintenance.TypeMaintenance.name : null,
-            typeMaintenanceDetail: maintenance.TypeMaintenance ? maintenance.TypeMaintenance.detail : null,
-        }));
-
-        res.json(formattedMaintenances);
-    } catch (error) {
-        res.status(500).json({
-            errors: [error.message],
-        });
-    }
+    const formattedMaintenances = maintenances.map((maintenance) => ({
+      id: maintenance.id,
+      nInvoce: maintenance.nInvoce,
+      detail: maintenance.detail,
+      amount: maintenance.amount,
+      createdAt: maintenance.createdAt,
+      vehicleModel: maintenance.vehicle.model,
+      vehiclePlate: maintenance.vehicle.plate,
+      typeMaintenanceName: maintenance.typeMaintenance
+        ? maintenance.TypeMaintenance.name
+        : null,
+    }));
+    res.json(formattedMaintenances);
+  } catch (error) {
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
 };
 
 //get maintenance by id
 export const getMaintenance = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const maintenances = await Maintenances.findOne({
-            where: { id },
-            include: [{ model: User }, { model: Driver }, { model: TypeMaintenances }, { model: Vehicle }],
-            attributes: [
-                "id",
-                "nInvoce",
-                "detail",
-                "amount",
-                "typeMaintenanceId",
-                "vehicleId",
-                "createdAt",
-            ]
-        });
+  try {
+    const { id } = req.params;
+    const maintenance = await Maintenance.findOne({
+      where: { id },
+      include: [{ model: TypeMaintenances }, { model: Vehicle }],
+    });
 
-        const guardUser = await User.findOne({
-            where: { Type: "guard" },
-            attributes: ["first_name", "last_name"],
-        });
-
-        const formattedMaintenances = maintenances.map((maintenance) => ({
-            id: maintenance.id,
-            nInvoce: maintenance.nInvoce,
-            detail: maintenance.detail,
-            amount: maintenance.amount,
-            typeMaintenanceId: maintenance.typeMaintenanceId,
-            vehicleId: maintenance.vehicleId,
-            createdAt: maintenance.createdAt,
-            guardName: guardUser ? `${guardUser.first_name} ${guardUser.last_name}` : null,
-            driverName: maintenance.Driver ? `${maintenance.Driver.user.first_name} ${maintenance.Driver.user.last_name}` : null,
-            vehicleModel: maintenance.vehicle.model,
-            vehiclePlate: maintenance.vehicle.plate,
-            typeMaintenanceName: maintenance.TypeMaintenance ? maintenance.TypeMaintenance.name : null,
-            typeMaintenanceDetail: maintenance.TypeMaintenance ? maintenance.TypeMaintenance.detail : null,
-        }));
-        res.json(formattedMaintenances);
-    } catch (error) {
-        res.status(500).json({
-            errors: [error.message],
-        });
-    }
+    const data = {
+      id: maintenance.id,
+      nInvoce: maintenance.nInvoce,
+      detail: maintenance.detail,
+      amount: maintenance.amount,
+      typeMaintenanceId: maintenance.typeMaintenanceId,
+      vehicleId: maintenance.vehicleId,
+      createdAt: maintenance.createdAt,
+      vehicleModel: maintenance.vehicle.model,
+      vehiclePlate: maintenance.vehicle.plate,
+      typeMaintenanceName: maintenance.TypeMaintenance
+        ? maintenance.TypeMaintenance.name
+        : null,
+      typeMaintenanceDetail: maintenance.TypeMaintenance
+        ? maintenance.TypeMaintenance.detail
+        : null,
+    };
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
 };
 
 //create maintenance
 export const createMaintenance = async (req, res) => {
-    try {
-        const { nInvoce, detail, amount, typeMaintenanceId, guardId, driverId, vehicleId } =
-            req.body;
-        await Maintenances.create({
-            nInvoce,
-            detail,
-            amount,
-            typeMaintenanceId,
-            guardId,
-            driverId,
-            vehicleId,
-        });
-        return res.sendStatus(204);
-    } catch (error) {
-        res.status(500).json({
-            errors: [error.message],
-        });
-    }
+  try {
+    const { nInvoce, detail, amount, typeMaintenanceId, vehicleId } = req.body;
+    await Maintenance.create({
+      nInvoce,
+      detail,
+      amount,
+      typeMaintenanceId,
+      vehicleId,
+    });
+    return res.sendStatus(204);
+  } catch (error) {
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
 };
 
 //update maintenance
 export const updateMaintenance = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { nInvoce, detail, amount, typeMaintenanceId, guardId, driverId, vehicleId } = req.body;
-        const maintenance = await Maintenances.findPk(id)
-        maintenance.nInvoce = nInvoce
-        maintenance.detail = detail
-        maintenance.amount = amount
-        maintenance.typeMaintenanceId = typeMaintenanceId
-        maintenance.guardId = guardId
-        maintenance.driverId = driverId
-        maintenance.vehicleId = vehicleId
-        await maintenance.save()
-        return res.sendStatus(204)
-    } catch (error) {
-        res.status(500).json({
-            errors: [error.message],
-        });
+  try {
+    const { id } = req.params;
+    const { nInvoce, detail, amount, typeMaintenanceId, vehicleId } = req.body;
+    const maintenance = await Maintenance.findByPk(id);
+    maintenance.nInvoce = nInvoce;
+    maintenance.detail = detail;
+    maintenance.amount = amount;
+    maintenance.typeMaintenanceId = typeMaintenanceId;
+    maintenance.vehicleId = vehicleId;
+    await maintenance.save();
+    return res.sendStatus(204);
+  } catch (error) {
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
+};
+
+export const getMaintenancesByVehicleId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { year, month } = req.query;
+    let condition = {
+      vehicleId: id,
+    };
+    if (month != "all") {
+      condition = {
+        vehicleId: id,
+        [Op.and]: [
+          literal(`EXTRACT(YEAR FROM "maintenances"."createdAt") = ${year}`),
+          literal(`EXTRACT(MONTH FROM "maintenances"."createdAt") = ${month}`),
+        ],
+      };
+    } else if (year) {
+      condition = {
+        vehicleId: id,
+        [Op.and]: [
+          literal(`EXTRACT(YEAR FROM "maintenances"."createdAt") = ${year}`),
+        ],
+      };
     }
+    const maintenances = await Maintenance.findAll({
+      where: condition,
+      include: [{ model: TypeMaintenances }],
+    });
+
+    const modifyMaintenances = maintenances.map((maintenance) => ({
+      id: maintenance.id,
+      nInvoce: maintenance.nInvoce,
+      detail: maintenance.detail,
+      amount: maintenance.amount,
+      createdAt: maintenance.createdAt,
+      typeMaintenanceName: maintenance.typeMaintenance
+        ? maintenance.typeMaintenance.name
+        : null,
+    }));
+    res.json(modifyMaintenances);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
 };

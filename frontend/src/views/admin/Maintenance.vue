@@ -183,7 +183,7 @@
 import Table from "@/components/Tables/Table.vue";
 
 import { getVehicleRequest } from "../../api/vehicle";
-import { getFuelingsByVehicleRequest } from "../../api/fueling";
+import { getMaintenancesByVehicleRequest } from "../../api/maintenance";
 import axios from "../../api/axios";
 
 export default {
@@ -203,12 +203,9 @@ export default {
       columnas: [
         { key: "id", label: "ID" },
         { key: "nInvoce", label: "N Factura" },
-        { key: "partialFull", label: "Tipo de llenado" },
-        { key: "price", label: "Precio" },
-        { key: "liters", label: "Litros" },
-        { key: "fuelType", label: "Tipo de combustible" },
-        { key: "driver", label: "Conductor" },
-        { key: "total", label: "Total" },
+        { key: "detail", label: "Detalle" },
+        { key: "amount", label: "Costo" },
+        { key: "typeMaintenanceName", label: "Tipo de mantenimiento" },
         { key: "createdAt", label: "Creado", date: true },
       ],
       options: [{ id: "update", name: "Actualizar", icon: "fas fa-plus" }],
@@ -220,7 +217,6 @@ export default {
   },
   watch: {
     month() {
-      console.log("asdfa");
       this.loadData();
     },
     year() {
@@ -245,7 +241,7 @@ export default {
       this.load = true;
       try {
         const query = `month=${this.month}&year=${this.year}`;
-        const res = await getFuelingsByVehicleRequest(
+        const res = await getMaintenancesByVehicleRequest(
           this.$route.params.id,
           query
         );
