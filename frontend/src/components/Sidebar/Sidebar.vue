@@ -273,7 +273,10 @@
             </router-link>
           </li>
           <li class="items-center">
-            <router-link to="/admin/remesa" v-slot="{ href, navigate, isActive }">
+            <router-link
+              to="/admin/remesa"
+              v-slot="{ href, navigate, isActive }"
+            >
               <a
                 :href="href"
                 @click="
@@ -298,7 +301,10 @@
             </router-link>
           </li>
           <li class="items-center">
-            <router-link to="/admin/route" v-slot="{ href, navigate, isActive }">
+            <router-link
+              to="/admin/route"
+              v-slot="{ href, navigate, isActive }"
+            >
               <a
                 :href="href"
                 @click="
@@ -357,35 +363,7 @@
               </a>
             </router-link>
           </li>
-          
-          <li class="items-center">
-            <router-link
-              to="/admin/maintenance"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="
-                  () => {
-                    navigate;
-                    collapseShow = 'hidden';
-                  }
-                "
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-green-600 hover:text-green-400'
-                    : 'text-gray-400 hover:text-white ',
-                ]"
-              >
-                <i
-                  class="fas fa-wrench mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
-                ></i>
-                Mantenimiento
-              </a>
-            </router-link>
-          </li>
+
           <li class="items-center">
             <router-link
               to="/admin/verify"
@@ -442,7 +420,34 @@
               </a>
             </router-link>
           </li>
-          
+          <li class="items-center">
+            <router-link
+              to="/admin/maintenanceType"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-wrench mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Tipos de mantenimiento
+              </a>
+            </router-link>
+          </li>
         </ul>
       </div>
     </div>

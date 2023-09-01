@@ -261,9 +261,9 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          item.plate.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.model.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.driver.toLowerCase().includes(this.searchQuery.toLowerCase())
+          item.driver.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.fuelType.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.nInvoce.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
       this.itemsDisplay = filteredItems;
     },

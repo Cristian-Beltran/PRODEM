@@ -37,6 +37,9 @@ import Manager from "@/views/admin/Manager.vue";
 import Incident from "@/views/admin/Incident.vue";
 import Vehicle from "@/views/admin/Vehicle.vue";
 import Fueling from "@/views/admin/Fueling.vue";
+import Maintenance from "@/views/admin/Maintenance.vue";
+import MaintenanceType from "@/views/admin/MaintenanceType.vue";
+import Verify from "@/views/admin/Verify.vue";
 // Transport Paf
 
 import Paf from "@/views/admin/Paf.vue";
@@ -45,13 +48,16 @@ import Paf from "@/views/admin/Paf.vue";
 import UpdatePassword from "@/views/forms/UpdatePassword.vue";
 import Settings from "@/views/forms/Settings.vue";
 
-// Admin
+// Admin Forms
 import UserForms from "@/views/admin/forms/UserForms.vue";
 import DriverForms from "@/views/admin/forms/DriverForms.vue";
 import PafForms from "@/views/admin/forms/PafForms.vue";
 import IncidentForms from "@/views/admin/forms/IncidentForms.vue";
 import VehicleForms from "@/views/admin/forms/VehicleForms.vue";
 import FuelingForms from "@/views/admin/forms/FuelingForms.vue";
+import MaintenanceForms from "@/views/admin/forms/MaintenanceForms.vue";
+import MaintenanceTypeForms from "@/views/admin/forms/MaintenanceTypeForms.vue";
+import VerifyForms from "@/views/admin/forms/VerifyForms.vue";
 
 // views for Auth layout
 import Login from "@/views/auth/Login.vue";
@@ -167,6 +173,45 @@ const routes = [
       {
         path: "/admin/updateFueling/:id",
         component: FuelingForms,
+      },
+      // Maintenance
+      {
+        path: "/admin/maintenance/:id",
+        component: Maintenance,
+      },
+      {
+        path: "/admin/addMaintenance/:id",
+        component: MaintenanceForms,
+      },
+      {
+        path: "/admin/updateMaintenance/:id",
+        component: MaintenanceForms,
+      },
+      // Tipo de mantenimiento
+      {
+        path: "/admin/maintenanceType",
+        component: MaintenanceType,
+      },
+      {
+        path: "/admin/addMaintenanceType",
+        component: MaintenanceTypeForms,
+      },
+      {
+        path: "/admin/updateMaintenanceType",
+        component: MaintenanceTypeForms,
+      },
+      // Tipo de mantenimiento
+      {
+        path: "/admin/verify",
+        component: Verify,
+      },
+      {
+        path: "/admin/addVerify",
+        component: VerifyForms,
+      },
+      {
+        path: "/admin/updateVerify",
+        component: VerifyForms,
       },
     ],
   },

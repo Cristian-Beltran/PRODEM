@@ -80,32 +80,6 @@
         />
 
         <vue-final-modal
-          v-model="viewVehicle"
-          class="flex justify-center items-center"
-          content-class="w-2/3 max-h-3/4 p-4 bg-white rounded-lg shadow "
-        >
-          <!-- Modal header -->
-          <div class="flex items-start justify-between p-4 border-b rounded-t">
-            <h3 class="text-xl font-semibold text-gray-900">Vehiculo</h3>
-            <button
-              type="button"
-              @click="viewVehicle = false"
-              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
-            >
-              <i class="fas fa-close"></i>
-              <span class="sr-only">Close modal</span>
-            </button>
-          </div>
-          <!-- Modal body -->
-          <div class="p-6 space-y-6 grid place-content-center">
-            <img
-              class="w-full h-auto max-w-xl rounded-lg"
-              :src="vehicle.photo"
-              alt=""
-            />
-          </div>
-        </vue-final-modal>
-        <vue-final-modal
           v-model="uploadVehicle"
           class="flex justify-center items-center"
           content-class="w-2/3 max-h-3/4 p-4 bg-white rounded-lg shadow "
@@ -197,11 +171,15 @@ export default {
       options: [
         { id: "update", name: "Actualizar", icon: "fas fa-plus" },
         { id: "upload", name: "Cargar foto", icon: "fas fa-upload" },
-        { id: "view", name: "Ver vehiculo", icon: "fas fa-eye" },
         {
           id: "fueling",
           name: "Cargas de combustible",
           icon: "fas fa-gas-pump",
+        },
+        {
+          id: "maintenance",
+          name: "Manteniemiento",
+          icon: "fas fa-wrench",
         },
       ],
       vehicle: {},
@@ -259,11 +237,10 @@ export default {
           path: "/admin/updateVehicle",
           query: { id: action.id },
         });
-      } else if (action.action === "view") {
-        const res = await getVehicleRequest(action.id);
-        this.vehicle = res.data;
-        this.vehicle.photo = axios.defaults.baseURL + this.vehicle.photo;
-        this.viewVehicle = true;
+      } else if (action.action === "maintenance") {
+        this.$router.push({
+          path: "/admin/maintenance/" + action.id,
+        });
       } else if (action.action === "upload") {
         this.uploadVehicle = true;
         this.vehicleId = action.id;
