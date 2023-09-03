@@ -98,7 +98,7 @@
                   <label
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                   >
-                    Iipo de mantenimiento
+                    Tipo de mantenimiento
                   </label>
                   <div
                     class="p-1 mb-1"

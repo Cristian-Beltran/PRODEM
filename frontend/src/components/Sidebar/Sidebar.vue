@@ -62,7 +62,11 @@
         >
           Rol: {{ $store.getters.type }}
         </h6>
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none">
+        <!-- Menu de administrador-->
+        <ul
+          v-if="$store.getters.type == 'administrador'"
+          class="md:flex-col md:min-w-full flex flex-col list-none"
+        >
           <li class="items-center">
             <router-link
               to="/admin/dashboard"
@@ -445,6 +449,305 @@
                   :class="[isActive ? 'opacity-75' : 'text-gray-400']"
                 ></i>
                 Tipos de mantenimiento
+              </a>
+            </router-link>
+          </li>
+        </ul>
+        <!-- Menu de conductor -->
+        <ul
+          v-if="$store.getters.type == 'conductor'"
+          class="md:flex-col md:min-w-full flex flex-col list-none"
+        >
+          <li class="items-center">
+            <router-link
+              to="/driver/vehicle"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-truck mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Vehiculo
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/driver/fueling"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-gas-pump mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Carga de combustible
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/driver/maintenance"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-wrench mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Mantenimiento
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/driver/verify"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-eye mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Verificaciones
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/driver/route"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-route mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Rutas asignadas
+              </a>
+            </router-link>
+          </li>
+        </ul>
+
+        <!-- Menu de gerentes -->
+        <ul
+          v-if="$store.getters.type == 'gerente'"
+          class="md:flex-col md:min-w-full flex flex-col list-none"
+        >
+          <li class="items-center">
+            <router-link
+              to="/manager/remesa/send"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-sign-out-alt mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Envios de remesas
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/manager/remesa/recieve"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-sign-in-alt mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Pedidos de remesas
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/manager/remesa/complete"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-check mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Remesas completas
+              </a>
+            </router-link>
+          </li>
+        </ul>
+        <!-- Menu de transportador de valor -->
+        <ul
+          v-if="$store.getters.type == 'transportador'"
+          class="md:flex-col md:min-w-full flex flex-col list-none"
+        >
+          <li class="items-center">
+            <router-link
+              to="/carrier/route"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-truck mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Rutas pendientes
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/carrier/route/complete"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-check mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Rutas completas
               </a>
             </router-link>
           </li>
