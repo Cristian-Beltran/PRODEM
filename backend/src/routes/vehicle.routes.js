@@ -9,6 +9,7 @@ import {
   getVehicles,
   updateVehicle,
   uploadPhoto,
+  getVehicleByDriver,
 } from "../controllers/vehicle.controllers.js";
 import { uploadImage } from "../middlewares/image.middlewares.js";
 
@@ -31,5 +32,8 @@ router.put(
 );
 
 router.post("/vehicle/photo/:id", authRequired, uploadImage, uploadPhoto);
+
+// Get vehicle by drive
+router.get("/vehicle/driver/:id", authRequired, getVehicleByDriver);
 
 export default router;

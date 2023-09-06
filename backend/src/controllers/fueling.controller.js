@@ -15,6 +15,8 @@ export const getFuelings = async (req, res) => {
         "liters",
         "fuelType",
         "obvservations",
+        "vehicleId",
+        "driverId",
         "createdAt",
       ],
       order: ["createdAt", "DESC"],
@@ -44,7 +46,9 @@ export const getFueling = async (req, res) => {
         "fuelType",
         "typeOfRoad",
         "obvservations",
+        "vehicleId",
         "driverId",
+        "createdAt",
       ],
     });
     res.json(fueling);
@@ -105,6 +109,7 @@ export const updateFueling = async (req, res) => {
       fuelType,
       typeOfRoad,
       obvservations,
+      vehicleId,
       driverId,
     } = req.body;
     const fueling = await Fueling.findByPk(id);
@@ -117,6 +122,7 @@ export const updateFueling = async (req, res) => {
     fueling.fuelType = fuelType;
     fueling.typeOfRoad = typeOfRoad;
     fueling.obvservations = obvservations;
+    fueling.vehicleId = vehicleId;
     fueling.driverId = driverId;
     await fueling.save();
     return res.sendStatus(204);
@@ -126,7 +132,8 @@ export const updateFueling = async (req, res) => {
   }
 };
 
-//get fueling by vehicle id
+// ! error con la ejecucion de esta funcion
+//get fueling by fueling id
 export const getFuelingsByVehicleId = async (req, res) => {
   try {
     const { id } = req.params;
@@ -171,6 +178,38 @@ export const getFuelingsByVehicleId = async (req, res) => {
     res.json(modifyFuelings);
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
+};
+
+//get all fuelings by driver id
+export const getFuelingsByDriverId = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const fuelings = await Fueling.findAll({
+      attributes: [
+        "id",
+        "nInvoce",
+        "partialFull",
+        "price",
+        "liters",
+        "fuelType",
+        "obvservations",
+        "vehicleId",
+        "driverId",
+        "createdAt",
+      ],
+      where: {
+        driverId: id,
+      },
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.json(fuelings);
+  } catch (error) {
     res.status(500).json({
       errors: [error.message],
     });
