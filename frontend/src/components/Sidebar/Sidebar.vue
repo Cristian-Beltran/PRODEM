@@ -306,6 +306,34 @@
           </li>
           <li class="items-center">
             <router-link
+              to="/admin/remesaComplete"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-check mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Remesas completas
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
               to="/admin/route"
               v-slot="{ href, navigate, isActive }"
             >

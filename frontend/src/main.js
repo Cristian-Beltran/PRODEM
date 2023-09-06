@@ -33,6 +33,7 @@ import Carrier from "@/views/admin/Carrier.vue";
 import Driver from "@/views/admin/Driver.vue";
 import Guard from "@/views/admin/Guard.vue";
 import Manager from "@/views/admin/Manager.vue";
+import Remesa from "@/views/admin/Remesa.vue";
 //Vehicle
 import Incident from "@/views/admin/Incident.vue";
 import Vehicle from "@/views/admin/Vehicle.vue";
@@ -259,6 +260,12 @@ const routes = [
         component: VerifyForms,
         meta: { admin: true },
       },
+      // Remesas
+      {
+        path: "/admin/remesa",
+        component: Remesa,
+        meta: { admin: true },
+      },
       // Path driver
       {
         path: "/driver/vehicle",
@@ -348,42 +355,44 @@ router.beforeEach(async (to, from, next) => {
       ok = true;
     }
   }
-  if (to.matched.some((record) => record.meta.admin)) {
-    if (store.getters["type"] === "administrador") {
-      ok = true;
-    } else {
-      ok = false;
-      const paths = {
-        administrador: "/admin/dashboard",
-        conductor: "/driver/vehicle",
-        gerente: "/manager/route/send",
-        transportador: "/carrier/route",
-      };
-      path = paths[store.getters["type"]];
+  if (store.getters["isLogin"]) {
+    if (to.matched.some((record) => record.meta.admin)) {
+      if (store.getters["type"] === "administrador") {
+        ok = true;
+      } else {
+        ok = false;
+        const paths = {
+          administrador: "/admin/dashboard",
+          conductor: "/driver/vehicle",
+          gerente: "/manager/route/send",
+          transportador: "/carrier/route",
+        };
+        path = paths[store.getters["type"]];
+      }
     }
-  }
-  if (to.matched.some((record) => record.meta.driver)) {
-    if (store.getters["type"] === "conductor") {
-      ok = true;
-    } else {
-      ok = false;
-      path = "/";
+    if (to.matched.some((record) => record.meta.driver)) {
+      if (store.getters["type"] === "conductor") {
+        ok = true;
+      } else {
+        ok = false;
+        path = "/";
+      }
     }
-  }
-  if (to.matched.some((record) => record.meta.manager)) {
-    if (store.getters["type"] === "gerente") {
-      ok = true;
-    } else {
-      ok = false;
-      path = "/";
+    if (to.matched.some((record) => record.meta.manager)) {
+      if (store.getters["type"] === "gerente") {
+        ok = true;
+      } else {
+        ok = false;
+        path = "/";
+      }
     }
-  }
-  if (to.matched.some((record) => record.meta.carrier)) {
-    if (store.getters["type"] === "transportador") {
-      ok = true;
-    } else {
-      ok = false;
-      path = "/";
+    if (to.matched.some((record) => record.meta.carrier)) {
+      if (store.getters["type"] === "transportador") {
+        ok = true;
+      } else {
+        ok = false;
+        path = "/";
+      }
     }
   }
   if (ok) {

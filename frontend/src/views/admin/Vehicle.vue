@@ -146,9 +146,7 @@ import { VueFinalModal } from "vue-final-modal";
 import {
   getVehiclesRequest,
   uploadVehicleRequest,
-  getVehicleRequest,
 } from "../../api/vehicle";
-import axios from "../../api/axios";
 export default {
   data() {
     return {
