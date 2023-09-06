@@ -104,18 +104,14 @@ export const getVehicleByDriver = async (req, res) => {
   try {
     const { id } = req.params;
     const vehicle = await Vehicle.findOne({
-      where: { "driverId": id },
-      include: [{
-        model: Driver
-      }],
+      where: { driverId: id },
+      include: [{ model: Driver }],
       raw: true,
     });
 
     // Buscar el conductor por el ID
     const driver = await Driver.findOne({
-      where: {
-        id
-      }
+      where: { id }
     });
 
     // Obtener el userId del conductor
@@ -123,9 +119,7 @@ export const getVehicleByDriver = async (req, res) => {
 
     // Buscar al usuario por su ID
     const user = await User.findOne({
-      where: {
-        id: userId
-      }
+      where: { id: userId }
     });
 
     const data = {
@@ -135,8 +129,8 @@ export const getVehicleByDriver = async (req, res) => {
       photo: `/static/${vehicle.photo}`,
       driver: vehicle.driverId,
       user: driver.userId,
-      driverLicense: driver.license,
       driverFullName: `${user.first_name} ${user.last_name}`,
+      driverLicense: driver.license,
       createdAt: vehicle.createdAt,
     }
     res.json(data);

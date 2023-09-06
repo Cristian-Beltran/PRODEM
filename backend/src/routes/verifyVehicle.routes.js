@@ -6,7 +6,7 @@ import {
     updateVerifyVehicle,
     getVerifyVehicleByVehicleId,
     getVerifyVehicleByDriverId,
-    getVerifyVehicleByUserId,
+    getVerifyVehicleByGuardId,
 } from "../controllers/verifyVehicle.controlller.js";
 
 import { authRequired } from "../middlewares/validateToken.js";
@@ -20,7 +20,7 @@ router.get("/verifyVehicle/", authRequired, getVerifyVehicles)
 router.get("/verifyVehicle/:id", authRequired, getVerifyVehicle)
 router.get("/verifyVehicle/vehicle/:id", authRequired, getVerifyVehicleByVehicleId)
 router.get("/verifyVehicle/driver/:id", authRequired, getVerifyVehicleByDriverId)
-router.get("/verifyVehicle/user/:id", authRequired, getVerifyVehicleByUserId)
+router.get("/verifyVehicle/guard/:id", authRequired, getVerifyVehicleByGuardId)
 router.post(
     "/verifyVehicle",
     authRequired,
