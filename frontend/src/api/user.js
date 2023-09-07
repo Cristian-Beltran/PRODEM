@@ -8,4 +8,4 @@ export const getUserRequest = (id) => axios.get("/user/id/" + id);
 export const createUserRequest = (user) => axios.post("/user", user);
 export const changeStatusUserRequest = (id) => axios.put("/user/status/" + id);
 export const updateUserRequest = (id, user) => axios.put("/user/" + id, user);
-export const udpatePasswordRequest = (id) => axios.put("/user/" + id);
+export const udpatePasswordRequest = (id) => axios.put("/user/password/" + id);

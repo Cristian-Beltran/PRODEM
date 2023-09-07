@@ -1,5 +1,5 @@
 import app from "./app.js";
-import { sequelize } from "./db.js";
+import {sequelize} from "./db.js";
 import "./models/Bag.js";
 import "./models/Fueling.js";
 import "./models/Incident.js";
@@ -10,6 +10,7 @@ import "./models/Route.js";
 import "./models/User.js";
 import "./models/Vehicle.js";
 import "./models/VerifyVehicle.js";
+
 
 async function main() {
   try {

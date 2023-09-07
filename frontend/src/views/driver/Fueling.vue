@@ -54,7 +54,7 @@
                   color === 'light' ? 'text-blueGray-700' : 'text-white',
                 ]"
               >
-                Mantenimientos de vehiculo Blindado
+                Cargas de vehiculo Blindado
               </h3>
             </div>
           </div>
@@ -97,14 +97,14 @@
           </form>
           <div class="relative flex flex-wrap items-stretch mb-3">
             <router-link
-              :to="'/admin/addMaintenance/' + $route.params.id"
+              :to="'/admin/addFueling/' + $route.params.id"
               v-slot="{ href, navigate }"
             >
               <a :href="href" @click="navigate">
                 <button
                   class="bg-grayBlue-800 text-sm border border-gray-300 px-2 py-2 rounded-md"
                 >
-                  Agregar mantenimiento
+                  Agregar carga nueva de combustible
                   <i class="fas fa-plus text-sm ml-2"></i>
                 </button>
               </a>
@@ -183,7 +183,7 @@
 import Table from "@/components/Tables/Table.vue";
 
 import { getVehicleRequest } from "../../api/vehicle";
-import { getMaintenancesByVehicleRequest } from "../../api/maintenance";
+import { getFuelingsByVehicleRequest } from "../../api/fueling";
 import axios from "../../api/axios";
 
 export default {
@@ -203,9 +203,12 @@ export default {
       columnas: [
         { key: "id", label: "ID" },
         { key: "nInvoce", label: "N Factura" },
-        { key: "detail", label: "Detalle" },
-        { key: "amount", label: "Costo" },
-        { key: "typeMaintenanceName", label: "Tipo de mantenimiento" },
+        { key: "partialFull", label: "Tipo de llenado" },
+        { key: "price", label: "Precio" },
+        { key: "liters", label: "Litros" },
+        { key: "fuelType", label: "Tipo de combustible" },
+        { key: "driver", label: "Conductor" },
+        { key: "total", label: "Total" },
         { key: "createdAt", label: "Creado", date: true },
       ],
       options: [{ id: "update", name: "Actualizar", icon: "fas fa-plus" }],
@@ -217,6 +220,7 @@ export default {
   },
   watch: {
     month() {
+      console.log("asdfa");
       this.loadData();
     },
     year() {
@@ -241,7 +245,7 @@ export default {
       this.load = true;
       try {
         const query = `month=${this.month}&year=${this.year}`;
-        const res = await getMaintenancesByVehicleRequest(
+        const res = await getFuelingsByVehicleRequest(
           this.$route.params.id,
           query
         );
@@ -257,16 +261,16 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          item.plate.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.model.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.driver.toLowerCase().includes(this.searchQuery.toLowerCase())
+          item.driver.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.fuelType.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.nInvoce.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
       this.itemsDisplay = filteredItems;
     },
     async action(action) {
       if (action.action === "update") {
         this.$router.push({
-          path: "/admin/updateMaintenance/" + this.$route.params.id,
+          path: "/admin/updateFueling/" + this.$route.params.id,
           query: { id: action.id },
         });
       }

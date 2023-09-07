@@ -17,7 +17,7 @@ export const TypeMaintenances = sequelize.define("typeMaintenances", {
   },
 });
 
-export const Maintenances = sequelize.define("maintenances", {
+export const Maintenance = sequelize.define("maintenances", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -37,23 +37,23 @@ export const Maintenances = sequelize.define("maintenances", {
   },
 });
 
-TypeMaintenances.hasMany(Maintenances, {
+TypeMaintenances.hasMany(Maintenance, {
   foreignKey: "typeMaintenanceId",
   sourceKey: "id",
 });
 
-Maintenances.belongsTo(TypeMaintenances, {
+Maintenance.belongsTo(TypeMaintenances, {
   foreignKey: "typeMaintenanceId",
   targetKey: "id",
   allowNull: false,
 });
 
-Vehicle.hasMany(Maintenances, {
+Vehicle.hasMany(Maintenance, {
   foreignKey: "vehicleId",
   sourceKey: "id",
 });
 
-Maintenances.belongsTo(Vehicle, {
+Maintenance.belongsTo(Vehicle, {
   foreignKey: "vehicleId",
   targetKey: "id",
   allowNull: false,

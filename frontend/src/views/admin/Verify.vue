@@ -69,26 +69,6 @@
           </div>
         </div>
 
-        <div class="w-full px-12 flex flex-wrap gap-2 justify-between">
-          <div class="relative flex flex-wrap items-stretch mb-3">
-            <label
-              class="py-2 text-sm font-normal text-blueGray-600 mr-2"
-              for="items"
-              >Habilitados</label
-            >
-            <select
-              v-model="status"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400"
-              name="items"
-              id="items"
-            >
-              <option value="all" selected>Todos</option>
-              <option value="1">Habilitados</option>
-              <option value="0">Deshabilitados</option>
-            </select>
-          </div>
-        </div>
-
         <hr class="my-4 md:min-w-full border-gray-300" />
         <Table
           :items="itemsDisplay"
@@ -122,14 +102,16 @@ export default {
       load: true,
       columnas: [
         { key: "id", label: "ID" },
-        { key: "first_name", label: "Nombre/s" },
-        { key: "last_name", label: "Apellidos" },
-        { key: "email", label: "Correo electronico" },
-        { key: "username", label: "Usuario" },
+        { key: "", label: "Vehiculo" },
+        { key: "last_name", label: "Conductor" },
+        { key: "email", label: "Guardia" },
         { key: "status", label: "Habilitado", check: true },
         { key: "createdAt", label: "Creado", date: true },
       ],
-      options: [{ id: "update", name: "Actualizar", icon: "fas fa-plus" }],
+      options: [
+        { id: "update", name: "Actualizar", icon: "fas fa-plus" },
+        { id: "view", name: "Ver", icon: "fas fa-eye" },
+      ],
     };
   },
   components: {

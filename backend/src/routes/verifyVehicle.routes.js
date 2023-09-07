@@ -22,16 +22,16 @@ router.get("/verifyVehicle/vehicle/:id", authRequired, getVerifyVehicleByVehicle
 router.get("/verifyVehicle/driver/:id", authRequired, getVerifyVehicleByDriverId)
 router.get("/verifyVehicle/guard/:id", authRequired, getVerifyVehicleByGuardId)
 router.post(
-    "/verifyVehicle",
-    authRequired,
-    validateSchema(VerifyVehicleSchema),
-    createVerifyVehicle
-)
+  "/verifyVehicle",
+  authRequired,
+  validateSchema(VerifyVehicleSchema),
+  createVerifyVehicle
+);
 router.put(
-    "/verifyVehicle/:id",
-    validateSchema(VerifyVehicleSchema),
-    authRequired,
-    updateVerifyVehicle
-)
+  "/verifyVehicle/:id",
+  validateSchema(VerifyVehicleSchema),
+  authRequired,
+  updateVerifyVehicle
+);
 
 export default router;

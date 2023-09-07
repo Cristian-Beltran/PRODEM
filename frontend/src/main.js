@@ -33,6 +33,7 @@ import Carrier from "@/views/admin/Carrier.vue";
 import Driver from "@/views/admin/Driver.vue";
 import Guard from "@/views/admin/Guard.vue";
 import Manager from "@/views/admin/Manager.vue";
+import Remesa from "@/views/admin/Remesa.vue";
 //Vehicle
 import Incident from "@/views/admin/Incident.vue";
 import Vehicle from "@/views/admin/Vehicle.vue";
@@ -59,6 +60,19 @@ import MaintenanceForms from "@/views/admin/forms/MaintenanceForms.vue";
 import MaintenanceTypeForms from "@/views/admin/forms/MaintenanceTypeForms.vue";
 import VerifyForms from "@/views/admin/forms/VerifyForms.vue";
 
+// Views from drivers
+import DriverVehicle from "@/views/driver/Vehicle.vue";
+import DriverFueling from "@/views/driver/Fueling.vue";
+import DriverRoute from "@/views/driver/Route.vue";
+import DriverVerify from "@/views/driver/Verify.vue";
+import DriverMaitenance from "@/views/driver/Maintenance.vue";
+
+//Views from manager
+import ManagerRouteSend from "@/views/manager/RouteSend.vue";
+
+//Views from carrier
+import CarrierRoute from "@/views/carrier/Route.vue";
+
 // views for Auth layout
 import Login from "@/views/auth/Login.vue";
 
@@ -74,144 +88,221 @@ const routes = [
       {
         path: "/admin/dashboard",
         component: Dashboard,
+        meta: { admin: true },
       },
       //Configuracion
       {
         path: "/admin/settings",
         component: Settings,
+        meta: { admin: true },
       },
       {
         path: "/admin/updatePassword",
         component: UpdatePassword,
+        meta: { admin: true },
       },
       //Usuraios
       {
         path: "/admin/admin",
         component: Admin,
+        meta: { admin: true },
       },
       {
         path: "/admin/carrier",
         component: Carrier,
+        meta: { admin: true },
       },
       {
         path: "/admin/driver",
         component: Driver,
+        meta: { admin: true },
       },
       {
         path: "/admin/guard",
         component: Guard,
+        meta: { admin: true },
       },
       {
         path: "/admin/manager",
         component: Manager,
+        meta: { admin: true },
       },
       {
         path: "/admin/addUser",
         component: UserForms,
+        meta: { admin: true },
       },
       {
         path: "/admin/updateUser",
         component: UserForms,
+        meta: { admin: true },
       },
       // Conductores
       {
         path: "/admin/addDriver",
         component: DriverForms,
+        meta: { admin: true },
       },
       {
         path: "/admin/updateDriver",
         component: DriverForms,
+        meta: { admin: true },
       },
       // paf
       {
         path: "/admin/paf",
         component: Paf,
+        meta: { admin: true },
       },
       {
         path: "/admin/addPaf",
         component: PafForms,
+        meta: { admin: true },
       },
       {
         path: "/admin/updatePaf",
         component: PafForms,
+        meta: { admin: true },
       },
       // Incidentes
       {
         path: "/admin/incident",
         component: Incident,
+        meta: { admin: true },
       },
       {
         path: "/admin/addIncident",
         component: IncidentForms,
+        meta: { admin: true },
       },
       {
         path: "/admin/updateIncident",
         component: IncidentForms,
+        meta: { admin: true },
       },
       // Vehiculos
       {
         path: "/admin/vehicle",
         component: Vehicle,
+        meta: { admin: true },
       },
       {
         path: "/admin/addVehicle",
         component: VehicleForms,
+        meta: { admin: true },
       },
       {
         path: "/admin/updateVehicle",
         component: VehicleForms,
+        meta: { admin: true },
       },
       // Fueling
       {
         path: "/admin/fueling/:id",
         component: Fueling,
+        meta: { admin: true },
       },
       {
         path: "/admin/addFueling/:id",
         component: FuelingForms,
+        meta: { admin: true },
       },
       {
         path: "/admin/updateFueling/:id",
         component: FuelingForms,
+        meta: { admin: true },
       },
       // Maintenance
       {
         path: "/admin/maintenance/:id",
         component: Maintenance,
+        meta: { admin: true },
       },
       {
         path: "/admin/addMaintenance/:id",
         component: MaintenanceForms,
+        meta: { admin: true },
       },
       {
         path: "/admin/updateMaintenance/:id",
         component: MaintenanceForms,
+        meta: { admin: true },
       },
       // Tipo de mantenimiento
       {
         path: "/admin/maintenanceType",
         component: MaintenanceType,
+        meta: { admin: true },
       },
       {
         path: "/admin/addMaintenanceType",
         component: MaintenanceTypeForms,
+        meta: { admin: true },
       },
       {
         path: "/admin/updateMaintenanceType",
         component: MaintenanceTypeForms,
+        meta: { admin: true },
       },
       // Tipo de mantenimiento
       {
         path: "/admin/verify",
         component: Verify,
+        meta: { admin: true },
       },
       {
         path: "/admin/addVerify",
         component: VerifyForms,
+        meta: { admin: true },
       },
       {
         path: "/admin/updateVerify",
         component: VerifyForms,
+        meta: { admin: true },
+      },
+      // Remesas
+      {
+        path: "/admin/remesa",
+        component: Remesa,
+        meta: { admin: true },
+      },
+      // Path driver
+      {
+        path: "/driver/vehicle",
+        component: DriverVehicle,
+        meta: { driver: true },
+      },
+      {
+        path: "/driver/fueling",
+        component: DriverFueling,
+        meta: { driver: true },
+      },
+      {
+        path: "/driver/maintenance",
+        component: DriverMaitenance,
+        meta: { driver: true },
+      },
+      {
+        path: "/driver/verify",
+        component: DriverVerify,
+        meta: { driver: true },
+      },
+      {
+        path: "/driver/route",
+        component: DriverRoute,
+        meta: { driver: true },
+      },
+      // Path manager
+      {
+        path: "/manager/route/send",
+        component: ManagerRouteSend,
+        meta: { manager: true },
+      },
+      // Path carrier
+      {
+        path: "/carrier/route",
+        component: CarrierRoute,
+        meta: { carrier: true },
       },
     ],
   },
@@ -264,7 +355,46 @@ router.beforeEach(async (to, from, next) => {
       ok = true;
     }
   }
-
+  if (store.getters["isLogin"]) {
+    if (to.matched.some((record) => record.meta.admin)) {
+      if (store.getters["type"] === "administrador") {
+        ok = true;
+      } else {
+        ok = false;
+        const paths = {
+          administrador: "/admin/dashboard",
+          conductor: "/driver/vehicle",
+          gerente: "/manager/route/send",
+          transportador: "/carrier/route",
+        };
+        path = paths[store.getters["type"]];
+      }
+    }
+    if (to.matched.some((record) => record.meta.driver)) {
+      if (store.getters["type"] === "conductor") {
+        ok = true;
+      } else {
+        ok = false;
+        path = "/";
+      }
+    }
+    if (to.matched.some((record) => record.meta.manager)) {
+      if (store.getters["type"] === "gerente") {
+        ok = true;
+      } else {
+        ok = false;
+        path = "/";
+      }
+    }
+    if (to.matched.some((record) => record.meta.carrier)) {
+      if (store.getters["type"] === "transportador") {
+        ok = true;
+      } else {
+        ok = false;
+        path = "/";
+      }
+    }
+  }
   if (ok) {
     next();
   } else {
