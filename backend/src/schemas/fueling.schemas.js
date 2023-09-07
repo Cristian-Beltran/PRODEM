@@ -26,4 +26,4 @@ export const FuelingSchema = z.object({
         required_error: "Se requiere el tipo de carretera",
     }),
     obvservations: z.string(),
-})
+});
