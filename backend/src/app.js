@@ -13,6 +13,7 @@ import fuelingRoutes from "./routes/fueling.routes.js";
 import verifyVehicleRoutes from "./routes/verifyVehicle.routes.js";
 import typeMaintenanceRoutes from "./routes/typeMaintenance.routes.js";
 import maintenanceRoutes from "./routes/maintenance.routes.js";
+import bagRoutes from "./routes/bag.routes.js";
 
 const app = express();
 //Config
@@ -46,5 +47,6 @@ app.use("/api", fuelingRoutes);
 app.use("/api", verifyVehicleRoutes);
 app.use("/api", typeMaintenanceRoutes);
 app.use("/api", maintenanceRoutes);
+app.use("/api", bagRoutes);
 
 export default app;
