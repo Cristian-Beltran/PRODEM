@@ -1,9 +1,9 @@
 import axios from "./axios";
 
-export const getMaintenanceTypesRequest = () => axios.get("/typeMaintenance");
-export const getMaintenanceTypeRequest = (id) =>
-  axios.get("/typeMaintenance/" + id);
-export const createMaintenanceTypeRequest = (incident) =>
-  axios.post("/typeMaintenance", incident);
-export const updateMaintenanceTypeRequest = (id, incident) =>
-  axios.put("/typeMaintenance/" + id, incident);
+export const getVerifysRequest = () => axios.get("/verifyVehicle");
+export const getVerifyRequest = (id) =>
+  axios.get("/verifyVehicle/" + id);
+export const createVerifyRequest = (verify) =>
+  axios.post("/verifyVehicle", verify);
+export const updateVerifyRequest = (id, verify) =>
+  axios.put("/verifyVehicle/" + id, verify);

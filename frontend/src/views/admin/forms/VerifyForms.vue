@@ -34,13 +34,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.vehicleId.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.vehicleId.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -64,20 +64,20 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.driverId.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.driverId.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
                     <option
                       v-for="item in drivers"
-                      :value="item.id"
-                      :key="item.id"
+                      :value="item.driverId"
+                      :key="item.driverId"
                     >
                       {{ item.first_name }} {{ item.last_name }}
                     </option>
@@ -94,13 +94,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.guardId.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.guardId.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -124,14 +124,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.km.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <input
                     type="number"
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.km.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   />
                 </div>
@@ -146,13 +146,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.observations.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <textarea
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.observations.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                   </textarea>
@@ -173,13 +173,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.lightParking.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.lightParking.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -200,13 +200,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.lightLow.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.lightLow.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -227,13 +227,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.lightHigh.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.lightHigh.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -254,13 +254,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.lightReverse.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.lightReverse.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -281,13 +281,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.lightTravel.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.lightTravel.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -314,13 +314,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.equipmentFlasher
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.equipmentFlasher.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -341,13 +342,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.equipmentHooter
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.equipmentHooter.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -368,13 +370,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.equipmentMailbox
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.equipmentMailbox.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -395,13 +398,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.equipmentGlass.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.equipmentGlass.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -422,13 +425,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.equipmentPI.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.equipmentPI.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -455,13 +458,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.brakeHand.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.brakeHand.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -482,13 +485,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.brakeFoot.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.brakeFoot.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -509,13 +512,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.brakeOther.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.brakeOther.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -542,13 +545,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.communicationGPS
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.communicationGPS.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -569,13 +573,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.communicationGSM
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.communicationGSM.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -596,13 +601,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData
+                      .communicationContingency.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.communicationContingency.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -629,13 +635,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.tireFR.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.tireFR.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -656,13 +662,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.tireFL.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.tireFL.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -683,13 +689,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.tireBR.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.tireBR.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -710,13 +716,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.tireBL.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.tireBL.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -737,13 +743,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.tireReplace.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.tireReplace.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -770,13 +776,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.contingenciesMask
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.contingenciesMask.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -797,13 +804,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.contingenciesOxigen
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.contingenciesOxigen.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -824,13 +832,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.contingenciesTriangles
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.contingenciesTriangles.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -851,13 +860,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.contingenciesKit
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.contingenciesKit.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -878,13 +888,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData
+                      .contingenciesExtinguisher1.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.contingenciesExtinguisher1.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -903,13 +914,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData
+                      .contingenciesExtinguisher2.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.contingenciesExtinguisher2.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -934,13 +946,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.daHydraulicjack
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.daHydraulicjack.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -961,13 +974,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.daWheelwrench.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.daWheelwrench.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -988,13 +1001,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.daSeatbelt.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.daSeatbelt.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -1015,13 +1028,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.daMirrors.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.daMirrors.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -1042,13 +1055,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.daBhorn.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.daBhorn.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -1069,13 +1082,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.daLocks.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.daLocks.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -1102,13 +1115,14 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.bulletproofdriver
+                      .$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.bulletproofdriver.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -1129,13 +1143,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.bulletproofP1.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.bulletproofP1.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -1156,13 +1170,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.bulletproofP2.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.bulletproofP2.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -1183,13 +1197,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.bulletproofG1.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.bulletproofG1.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -1210,13 +1224,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.bulletproofG2.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.bulletproofG2.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -1243,13 +1257,13 @@
                   </label>
                   <div
                     class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.model.$errors"
+                    v-for="(error, index) of v$.formData.fuel.$errors"
                     :key="index"
                   >
                     <p class="text-sm text-red-500">{{ error.$message }}</p>
                   </div>
                   <select
-                    v-model="v$.formData.driver.$model"
+                    v-model="v$.formData.fuel.$model"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   >
                     <option value="" selected>Seleccione una opcion</option>
@@ -1293,19 +1307,15 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
 
-import {
-  getDriverRequest,
-  getDriverVehicleRequest,
-  getDriversRequest,
-} from "../../../api/driver";
-import { getUserRequest, getUsersRequest } from "../../../api/user";
+import { getDriversRequest } from "../../../api/driver";
+import { getUsersRequest } from "../../../api/user";
 import { getVehiclesRequest } from "../../../api/vehicle";
 
 import {
-  createVehicleRequest,
-  uploadVehicleRequest,
-  getVehicleRequest,
-} from "../../../api/vehicle";
+  createVerifyRequest,
+  updateVerifyRequest,
+  getVerifyRequest,
+} from "../../../api/verify";
 
 export default {
   setup() {
@@ -1315,9 +1325,50 @@ export default {
   data() {
     return {
       formData: {
-        plate: "",
-        model: "",
-        driver: "",
+        vehicleId: "",
+        driverId: "",
+        guardId: "",
+        km: "",
+        lightParking: "",
+        lightLow: "",
+        lightHigh: "",
+        lightReverse: "",
+        lightTravel: "",
+        equipmentFlasher: "",
+        equipmentHooter: "",
+        equipmentMailbox: "",
+        equipmentGlass: "",
+        equipmentPI: "",
+        brakeHand: "",
+        brakeFoot: "",
+        brakeOther: "",
+        communicationGPS: "",
+        communicationGSM: "",
+        communicationContingency: "",
+        tireFR: "",
+        tireFL: "",
+        tireBR: "",
+        tireBL: "",
+        tireReplace: "",
+        contingenciesMask: "",
+        contingenciesOxigen: "",
+        contingenciesTriangles: "",
+        contingenciesKit: "",
+        contingenciesExtinguisher1: "",
+        contingenciesExtinguisher2: "",
+        daHydraulicjack: "",
+        daWheelwrench: "",
+        daSeatbelt: "",
+        daMirrors: "",
+        daBhorn: "",
+        daLocks: "",
+        bulletproofdriver: "",
+        bulletproofP1: "",
+        bulletproofP2: "",
+        bulletproofG1: "",
+        bulletproofG2: "",
+        fuel: "",
+        observations: "",
       },
       errors: [],
       drivers: [],
@@ -1329,13 +1380,136 @@ export default {
   validations() {
     return {
       formData: {
-        model: {
+        vehicleId: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        plate: {
+        driverId: {
           required: helpers.withMessage("Campo requerido", required),
         },
-        driver: {
+        guardId: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        km: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        lightParking: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        lightLow: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        lightHigh: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        lightReverse: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        lightTravel: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        equipmentFlasher: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        equipmentHooter: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        equipmentMailbox: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        equipmentGlass: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        equipmentPI: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        brakeHand: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        brakeFoot: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        brakeOther: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        communicationGPS: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        communicationGSM: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        communicationContingency: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        tireFR: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        tireFL: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        tireBR: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        tireBL: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        tireReplace: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        contingenciesMask: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        contingenciesOxigen: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        contingenciesTriangles: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        contingenciesKit: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        contingenciesExtinguisher1: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        contingenciesExtinguisher2: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        daHydraulicjack: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        daWheelwrench: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        daSeatbelt: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        daMirrors: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        daBhorn: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        daLocks: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        bulletproofdriver: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        bulletproofP1: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        bulletproofP2: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        bulletproofG1: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        bulletproofG2: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        fuel: {
+          required: helpers.withMessage("Campo requerido", required),
+        },
+        observations: {
           required: helpers.withMessage("Campo requerido", required),
         },
       },
@@ -1356,9 +1530,9 @@ export default {
         const request = async () => {
           try {
             if (!this.$route.query.id) {
-              await createVehicleRequest(this.formData);
+              await createVerifyRequest(this.formData);
             } else
-              await uploadVehicleRequest(this.$route.query.id, this.formData);
+              await updateVerifyRequest(this.$route.query.id, this.formData);
             this.$router.go(-1);
           } catch (error) {
             this.errors = error.response.data.errors;
@@ -1377,7 +1551,7 @@ export default {
     this.guards = guards.data;
     this.vehicles = vehicles.data;
     if (this.$route.query.id) {
-      const res = await getVehicleRequest(this.$route.query.id);
+      const res = await getVerifyRequest(this.$route.query.id);
       this.formData = res.data;
     }
   },
