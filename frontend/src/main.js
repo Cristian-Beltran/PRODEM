@@ -67,6 +67,10 @@ import DriverRoute from "@/views/driver/Route.vue";
 import DriverVerify from "@/views/driver/Verify.vue";
 import DriverMaitenance from "@/views/driver/Maintenance.vue";
 
+import DriverFuelingForms from "@/views/driver/forms/FuelingForms.vue";
+import DriverVerifyForms from "@/views/driver/forms/VerifyForms.vue";
+import DriverMaintenanceForms from "@/views/driver/forms/MaintenanceForms.vue";
+
 //Views from manager
 import ManagerRouteSend from "@/views/manager/RouteSend.vue";
 
@@ -278,13 +282,28 @@ const routes = [
         meta: { driver: true },
       },
       {
+        path: "/driver/addFueling",
+        component: DriverFuelingForms,
+        meta: { driver: true },
+      },
+      {
         path: "/driver/maintenance",
         component: DriverMaitenance,
         meta: { driver: true },
       },
       {
+        path: "/driver/addMaintenance",
+        component: DriverMaintenanceForms,
+        meta: { driver: true },
+      },
+      {
         path: "/driver/verify",
         component: DriverVerify,
+        meta: { driver: true },
+      },
+      {
+        path: "/driver/addVerify",
+        component: DriverVerifyForms,
         meta: { driver: true },
       },
       {

@@ -5,7 +5,8 @@ import {
   createFueling,
   updateFueling,
   getFuelingsByVehicleId,
-  getFuelingsByDriverId,
+  getFuelingsByDriver,
+  createFuelingDriver,
 } from "../controllers/fueling.controller.js";
 
 import { authRequired } from "../middlewares/validateToken.js";
@@ -30,6 +31,7 @@ router.put(
   updateFueling
 );
 
-router.get("/fueling/driver/:id", authRequired, getFuelingsByDriverId);
+router.get("/fuelingDriver", authRequired, getFuelingsByDriver);
+router.post("/fuelingDriver", authRequired,validateSchema(FuelingSchema), createFuelingDriver);
 
 export default router;

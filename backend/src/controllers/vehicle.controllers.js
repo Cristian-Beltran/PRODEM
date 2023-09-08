@@ -102,40 +102,22 @@ export const uploadPhoto = async (req, res) => {
 //get vehicle by driver
 export const getVehicleByDriver = async (req, res) => {
   try {
-    const { id } = req.params;
+    const driver = await Driver.findOne({ userId: req.user.id });
     const vehicle = await Vehicle.findOne({
-      where: { driverId: id },
-      include: [{ model: Driver }],
-      raw: true,
+      where: { driverId: driver.id },
+      include: [{ model: Driver, include: [{ model: User }] }],
     });
-
-    // Buscar el conductor por el ID
-    const driver = await Driver.findOne({
-      where: { id }
-    });
-
-    // Obtener el userId del conductor
-    const userId = driver.userId;
-
-    // Buscar al usuario por su ID
-    const user = await User.findOne({
-      where: { id: userId }
-    });
-
     const data = {
       id: vehicle.id,
       model: vehicle.model,
       plate: vehicle.plate,
       photo: `/static/${vehicle.photo}`,
-      driver: vehicle.driverId,
-      user: driver.userId,
-      driverFullName: `${user.first_name} ${user.last_name}`,
-      driverLicense: driver.license,
+      driverFullName: `${vehicle.driver.user.first_name} ${vehicle.driver.user.last_name}`,
+      driverLicense: vehicle.driver.license,
       createdAt: vehicle.createdAt,
-    }
+    };
     res.json(data);
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({
       errors: [error.message],
     });

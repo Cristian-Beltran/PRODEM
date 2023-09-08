@@ -1,5 +1,6 @@
 import axios from "./axios";
 
+// Admin
 export const getVehiclesRequest = () => axios.get("/vehicle");
 export const getVehicleRequest = (id) => axios.get("/vehicle/" + id);
 export const createVehicleRequest = (vehicle) =>
@@ -12,3 +13,6 @@ export const uploadVehicleRequest = (id, vehicle) =>
       "Content-Type": "multipart/form-data",
     },
   });
+
+// Driver
+export const getDriverVehicleRequest = () => axios.get("/vehicleDriver");

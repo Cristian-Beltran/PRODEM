@@ -2,6 +2,7 @@
 import { Fueling } from "../models/Fueling.js";
 import { Op, literal } from "sequelize";
 import { User, Driver } from "../models/User.js";
+import { Vehicle } from "../models/Vehicle.js";
 
 //get fueling
 export const getFuelings = async (req, res) => {
@@ -132,14 +133,11 @@ export const updateFueling = async (req, res) => {
   }
 };
 
-// ! error con la ejecucion de esta funcion
-//get fueling by fueling id
 export const getFuelingsByVehicleId = async (req, res) => {
   try {
     const { id } = req.params;
     const { year, month } = req.query;
 
-    console.log(req.query);
     let condition = {
       vehicleId: id,
     };
@@ -184,34 +182,88 @@ export const getFuelingsByVehicleId = async (req, res) => {
   }
 };
 
-//get all fuelings by driver id
-export const getFuelingsByDriverId = async (req, res) => {
+export const getFuelingsByDriver = async (req, res) => {
   try {
-    const { id } = req.params;
-
+    const { year, month } = req.query;
+    const driver = await Driver.findOne({ where: { userId: req.user.id } });
+    let condition = {
+      driverId: driver.id,
+    };
+    if (month != "all") {
+      condition = {
+        driverId: driver.id,
+        [Op.and]: [
+          literal(`EXTRACT(YEAR FROM "fuelings"."createdAt") = ${year}`),
+          literal(`EXTRACT(MONTH FROM "fuelings"."createdAt") = ${month}`),
+        ],
+      };
+    } else if (year) {
+      condition = {
+        driverId: driver.id,
+        [Op.and]: [
+          literal(`EXTRACT(YEAR FROM "fuelings"."createdAt") = ${year}`),
+        ],
+      };
+    }
     const fuelings = await Fueling.findAll({
-      attributes: [
-        "id",
-        "nInvoce",
-        "partialFull",
-        "price",
-        "liters",
-        "fuelType",
-        "obvservations",
-        "vehicleId",
-        "driverId",
-        "createdAt",
-      ],
-      where: {
-        driverId: id,
-      },
-      order: [["createdAt", "DESC"]],
+      where: condition,
+      include: [{ model: Driver, include: [{ model: User }] }],
     });
-
-    res.json(fuelings);
+    const modifyFuelings = fuelings.map((fueling) => ({
+      id: fueling.id,
+      nInvoce: fueling.nInvoce,
+      partialFull: fueling.partialFull,
+      price: fueling.price,
+      liters: fueling.liters,
+      fuelType: fueling.fuelType,
+      driver:
+        fueling.driver.user.first_name + " " + fueling.driver.user.last_name,
+      total: parseFloat(fueling.liters) * parseFloat(fueling.price),
+      createdAt: fueling.createdAt,
+    }));
+    res.json(modifyFuelings);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       errors: [error.message],
     });
   }
 };
+
+//create fueling
+export const createFuelingDriver = async (req, res) => {
+  try {
+    const {
+      nInvoce,
+      partialFull,
+      kmStart,
+      kmEnd,
+      price,
+      liters,
+      fuelType,
+      typeOfRoad,
+      obvservations,
+    } = req.body;
+    const driver = await Driver.findOne({ where: { userId: req.user.id } });
+    const vehicle = await Vehicle.findOne({ where: { driverId: driver.id } });
+    await Fueling.create({
+      nInvoce,
+      partialFull,
+      kmStart,
+      kmEnd,
+      price,
+      liters,
+      fuelType,
+      typeOfRoad,
+      obvservations,
+      driverId: driver.id,
+      vehicleId: vehicle.id,
+    });
+    return res.sendStatus(204);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ errors: [error] });
+  }
+};
+
+

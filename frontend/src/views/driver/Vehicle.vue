@@ -11,7 +11,7 @@
         </div>
         <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
           <h5 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-            Infomacion de Vehiculo
+            Vehiculo asignado
           </h5>
 
           <div class="flex flex-wrap">
@@ -33,6 +33,9 @@
                   <strong>Conductor asignado:</strong>
                   {{ vehicle.driverFullName }}
                   <br />
+                  <strong>Licencia:</strong>
+                  {{ vehicle.driverLicense }}
+                  <br />
                 </p>
               </div>
             </div>
@@ -44,19 +47,12 @@
 </template>
 
 <script>
-import { getVehicleRequest } from "../../api/vehicle";
-import { getMaintenancesByVehicleRequest } from "../../api/maintenance";
+import { getDriverVehicleRequest } from "../../api/vehicle";
 import axios from "../../api/axios";
 
 export default {
   data() {
     return {
-      viewVehicle: false,
-      uploadVehicle: false,
-      items: [],
-      itemsDisplay: [],
-      itemsPerPage: 10,
-      searchQuery: "",
       status: "all",
       color: "light",
       load: true,
@@ -69,7 +65,7 @@ export default {
   methods: {
     async getDataVehicle() {
       try {
-        const res = await getVehicleRequest(this.$route.params.id);
+        const res = await getDriverVehicleRequest();
         this.vehicle = res.data;
         this.vehicle.photo = axios.defaults.baseURL + this.vehicle.photo;
       } catch (error) {

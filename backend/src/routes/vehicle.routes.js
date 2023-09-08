@@ -34,6 +34,6 @@ router.put(
 router.post("/vehicle/photo/:id", authRequired, uploadImage, uploadPhoto);
 
 // Get vehicle by drive
-router.get("/vehicle/driver/:id", authRequired, getVehicleByDriver);
+router.get("/vehicleDriver", authRequired, getVehicleByDriver);
 
 export default router;
