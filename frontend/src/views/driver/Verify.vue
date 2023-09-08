@@ -56,7 +56,7 @@
             />
           </form>
           <div class="relative flex flex-wrap items-stretch mb-3">
-            <router-link to="/admin/addVerify" v-slot="{ href, navigate }">
+            <router-link to="/driver/addVerify" v-slot="{ href, navigate }">
               <a :href="href" @click="navigate">
                 <button
                   class="bg-grayBlue-800 text-sm border border-gray-300 px-2 py-2 rounded-md"
@@ -116,7 +116,9 @@
                 {{ verifyData.createdAt }}
               </p>
               <p><strong>kilometraje:</strong> {{ verifyData.km }} [km]</p>
-              <p><strong>Tanque de combustible:</strong> {{ verifyData.fuel }} </p>
+              <p>
+                <strong>Tanque de combustible:</strong> {{ verifyData.fuel }}
+              </p>
               <p>
                 <strong>Observacione:</strong> {{ verifyData.observations }}
               </p>
@@ -272,23 +274,23 @@
             <div class="text-gray-800">
               <p>
                 <strong>Conductor:</strong>
-                {{ verifyData.bulletproofdriver}}
+                {{ verifyData.bulletproofdriver }}
               </p>
               <p>
                 <strong>Porta valor 1:</strong>
-                {{ verifyData.bulletproofP1}}
+                {{ verifyData.bulletproofP1 }}
               </p>
               <p>
                 <strong>Porta valor 2:</strong>
-                {{ verifyData.bulletproofP2}}
+                {{ verifyData.bulletproofP2 }}
               </p>
               <p>
                 <strong>Guardia 1:</strong>
-                {{ verifyData.bulletproofG1}}
+                {{ verifyData.bulletproofG1 }}
               </p>
               <p>
                 <strong>Guardia 2:</strong>
-                {{ verifyData.bulletproofG2}}
+                {{ verifyData.bulletproofG2 }}
               </p>
             </div>
           </div>
@@ -311,7 +313,7 @@
 <script>
 import Table from "@/components/Tables/Table.vue";
 import { VueFinalModal } from "vue-final-modal";
-import { getVerifyRequest, getVerifysRequest } from "../../api/verify";
+import { getVerifyRequest, getVerifysDriverRequest } from "../../api/verify";
 
 export default {
   data() {
@@ -332,10 +334,7 @@ export default {
         { key: "guard", label: "Guardia" },
         { key: "createdAt", label: "Creado", date: true },
       ],
-      options: [
-        { id: "update", name: "Actualizar", icon: "fas fa-plus" },
-        { id: "view", name: "Ver", icon: "fas fa-eye" },
-      ],
+      options: [{ id: "view", name: "Ver", icon: "fas fa-eye" }],
     };
   },
   components: {
@@ -354,7 +353,7 @@ export default {
     async loadData() {
       this.load = true;
       try {
-        const res = await getVerifysRequest();
+        const res = await getVerifysDriverRequest();
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;
@@ -366,16 +365,13 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          (item.first_name
+          (item.vehicle
             .toLowerCase()
             .includes(this.searchQuery.toLowerCase()) ||
-            item.last_name
+            item.driver
               .toLowerCase()
               .includes(this.searchQuery.toLowerCase()) ||
-            item.username
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()) ||
-            item.email
+            item.guard
               .toLowerCase()
               .includes(this.searchQuery.toLowerCase())) &&
           (this.status === "all" || item.status == this.status)
@@ -397,12 +393,7 @@ export default {
       return dateFormat;
     },
     async action(action) {
-      if (action.action === "update") {
-        this.$router.push({
-          path: "/admin/updateVerify",
-          query: { id: action.id },
-        });
-      } else if (action.action === "view") {
+      if (action.action === "view") {
         const res = await getVerifyRequest(action.id);
         this.verifyData = res.data;
         this.verifyData.createdAt = this.date(this.verifyData.createdAt);

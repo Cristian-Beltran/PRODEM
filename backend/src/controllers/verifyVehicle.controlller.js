@@ -19,7 +19,6 @@ export const getVerifyVehicles = async (req, res) => {
         },
       ],
     });
-    // Formatear los resultados antes de enviarlos
     const formattedVerifyVehicles = verifyVehicles.map((verifyVehicles) => ({
       id: verifyVehicles.id,
       km: verifyVehicles.km,
@@ -38,7 +37,6 @@ export const getVerifyVehicles = async (req, res) => {
   }
 };
 
-//get verifyVehicle by id
 export const getVerifyVehicle = async (req, res) => {
   try {
     const { id } = req.params;
@@ -106,11 +104,11 @@ export const getVerifyVehicle = async (req, res) => {
       fuel: verifyVehicles.fuel,
       observations: verifyVehicles.observations,
       driverId: verifyVehicles.driverId,
-      driverName:`${verifyVehicles.driver.user.first_name} ${verifyVehicles.driver.user.last_name}`, 
+      driverName: `${verifyVehicles.driver.user.first_name} ${verifyVehicles.driver.user.last_name}`,
       guardId: verifyVehicles.guardId,
-      guardName:`${verifyVehicles.user.first_name} ${verifyVehicles.user.last_name}`, 
+      guardName: `${verifyVehicles.user.first_name} ${verifyVehicles.user.last_name}`,
       vehicleId: verifyVehicles.vehicleId,
-      vehicleName:`${verifyVehicles.vehicle.model} ${verifyVehicles.vehicle.plate}`, 
+      vehicleName: `${verifyVehicles.vehicle.model} ${verifyVehicles.vehicle.plate}`,
     };
 
     res.json(data);
@@ -330,300 +328,142 @@ export const updateVerifyVehicle = async (req, res) => {
   }
 };
 
-//get verifyVehicle by vehicle id
-export const getVerifyVehicleByVehicleId = async (req, res) => {
+export const getVerifyVehicleDriver = async (req, res) => {
   try {
-    const { id } = req.params;
-    const verifyVehicles = await VerifyVehicle.findOne({
-      where: { vehicleId: id },
-      include: [{ model: User }, { model: Driver }, { model: Vehicle }],
-      raw: true,
+    const driver = await Driver.findOne({ where: { userId: req.user.id } });
+    const verifyVehicles = await VerifyVehicle.findAll({
+      where: { driverId: driver.id },
+      include: [
+        {
+          model: Driver,
+          include: [{ model: User }],
+        },
+        {
+          model: User,
+        },
+        {
+          model: Vehicle,
+        },
+      ],
     });
-
-    const driverId = verifyVehicles.driverId;
-    const guardId = verifyVehicles.guardId;
-    const vehicleId = verifyVehicles.vehicleId;
-
-    // Buscar el conductor por el ID
-    const driver = await Driver.findOne({
-      where: { id: driverId },
-    });
-
-    // Obtener el userId del conductor
-    const userId = driver.userId;
-
-    // Buscar al usuario/driver por su ID
-    const user = await User.findOne({
-      where: { id: userId },
-    });
-
-    // Buscar guardia por ID
-    const guard = await User.findOne({
-      where: { id: guardId },
-    });
-
-    // Buscar vehiculo por ID
-    const vehicle = await Vehicle.findOne({
-      where: { id: vehicleId },
-    });
-
-    // Formatear los resultados antes de enviarlos
-    const data = {
+    const formattedVerifyVehicles = verifyVehicles.map((verifyVehicles) => ({
       id: verifyVehicles.id,
-      nInvoce: verifyVehicles.nInvoce,
-      detail: verifyVehicles.detail,
-      amount: verifyVehicles.amount,
-      createdAt: verifyVehicles.createdAt,
       km: verifyVehicles.km,
-      lightParking: verifyVehicles.lightParking,
-      lightLow: verifyVehicles.lightLow,
-      lightHigh: verifyVehicles.lightHigh,
-      lightReverse: verifyVehicles.lightReverse,
-      lightTravel: verifyVehicles.lightTravel,
-      equipmentFlasher: verifyVehicles.equipmentFlasher,
-      equipmentHooter: verifyVehicles.equipmentHooter,
-      equipmentMailbox: verifyVehicles.equipmentMailbox,
-      equipmentGlass: verifyVehicles.equipmentGlass,
-      equipmentPI: verifyVehicles.equipmentPI,
-      brakeHand: verifyVehicles.brakeHand,
-      brakeFoot: verifyVehicles.brakeFoot,
-      brakeOther: verifyVehicles.brakeOther,
-      communicationGPS: verifyVehicles.communicationGPS,
-      communicationGSM: verifyVehicles.communicationGSM,
-      communicationContingency: verifyVehicles.communicationContingency,
-      tireFR: verifyVehicles.tireFR,
-      tireFL: verifyVehicles.tireFL,
-      tireBR: verifyVehicles.tireBR,
-      tireBL: verifyVehicles.tireBL,
-      tireReplace: verifyVehicles.tireReplace,
-      contingenciesMask: verifyVehicles.contingenciesMask,
-      contingenciesOxigen: verifyVehicles.contingenciesOxigen,
-      contingenciesTriangles: verifyVehicles.contingenciesTriangles,
-      contingenciesKit: verifyVehicles.contingenciesKit,
-      contingenciesExtinguisher1: verifyVehicles.contingenciesExtinguisher1,
-      contingenciesExtinguisher2: verifyVehicles.contingenciesExtinguisher2,
-      daHydraulicjack: verifyVehicles.daHydraulicjack,
-      daWheelwrench: verifyVehicles.daWheelwrench,
-      daSeatbelt: verifyVehicles.daSeatbelt,
-      daMirrors: verifyVehicles.daMirrors,
-      daBhorn: verifyVehicles.daBhorn,
-      daLocks: verifyVehicles.daLocks,
-      bulletproofdriver: verifyVehicles.bulletproofdriver,
-      bulletproofP1: verifyVehicles.bulletproofP1,
-      bulletproofP2: verifyVehicles.bulletproofP2,
-      bulletproofG1: verifyVehicles.bulletproofG1,
-      bulletproofG2: verifyVehicles.bulletproofG2,
-      fuel: verifyVehicles.fuel,
       observations: verifyVehicles.observations,
-      driver: `${user.first_name} ${user.last_name}`,
-      driverLicense: driver.license,
-      guard: `${guard.first_name} ${guard.last_name}`,
-      vehicleModel: vehicle.model,
-      vehiclePlate: vehicle.plate,
-    };
-
-    res.json(data);
+      driver: `${verifyVehicles.driver.user.first_name} ${verifyVehicles.driver.user.last_name}`,
+      guard: `${verifyVehicles.user.first_name} ${verifyVehicles.user.last_name}`,
+      vehicle: `${verifyVehicles.vehicle.model} ${verifyVehicles.vehicle.model}`,
+      createdAt: verifyVehicles.createdAt,
+    }));
+    res.json(formattedVerifyVehicles);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       errors: [error.message],
     });
   }
 };
 
-//get verifyVehicle by driver id
-export const getVerifyVehicleByDriverId = async (req, res) => {
+//create verifyVehicle
+export const createVerifyVehicleDriver = async (req, res) => {
   try {
-    const { id } = req.params;
-    const verifyVehicles = await VerifyVehicle.findOne({
-      where: { driverId: id },
-      include: [{ model: User }, { model: Driver }, { model: Vehicle }],
-      raw: true,
+    const {
+      guardId,
+      km,
+      lightParking,
+      lightLow,
+      lightHigh,
+      lightReverse,
+      lightTravel,
+      equipmentFlasher,
+      equipmentHooter,
+      equipmentMailbox,
+      equipmentGlass,
+      equipmentPI,
+      brakeHand,
+      brakeFoot,
+      brakeOther,
+      communicationGPS,
+      communicationGSM,
+      communicationContingency,
+      tireFR,
+      tireFL,
+      tireBR,
+      tireBL,
+      tireReplace,
+      contingenciesMask,
+      contingenciesOxigen,
+      contingenciesTriangles,
+      contingenciesKit,
+      contingenciesExtinguisher1,
+      contingenciesExtinguisher2,
+      daHydraulicjack,
+      daWheelwrench,
+      daSeatbelt,
+      daMirrors,
+      daBhorn,
+      daLocks,
+      bulletproofdriver,
+      bulletproofP1,
+      bulletproofP2,
+      bulletproofG1,
+      bulletproofG2,
+      fuel,
+      observations,
+    } = req.body;
+
+    const driver = await Driver.findOne({ where: { userId: req.user.id } });
+    const vehicle = await Vehicle.findOne({ where: { driverId: driver.id } });
+    await VerifyVehicle.create({
+      driverId: driver.id,
+      vehicleId: vehicle.id,
+      guardId,
+      km,
+      lightParking,
+      lightLow,
+      lightHigh,
+      lightReverse,
+      lightTravel,
+      equipmentFlasher,
+      equipmentHooter,
+      equipmentMailbox,
+      equipmentGlass,
+      equipmentPI,
+      brakeHand,
+      brakeFoot,
+      brakeOther,
+      communicationGPS,
+      communicationGSM,
+      communicationContingency,
+      tireFR,
+      tireFL,
+      tireBR,
+      tireBL,
+      tireReplace,
+      contingenciesMask,
+      contingenciesOxigen,
+      contingenciesTriangles,
+      contingenciesKit,
+      contingenciesExtinguisher1,
+      contingenciesExtinguisher2,
+      daHydraulicjack,
+      daWheelwrench,
+      daSeatbelt,
+      daMirrors,
+      daBhorn,
+      daLocks,
+      bulletproofdriver,
+      bulletproofP1,
+      bulletproofP2,
+      bulletproofG1,
+      bulletproofG2,
+      fuel,
+      observations,
     });
 
-    const driverId = verifyVehicles.driverId;
-    const guardId = verifyVehicles.guardId;
-    const vehicleId = verifyVehicles.vehicleId;
-
-    // Buscar el conductor por el ID
-    const driver = await Driver.findOne({
-      where: { id: driverId },
-    });
-
-    // Obtener el userId del conductor
-    const userId = driver.userId;
-
-    // Buscar al usuario/driver por su ID
-    const user = await User.findOne({
-      where: { id: userId },
-    });
-
-    // Buscar guardia por ID
-    const guard = await User.findOne({
-      where: { id: guardId },
-    });
-
-    // Buscar vehiculo por ID
-    const vehicle = await Vehicle.findOne({
-      where: { id: vehicleId },
-    });
-
-    // Formatear los resultados antes de enviarlos
-    const data = {
-      id: verifyVehicles.id,
-      nInvoce: verifyVehicles.nInvoce,
-      detail: verifyVehicles.detail,
-      amount: verifyVehicles.amount,
-      createdAt: verifyVehicles.createdAt,
-      km: verifyVehicles.km,
-      lightParking: verifyVehicles.lightParking,
-      lightLow: verifyVehicles.lightLow,
-      lightHigh: verifyVehicles.lightHigh,
-      lightReverse: verifyVehicles.lightReverse,
-      lightTravel: verifyVehicles.lightTravel,
-      equipmentFlasher: verifyVehicles.equipmentFlasher,
-      equipmentHooter: verifyVehicles.equipmentHooter,
-      equipmentMailbox: verifyVehicles.equipmentMailbox,
-      equipmentGlass: verifyVehicles.equipmentGlass,
-      equipmentPI: verifyVehicles.equipmentPI,
-      brakeHand: verifyVehicles.brakeHand,
-      brakeFoot: verifyVehicles.brakeFoot,
-      brakeOther: verifyVehicles.brakeOther,
-      communicationGPS: verifyVehicles.communicationGPS,
-      communicationGSM: verifyVehicles.communicationGSM,
-      communicationContingency: verifyVehicles.communicationContingency,
-      tireFR: verifyVehicles.tireFR,
-      tireFL: verifyVehicles.tireFL,
-      tireBR: verifyVehicles.tireBR,
-      tireBL: verifyVehicles.tireBL,
-      tireReplace: verifyVehicles.tireReplace,
-      contingenciesMask: verifyVehicles.contingenciesMask,
-      contingenciesOxigen: verifyVehicles.contingenciesOxigen,
-      contingenciesTriangles: verifyVehicles.contingenciesTriangles,
-      contingenciesKit: verifyVehicles.contingenciesKit,
-      contingenciesExtinguisher1: verifyVehicles.contingenciesExtinguisher1,
-      contingenciesExtinguisher2: verifyVehicles.contingenciesExtinguisher2,
-      daHydraulicjack: verifyVehicles.daHydraulicjack,
-      daWheelwrench: verifyVehicles.daWheelwrench,
-      daSeatbelt: verifyVehicles.daSeatbelt,
-      daMirrors: verifyVehicles.daMirrors,
-      daBhorn: verifyVehicles.daBhorn,
-      daLocks: verifyVehicles.daLocks,
-      bulletproofdriver: verifyVehicles.bulletproofdriver,
-      bulletproofP1: verifyVehicles.bulletproofP1,
-      bulletproofP2: verifyVehicles.bulletproofP2,
-      bulletproofG1: verifyVehicles.bulletproofG1,
-      bulletproofG2: verifyVehicles.bulletproofG2,
-      fuel: verifyVehicles.fuel,
-      observations: verifyVehicles.observations,
-      driver: `${user.first_name} ${user.last_name}`,
-      driverLicense: driver.license,
-      guard: `${guard.first_name} ${guard.last_name}`,
-      vehicleModel: vehicle.model,
-      vehiclePlate: vehicle.plate,
-    };
-
-    res.json(data);
+    res.sendStatus(204);
   } catch (error) {
-    res.status(500).json({
-      errors: [error.message],
-    });
-  }
-};
-
-//get verifyVehicle by guard id
-export const getVerifyVehicleByGuardId = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const verifyVehicles = await VerifyVehicle.findOne({
-      where: { guardId: id },
-      include: [{ model: User }, { model: Driver }, { model: Vehicle }],
-      raw: true,
-    });
-
-    const driverId = verifyVehicles.driverId;
-    const guardId = verifyVehicles.guardId;
-    const vehicleId = verifyVehicles.vehicleId;
-
-    // Buscar el conductor por el ID
-    const driver = await Driver.findOne({
-      where: { id: driverId },
-    });
-
-    // Obtener el userId del conductor
-    const userId = driver.userId;
-
-    // Buscar al usuario/driver por su ID
-    const user = await User.findOne({
-      where: { id: userId },
-    });
-
-    // Buscar guardia por ID
-    const guard = await User.findOne({
-      where: { id: guardId },
-    });
-
-    // Buscar vehiculo por ID
-    const vehicle = await Vehicle.findOne({
-      where: { id: vehicleId },
-    });
-
-    // Formatear los resultados antes de enviarlos
-    const data = {
-      id: verifyVehicles.id,
-      nInvoce: verifyVehicles.nInvoce,
-      detail: verifyVehicles.detail,
-      amount: verifyVehicles.amount,
-      createdAt: verifyVehicles.createdAt,
-      km: verifyVehicles.km,
-      lightParking: verifyVehicles.lightParking,
-      lightLow: verifyVehicles.lightLow,
-      lightHigh: verifyVehicles.lightHigh,
-      lightReverse: verifyVehicles.lightReverse,
-      lightTravel: verifyVehicles.lightTravel,
-      equipmentFlasher: verifyVehicles.equipmentFlasher,
-      equipmentHooter: verifyVehicles.equipmentHooter,
-      equipmentMailbox: verifyVehicles.equipmentMailbox,
-      equipmentGlass: verifyVehicles.equipmentGlass,
-      equipmentPI: verifyVehicles.equipmentPI,
-      brakeHand: verifyVehicles.brakeHand,
-      brakeFoot: verifyVehicles.brakeFoot,
-      brakeOther: verifyVehicles.brakeOther,
-      communicationGPS: verifyVehicles.communicationGPS,
-      communicationGSM: verifyVehicles.communicationGSM,
-      communicationContingency: verifyVehicles.communicationContingency,
-      tireFR: verifyVehicles.tireFR,
-      tireFL: verifyVehicles.tireFL,
-      tireBR: verifyVehicles.tireBR,
-      tireBL: verifyVehicles.tireBL,
-      tireReplace: verifyVehicles.tireReplace,
-      contingenciesMask: verifyVehicles.contingenciesMask,
-      contingenciesOxigen: verifyVehicles.contingenciesOxigen,
-      contingenciesTriangles: verifyVehicles.contingenciesTriangles,
-      contingenciesKit: verifyVehicles.contingenciesKit,
-      contingenciesExtinguisher1: verifyVehicles.contingenciesExtinguisher1,
-      contingenciesExtinguisher2: verifyVehicles.contingenciesExtinguisher2,
-      daHydraulicjack: verifyVehicles.daHydraulicjack,
-      daWheelwrench: verifyVehicles.daWheelwrench,
-      daSeatbelt: verifyVehicles.daSeatbelt,
-      daMirrors: verifyVehicles.daMirrors,
-      daBhorn: verifyVehicles.daBhorn,
-      daLocks: verifyVehicles.daLocks,
-      bulletproofdriver: verifyVehicles.bulletproofdriver,
-      bulletproofP1: verifyVehicles.bulletproofP1,
-      bulletproofP2: verifyVehicles.bulletproofP2,
-      bulletproofG1: verifyVehicles.bulletproofG1,
-      bulletproofG2: verifyVehicles.bulletproofG2,
-      fuel: verifyVehicles.fuel,
-      observations: verifyVehicles.observations,
-      driver: `${user.first_name} ${user.last_name}`,
-      driverLicense: driver.license,
-      guard: `${guard.first_name} ${guard.last_name}`,
-      vehicleModel: vehicle.model,
-      vehiclePlate: vehicle.plate,
-    };
-
-    res.json(data);
-  } catch (error) {
+    console.log(error);
     res.status(500).json({
       errors: [error.message],
     });

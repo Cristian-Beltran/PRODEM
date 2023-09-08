@@ -151,3 +151,72 @@ export const getMaintenancesByVehicleId = async (req, res) => {
     });
   }
 };
+
+export const getMaintenancesByDriver = async (req, res) => {
+  try {
+    const { year, month } = req.query;
+    const driver = await Driver.findOne({ where: { userId: req.user.id } });
+    const vehicle = await Vehicle.findOne({ where: { driverId: driver.id } });
+    let condition = {
+      vehicleId: vehicle.id,
+    };
+    if (month != "all") {
+      condition = {
+        vehicleId: vehicle.id,
+        [Op.and]: [
+          literal(`EXTRACT(YEAR FROM "maintenances"."createdAt") = ${year}`),
+          literal(`EXTRACT(MONTH FROM "maintenances"."createdAt") = ${month}`),
+        ],
+      };
+    } else if (year) {
+      condition = {
+        vehicleId: vehicle.id,
+        [Op.and]: [
+          literal(`EXTRACT(YEAR FROM "maintenances"."createdAt") = ${year}`),
+        ],
+      };
+    }
+    const maintenances = await Maintenance.findAll({
+      where: condition,
+      include: [{ model: TypeMaintenances }],
+    });
+
+    const modifyMaintenances = maintenances.map((maintenance) => ({
+      id: maintenance.id,
+      nInvoce: maintenance.nInvoce,
+      detail: maintenance.detail,
+      amount: maintenance.amount,
+      createdAt: maintenance.createdAt,
+      typeMaintenanceName: maintenance.typeMaintenance
+        ? maintenance.typeMaintenance.name
+        : null,
+    }));
+    res.json(modifyMaintenances);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
+};
+
+//create maintenance
+export const createMaintenanceDriver = async (req, res) => {
+  try {
+    const { nInvoce, detail, amount, typeMaintenanceId } = req.body;
+    const driver = await Driver.findOne({ where: { userId: req.user.id } });
+    const vehicle = await Vehicle.findOne({ where: { driverId: driver.id } });
+    await Maintenance.create({
+      nInvoce,
+      detail,
+      amount,
+      typeMaintenanceId,
+      vehicleId: vehicle.id,
+    });
+    return res.sendStatus(204);
+  } catch (error) {
+    res.status(500).json({
+      errors: [error.message],
+    });
+  }
+};

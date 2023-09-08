@@ -11,3 +11,9 @@ export const updateMaintenanceRequest = (id, maintenance) =>
 
 export const getMaintenancesByVehicleRequest = (id, query) =>
   axios.get("/maintenance/vehicle/" + id + "/?" + query);
+
+export const getMaintenancesByDriverRequest = (query) =>
+  axios.get("/maintenanceDriver/?" + query);
+
+export const createMaintenanceDriverRequest = (maintenance) =>
+  axios.post("/maintenanceDriver", maintenance);

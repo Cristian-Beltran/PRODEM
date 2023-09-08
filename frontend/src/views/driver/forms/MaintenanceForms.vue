@@ -158,9 +158,7 @@ import { required, helpers } from "@vuelidate/validators";
 import { getMaintenanceTypesRequest } from "../../../api/maintenanceType";
 
 import {
-  createMaintenanceRequest,
-  updateMaintenanceRequest,
-  getMaintenanceRequest,
+  createMaintenanceDriverRequest
 } from "../../../api/maintenance";
 
 export default {
@@ -175,7 +173,6 @@ export default {
         detail: "",
         amount: "",
         typeMaintenanceId: "",
-        vehicleId: "",
       },
       errors: [],
       typeMaintenances: [],
@@ -214,14 +211,7 @@ export default {
       if (!this.v$.$invalid) {
         const request = async () => {
           try {
-            if (!this.$route.query.id) {
-              this.formData.vehicleId = this.$route.params.id;
-              await createMaintenanceRequest(this.formData);
-            } else
-              await updateMaintenanceRequest(
-                this.$route.query.id,
-                this.formData
-              );
+            await createMaintenanceDriverRequest(this.formData);
             this.$router.go(-1);
           } catch (error) {
             this.errors = error.response.data.errors;
@@ -234,11 +224,7 @@ export default {
   },
   async created() {
     const res = await getMaintenanceTypesRequest();
-    this.typeMaintenances= res.data;
-    if (this.$route.query.id) {
-      const res = await getMaintenanceRequest(this.$route.query.id);
-      this.formData = res.data;
-    }
+    this.typeMaintenances = res.data;
   },
 };
 </script>

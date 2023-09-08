@@ -366,16 +366,13 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          (item.first_name
+          (item.vehicle
             .toLowerCase()
             .includes(this.searchQuery.toLowerCase()) ||
-            item.last_name
+            item.driver
               .toLowerCase()
               .includes(this.searchQuery.toLowerCase()) ||
-            item.username
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()) ||
-            item.email
+            item.guard
               .toLowerCase()
               .includes(this.searchQuery.toLowerCase())) &&
           (this.status === "all" || item.status == this.status)

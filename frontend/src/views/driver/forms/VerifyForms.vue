@@ -30,66 +30,6 @@
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Vehiculo
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.vehicleId.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <select
-                    v-model="v$.formData.vehicleId.$model"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  >
-                    <option value="" selected>Seleccione una opcion</option>
-                    <option
-                      v-for="item in vehicles"
-                      :value="item.id"
-                      :key="item.id"
-                    >
-                      {{ item.model }} {{ item.plate }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Conductor
-                  </label>
-                  <div
-                    class="p-1 mb-1"
-                    v-for="(error, index) of v$.formData.driverId.$errors"
-                    :key="index"
-                  >
-                    <p class="text-sm text-red-500">{{ error.$message }}</p>
-                  </div>
-                  <select
-                    v-model="v$.formData.driverId.$model"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  >
-                    <option value="" selected>Seleccione una opcion</option>
-                    <option
-                      v-for="item in drivers"
-                      :value="item.driverId"
-                      :key="item.driverId"
-                    >
-                      {{ item.first_name }} {{ item.last_name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="w-full lg:w-6/12 px-4">
-                <div class="relative w-full mb-3">
-                  <label
-                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
                     Guardia
                   </label>
                   <div
@@ -1307,15 +1247,9 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
 
-import { getDriversRequest } from "../../../api/driver";
 import { getUsersRequest } from "../../../api/user";
-import { getVehiclesRequest } from "../../../api/vehicle";
 
-import {
-  createVerifyRequest,
-  updateVerifyRequest,
-  getVerifyRequest,
-} from "../../../api/verify";
+import { createVerifyDriverRequest } from "../../../api/verify";
 
 export default {
   setup() {
@@ -1325,8 +1259,6 @@ export default {
   data() {
     return {
       formData: {
-        vehicleId: "",
-        driverId: "",
         guardId: "",
         km: "",
         lightParking: "",
@@ -1380,12 +1312,6 @@ export default {
   validations() {
     return {
       formData: {
-        vehicleId: {
-          required: helpers.withMessage("Campo requerido", required),
-        },
-        driverId: {
-          required: helpers.withMessage("Campo requerido", required),
-        },
         guardId: {
           required: helpers.withMessage("Campo requerido", required),
         },
@@ -1529,10 +1455,7 @@ export default {
       if (!this.v$.$invalid) {
         const request = async () => {
           try {
-            if (!this.$route.query.id) {
-              await createVerifyRequest(this.formData);
-            } else
-              await updateVerifyRequest(this.$route.query.id, this.formData);
+            await createVerifyDriverRequest(this.formData);
             this.$router.go(-1);
           } catch (error) {
             this.errors = error.response.data.errors;
@@ -1544,12 +1467,8 @@ export default {
     },
   },
   async created() {
-    const drivers = await getDriversRequest();
     const guards = await getUsersRequest("guardia");
-    const vehicles = await getVehiclesRequest();
-    this.drivers = drivers.data;
     this.guards = guards.data;
-    this.vehicles = vehicles.data;
     if (this.$route.query.id) {
       const res = await getVerifyRequest(this.$route.query.id);
       this.formData = res.data;
