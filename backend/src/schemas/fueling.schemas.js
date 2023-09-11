@@ -13,9 +13,13 @@ export const FuelingSchema = z.object({
     kmEnd: z.number({
         required_error: "Se requiere el kilometraje final",
     }),
-    price: z.number({
-        required_error: "Se requiere el monto total del abastecimiento",
-    }),
+    price: z
+        .number({
+            required_error: "Se requiere el monto total del abastecimiento",
+        })
+        .max(9999999, {
+            message: "Ingrese un precio válido"
+        }),
     liters: z.number({
         required_error: "Se requiere la cantidad de combustible en litros",
     }),

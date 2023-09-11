@@ -14,6 +14,12 @@ export const DriverSchema = z.object({
     })
     .min(4, {
       message: "El nombre debe tener al menos 4 caracteres",
+    })
+    .max(15, {
+      message: "El nombre debe tener como máximo 15 caracteres",
+    })
+    .regex(/^[a-zA-ZÀÁÉÍÓÚÑ]+$/, {
+      message: "El nombre solo puede contener letras",
     }),
   last_name: z
     .string({
@@ -21,6 +27,12 @@ export const DriverSchema = z.object({
     })
     .min(4, {
       message: "El apellido debe tener al menos 4 caracteres",
+    })
+    .max(15, {
+      message: "El nombre debe tener como máximo 15 caracteres",
+    })
+    .regex(/^[a-zA-ZÀÁÉÍÓÚÑ]+$/, {
+      message: "El nombre solo puede contener letras",
     }),
   ci: z
     .string({
@@ -28,11 +40,17 @@ export const DriverSchema = z.object({
     })
     .min(4, {
       message: "El ci debe tener al menos 6 caracteres",
+    })
+    .max(15, {
+      message: "El CI debe tener como máximo 15 caracteres",
     }),
   address: z.string(),
   telf: z.number(),
   license: z.string({
-    required_error: "La licensia es requerida",
+    required_error: "La licencia es requerida",
+  })
+  .max(12, {
+    message: "La licencia debe tener como máximo 12 caracteres",
   }),
   username: z.string({
     required_error: "Se requiere un nombre de usuario",
