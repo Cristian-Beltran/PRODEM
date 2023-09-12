@@ -11,11 +11,13 @@ export const Route = sequelize.define("routes", {
   },
   kmStart: {
     type: DataTypes.INTEGER,
-    requierd: true,
   },
   kmEnd: {
     type: DataTypes.INTEGER,
-    required: true,
+  },
+  complete: {
+    type: DataTypes.BOOLEAN,
+    default: false,
   },
 });
 
@@ -27,6 +29,7 @@ User.hasMany(Route, {
 
 Route.belongsTo(User, {
   foreignKey: "guard1",
+  as: "Guard1",
   targetKey: "id",
 });
 // Guard 2
@@ -37,8 +40,33 @@ User.hasMany(Route, {
 
 Route.belongsTo(User, {
   foreignKey: "guard2",
+  as: "Guard2",
   targetKey: "id",
 });
+
+// carrier 1
+User.hasMany(Route, {
+  foreignKey: "carriesValue1",
+  sourceKey: "id",
+});
+
+Route.belongsTo(User, {
+  foreignKey: "carriesValue1",
+  as: "CarriesValue1",
+  targetKey: "id",
+});
+// carrier 2
+User.hasMany(Route, {
+  foreignKey: "carriesValue2",
+  sourceKey: "id",
+});
+
+Route.belongsTo(User, {
+  foreignKey: "carriesValue2",
+  as: "CarriesValue2",
+  targetKey: "id",
+});
+
 // driver
 Driver.hasMany(Route, {
   foreignKey: "driverId",
@@ -49,6 +77,7 @@ Route.belongsTo(Driver, {
   foreignKey: "driverId",
   targetKey: "id",
 });
+
 // vehicle
 Vehicle.hasMany(Route, {
   foreignKey: "vehicleId",

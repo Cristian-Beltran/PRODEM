@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db.js";
 import { User } from "./User.js";
+import { Route } from "./Route.js";
 import { Paf } from "./Paf.js";
 
 export const Remesa = sequelize.define("remesa", {
@@ -47,6 +48,7 @@ User.hasMany(Remesa, {
 
 Remesa.belongsTo(User, {
   foreignKey: "carriesValue1",
+  as: "CarriesValue1",
   targetKey: "id",
 });
 
@@ -58,6 +60,7 @@ User.hasMany(Remesa, {
 
 Remesa.belongsTo(User, {
   foreignKey: "carriesValue2",
+  as: "CarriesValue2",
   targetKey: "id",
 });
 
@@ -69,6 +72,7 @@ Paf.hasMany(Remesa, {
 
 Remesa.belongsTo(Paf, {
   foreignKey: "sender",
+  as: "Sender",
   targetKey: "id",
 });
 // Paf addressee
@@ -79,11 +83,17 @@ Paf.hasMany(Remesa, {
 
 Remesa.belongsTo(Paf, {
   foreignKey: "addressee",
+  as: "Addressee",
   targetKey: "id",
 });
 
 // Routes
+Route.hasMany(Remesa, {
+  foreignKey: "routeId",
+  targetKey: "id",
+});
 
-
-
-
+Remesa.belongsTo(Route, {
+  foreignKey: "routeId",
+  targetKey: "id",
+});

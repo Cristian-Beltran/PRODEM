@@ -14,6 +14,8 @@ import verifyVehicleRoutes from "./routes/verifyVehicle.routes.js";
 import typeMaintenanceRoutes from "./routes/typeMaintenance.routes.js";
 import maintenanceRoutes from "./routes/maintenance.routes.js";
 import bagRoutes from "./routes/bag.routes.js";
+import remesaRoutes from "./routes/remesa.routes.js";
+import routeRoutes from "./routes/route.routes.js";
 
 const app = express();
 //Config
@@ -48,5 +50,6 @@ app.use("/api", verifyVehicleRoutes);
 app.use("/api", typeMaintenanceRoutes);
 app.use("/api", maintenanceRoutes);
 app.use("/api", bagRoutes);
-
+app.use("/api", remesaRoutes);
+app.use("/api", routeRoutes);
 export default app;
