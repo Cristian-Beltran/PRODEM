@@ -14,7 +14,7 @@
                   color === 'light' ? 'text-blueGray-700' : 'text-white',
                 ]"
               >
-                Remesas pendientes
+                Remesas de ruta
               </h3>
             </div>
           </div>
@@ -56,7 +56,6 @@
             />
           </form>
         </div>
-
         <hr class="my-4 md:min-w-full border-gray-300" />
         <Table
           :items="itemsDisplay"
@@ -97,6 +96,20 @@
             <div class="text-gray-800">
               <p><strong>Nombre:</strong> {{ remesa.Addressee.name }}</p>
               <p><strong>Direccion:</strong> {{ remesa.Addressee.address }}</p>
+              <p>
+                <strong>Ubicación: </strong>
+                <a
+                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  :href="
+                    'https://www.google.com/maps?q=' +
+                    remesa.Addressee.lat +
+                    ',' +
+                    remesa.Addressee.log
+                  "
+                  target="_blank"
+                  >link</a
+                >
+              </p>
             </div>
           </div>
           <div class="w-full lg:w-6/12 p-2">
@@ -104,6 +117,20 @@
             <div class="text-gray-800" v-if="remesa.Sender">
               <p><strong>Nombre:</strong> {{ remesa.Sender.name }}</p>
               <p><strong>Direccion:</strong> {{ remesa.Sender.address }}</p>
+              <p>
+                <strong>Ubicación: </strong>
+                <a
+                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  :href="
+                    'https://www.google.com/maps?q=' +
+                    remesa.Sender.lat +
+                    ',' +
+                    remesa.Sender.log
+                  "
+                  target="_blank"
+                  >link</a
+                >
+              </p>
             </div>
             <div v-else>
               <p class="text-red-500">No hay informacion</p>
@@ -193,11 +220,7 @@
 </template>
 <script>
 import Table from "@/components/Tables/Table.vue";
-import {
-  getRemesasIncompleteRequest,
-  getRemesaRequest,
-  deleteRemesaRequest,
-} from "../../api/remesa";
+import { getRemesasRouteRequest, getRemesaRequest } from "../../api/remesa";
 import { VueFinalModal } from "vue-final-modal";
 
 export default {
@@ -220,15 +243,7 @@ export default {
         { key: "subType", label: "Sub Tipo" },
         { key: "createdAt", label: "Creado", date: true },
       ],
-      options: [
-        {
-          id: "revision",
-          name: "Revision",
-          icon: "fas fa-sign-in-alt",
-        },
-        { id: "view", name: "Ver informacion", icon: "fas fa-folder" },
-        { id: "delete", name: "Eliminar", icon: "fas fa-x" },
-      ],
+      options: [{ id: "view", name: "Ver informacion", icon: "fas fa-folder" }],
       remesa: {},
     };
   },
@@ -243,7 +258,7 @@ export default {
     async loadData() {
       this.load = true;
       try {
-        const res = await getRemesasIncompleteRequest();
+        const res = await getRemesasRouteRequest(this.$route.query.id);
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;
@@ -255,11 +270,15 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          item.addressee.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.addressee
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase()) ||
           item.sender.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.order.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.subType.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.typeOfService.toLowerCase().includes(this.searchQuery.toLowerCase())
+          item.typeOfService
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase())
       );
       this.itemsDisplay = filteredItems;
     },
@@ -278,18 +297,10 @@ export default {
       return dateFormat;
     },
     async action(action) {
-      if (action.action === "revision") {
-        this.$router.push({
-          path: "/admin/updateRemesa",
-          query: { id: action.id },
-        });
-      } else if (action.action === "view") {
+      if (action.action === "view") {
         this.modal = true;
         const res = await getRemesaRequest(action.id);
         this.remesa = res.data;
-      } else if (action.action === "delete") {
-        await deleteRemesaRequest(action.id);
-        this.loadData();
       }
     },
   },

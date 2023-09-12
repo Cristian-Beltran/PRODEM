@@ -14,7 +14,7 @@
                   color === 'light' ? 'text-blueGray-700' : 'text-white',
                 ]"
               >
-                Rutas asignadas
+                Rutas
               </h3>
             </div>
           </div>
@@ -55,6 +55,18 @@
               class="px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pl-10"
             />
           </form>
+          <div class="relative flex flex-wrap items-stretch mb-3">
+            <router-link to="/admin/addRoute" v-slot="{ href, navigate }">
+              <a :href="href" @click="navigate">
+                <button
+                  class="bg-grayBlue-800 text-sm border border-gray-300 px-2 py-2 rounded-md"
+                >
+                  Crear ruta
+                  <i class="fas fa-plus text-sm ml-2"></i>
+                </button>
+              </a>
+            </router-link>
+          </div>
         </div>
 
         <hr class="my-4 md:min-w-full border-gray-300" />
@@ -72,7 +84,7 @@
 </template>
 <script>
 import Table from "@/components/Tables/Table.vue";
-import { getRouteRequest, getRoutesDriverRequest } from "../../api/route";
+import { getRouteRequest, getRoutesRequest } from "../../api/route";
 import { VueFinalModal } from "vue-final-modal";
 
 export default {
@@ -96,7 +108,14 @@ export default {
         { key: "vehicle", label: "Vehiculo" },
         { key: "createdAt", label: "Creado", date: true },
       ],
-      options: [{ id: "view", name: "Ver informacion", icon: "fas fa-folder" }],
+      options: [
+        {
+          id: "update",
+          name: "Actualizar",
+          icon: "fas fa-plus",
+        },
+        { id: "view", name: "Ver informacion", icon: "fas fa-folder" },
+      ],
     };
   },
   components: {
@@ -110,7 +129,7 @@ export default {
     async loadData() {
       this.load = true;
       try {
-        const res = await getRoutesDriverRequest();
+        const res = await getRoutesRequest();
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;
@@ -123,8 +142,12 @@ export default {
       const filteredItems = this.items.filter(
         (item) =>
           item.driver.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.guard1.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.guard2.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.carrier1
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase()) ||
+          item.carrier2
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase()) ||
           item.vehicle.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
       this.itemsDisplay = filteredItems;
@@ -144,7 +167,12 @@ export default {
       return dateFormat;
     },
     async action(action) {
-      if (action.action === "view") {
+      if (action.action === "update") {
+        this.$router.push({
+          path: "/admin/updateRoute",
+          query: { id: action.id },
+        });
+      } else if (action.action === "view") {
         this.$router.push({
           path: "/admin/viewRoute",
           query: { id: action.id },

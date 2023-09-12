@@ -26,14 +26,12 @@ import AuthLayout from "@/layouts/Auth.vue";
 
 //views
 // Admin
-import Dashboard from "@/views/admin/Dashboard.vue";
 //Users
 import Admin from "@/views/admin/Admin.vue";
 import Carrier from "@/views/admin/Carrier.vue";
 import Driver from "@/views/admin/Driver.vue";
 import Guard from "@/views/admin/Guard.vue";
 import Manager from "@/views/admin/Manager.vue";
-import Remesa from "@/views/admin/Remesa.vue";
 //Vehicle
 import Incident from "@/views/admin/Incident.vue";
 import Vehicle from "@/views/admin/Vehicle.vue";
@@ -42,10 +40,13 @@ import Maintenance from "@/views/admin/Maintenance.vue";
 import MaintenanceType from "@/views/admin/MaintenanceType.vue";
 import Verify from "@/views/admin/Verify.vue";
 // Transport Paf
-
 import Paf from "@/views/admin/Paf.vue";
+import Remesa from "@/views/admin/Remesa.vue";
+import RemesaComplete from "@/views/admin/RemesaComplete.vue";
+import Route from "@/views/admin/Route.vue";
+import RouteComplete from "@/views/admin/RouteComplete.vue";
+import RouteView from "@/views/admin/RouteView.vue";
 // Forms
-//import CardForms from "@/views/forms/CardForms.vue";
 import UpdatePassword from "@/views/forms/UpdatePassword.vue";
 import Settings from "@/views/forms/Settings.vue";
 
@@ -59,6 +60,8 @@ import FuelingForms from "@/views/admin/forms/FuelingForms.vue";
 import MaintenanceForms from "@/views/admin/forms/MaintenanceForms.vue";
 import MaintenanceTypeForms from "@/views/admin/forms/MaintenanceTypeForms.vue";
 import VerifyForms from "@/views/admin/forms/VerifyForms.vue";
+import RemesaForms from "@/views/admin/forms/RemesaForms.vue";
+import RouteForms from "@/views/admin/forms/RouteForms.vue";
 
 // Views from drivers
 import DriverVehicle from "@/views/driver/Vehicle.vue";
@@ -72,10 +75,14 @@ import DriverVerifyForms from "@/views/driver/forms/VerifyForms.vue";
 import DriverMaintenanceForms from "@/views/driver/forms/MaintenanceForms.vue";
 
 //Views from manager
-import ManagerRouteSend from "@/views/manager/RouteSend.vue";
+import ManagerRemesaSender from "@/views/manager/RemesaSender.vue";
+import ManagerRemesaReceive from "@/views/manager/RemesaReceive.vue";
+import ManagerRemesaComplete from "@/views/manager/RemesaComplete.vue";
+import ManagerRemesaForms from "@/views/manager/forms/RemesaForms.vue";
 
 //Views from carrier
 import CarrierRoute from "@/views/carrier/Route.vue";
+import CarrierRouteView from "@/views/carrier/RouteView.vue";
 
 // views for Auth layout
 import Login from "@/views/auth/Login.vue";
@@ -85,15 +92,10 @@ import Login from "@/views/auth/Login.vue";
 const routes = [
   {
     path: "/",
-    redirect: "/admin/dashboard",
+    redirect: "/admin/remesa",
     component: AdminLayout,
     meta: { requiresAuth: true },
     children: [
-      {
-        path: "/admin/dashboard",
-        component: Dashboard,
-        meta: { admin: true },
-      },
       //Configuracion
       {
         path: "/admin/settings",
@@ -270,6 +272,41 @@ const routes = [
         component: Remesa,
         meta: { admin: true },
       },
+      {
+        path: "/admin/remesa/complete",
+        component: RemesaComplete,
+        meta: { admin: true },
+      },
+      {
+        path: "/admin/updateRemesa",
+        component: RemesaForms,
+        meta: { admin: true },
+      },
+      // Route
+      {
+        path: "/admin/route",
+        component: Route,
+        meta: { admin: true },
+      },
+      {
+        path: "/admin/route/complete",
+        component: RouteComplete,
+        meta: { admin: true },
+      },
+      {
+        path: "/admin/addRoute",
+        component: RouteForms,
+        meta: { admin: true },
+      },
+      {
+        path: "/admin/updateRoute",
+        component: RouteForms,
+        meta: { admin: true },
+      },
+      {
+        path: "/admin/viewRoute",
+        component: RouteView,
+      },
       // Path driver
       {
         path: "/driver/vehicle",
@@ -313,14 +350,35 @@ const routes = [
       },
       // Path manager
       {
-        path: "/manager/route/send",
-        component: ManagerRouteSend,
+        path: "/manager/remesa/sender",
+        component: ManagerRemesaSender,
         meta: { manager: true },
       },
+      {
+        path: "/manager/remesa/receive",
+        component: ManagerRemesaReceive,
+        meta: { manager: true },
+      },
+      {
+        path: "/manager/remesa/complete",
+        component: ManagerRemesaComplete,
+        meta: { manager: true },
+      },
+      {
+        path: "/manager/remesaUpdate",
+        component: ManagerRemesaForms,
+        meta: { manager: true },
+      },
+
       // Path carrier
       {
         path: "/carrier/route",
         component: CarrierRoute,
+        meta: { carrier: true },
+      },
+      {
+        path: "/carrier/viewRoute",
+        component: CarrierRouteView,
         meta: { carrier: true },
       },
     ],
@@ -383,7 +441,7 @@ router.beforeEach(async (to, from, next) => {
         const paths = {
           administrador: "/admin/dashboard",
           conductor: "/driver/vehicle",
-          gerente: "/manager/route/send",
+          gerente: "/manager/remesa/sender",
           transportador: "/carrier/route",
         };
         path = paths[store.getters["type"]];

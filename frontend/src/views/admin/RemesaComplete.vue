@@ -14,7 +14,7 @@
                   color === 'light' ? 'text-blueGray-700' : 'text-white',
                 ]"
               >
-                Remesas pendientes
+                Remesas completeas
               </h3>
             </div>
           </div>
@@ -193,11 +193,7 @@
 </template>
 <script>
 import Table from "@/components/Tables/Table.vue";
-import {
-  getRemesasIncompleteRequest,
-  getRemesaRequest,
-  deleteRemesaRequest,
-} from "../../api/remesa";
+import { getRemesasCompleteRequest, getRemesaRequest } from "../../api/remesa";
 import { VueFinalModal } from "vue-final-modal";
 
 export default {
@@ -220,15 +216,7 @@ export default {
         { key: "subType", label: "Sub Tipo" },
         { key: "createdAt", label: "Creado", date: true },
       ],
-      options: [
-        {
-          id: "revision",
-          name: "Revision",
-          icon: "fas fa-sign-in-alt",
-        },
-        { id: "view", name: "Ver informacion", icon: "fas fa-folder" },
-        { id: "delete", name: "Eliminar", icon: "fas fa-x" },
-      ],
+      options: [{ id: "view", name: "Ver informacion", icon: "fas fa-folder" }],
       remesa: {},
     };
   },
@@ -243,7 +231,7 @@ export default {
     async loadData() {
       this.load = true;
       try {
-        const res = await getRemesasIncompleteRequest();
+        const res = await getRemesasCompleteRequest();
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;
@@ -255,11 +243,15 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          item.addressee.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.addressee
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase()) ||
           item.sender.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.order.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.subType.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.typeOfService.toLowerCase().includes(this.searchQuery.toLowerCase())
+          item.typeOfService
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase())
       );
       this.itemsDisplay = filteredItems;
     },
@@ -278,18 +270,10 @@ export default {
       return dateFormat;
     },
     async action(action) {
-      if (action.action === "revision") {
-        this.$router.push({
-          path: "/admin/updateRemesa",
-          query: { id: action.id },
-        });
-      } else if (action.action === "view") {
+      if (action.action === "view") {
         this.modal = true;
         const res = await getRemesaRequest(action.id);
         this.remesa = res.data;
-      } else if (action.action === "delete") {
-        await deleteRemesaRequest(action.id);
-        this.loadData();
       }
     },
   },

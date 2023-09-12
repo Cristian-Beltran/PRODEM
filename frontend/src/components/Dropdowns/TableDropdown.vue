@@ -2,7 +2,6 @@
   <div>
     <a
       class="text-blueGray-500 py-1 px-3"
-      href="#pablo"
       ref="btnDropdownRef"
       v-on:click="toggleDropdown($event)"
     >

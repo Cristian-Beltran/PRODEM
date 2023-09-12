@@ -14,7 +14,7 @@
                   color === 'light' ? 'text-blueGray-700' : 'text-white',
                 ]"
               >
-                Remesas pendientes
+                Remesas de ruta
               </h3>
             </div>
           </div>
@@ -56,7 +56,6 @@
             />
           </form>
         </div>
-
         <hr class="my-4 md:min-w-full border-gray-300" />
         <Table
           :items="itemsDisplay"
@@ -97,6 +96,20 @@
             <div class="text-gray-800">
               <p><strong>Nombre:</strong> {{ remesa.Addressee.name }}</p>
               <p><strong>Direccion:</strong> {{ remesa.Addressee.address }}</p>
+              <p>
+                <strong>Ubicación: </strong>
+                <a
+                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  :href="
+                    'https://www.google.com/maps?q=' +
+                    remesa.Addressee.lat +
+                    ',' +
+                    remesa.Addressee.log
+                  "
+                  target="_blank"
+                  >link</a
+                >
+              </p>
             </div>
           </div>
           <div class="w-full lg:w-6/12 p-2">
@@ -104,6 +117,20 @@
             <div class="text-gray-800" v-if="remesa.Sender">
               <p><strong>Nombre:</strong> {{ remesa.Sender.name }}</p>
               <p><strong>Direccion:</strong> {{ remesa.Sender.address }}</p>
+              <p>
+                <strong>Ubicación: </strong>
+                <a
+                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  :href="
+                    'https://www.google.com/maps?q=' +
+                    remesa.Sender.lat +
+                    ',' +
+                    remesa.Sender.log
+                  "
+                  target="_blank"
+                  >link</a
+                >
+              </p>
             </div>
             <div v-else>
               <p class="text-red-500">No hay informacion</p>
@@ -189,16 +216,53 @@
         </button>
       </div>
     </vue-final-modal>
+    <vue-final-modal
+      v-model="qrModal"
+      class="flex justify-center items-center"
+      content-class="w-2/3 max-h-3/4 p-4 bg-white rounded-lg shadow "
+    >
+      <!-- Modal header -->
+      <div class="flex items-start justify-between p-4 border-b rounded-t">
+        <h3 class="text-xl font-semibold text-gray-900">
+          Escaneo de codigo QR
+          {{ type === "send" ? "para recojer remesa" : "para entregar remesa" }}
+        </h3>
+        <button
+          type="button"
+          @click="qrModal = false"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
+        >
+          <i class="fas fa-close"></i>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="p-6">
+        <div class="flex flex-wrap justify-center">
+          <div class="w-full lg:w-6/12 p-2">
+            <qrcode-stream @detect="onDetect"></qrcode-stream>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b"
+      >
+        <button
+          type="button"
+          @click="qrModal = false"
+          class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+        >
+          Cerrar
+        </button>
+      </div>
+    </vue-final-modal>
   </div>
 </template>
 <script>
 import Table from "@/components/Tables/Table.vue";
-import {
-  getRemesasIncompleteRequest,
-  getRemesaRequest,
-  deleteRemesaRequest,
-} from "../../api/remesa";
+import { getRemesasRouteRequest, getRemesaRequest } from "../../api/remesa";
 import { VueFinalModal } from "vue-final-modal";
+import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from "vue-qrcode-reader";
 
 export default {
   data() {
@@ -211,6 +275,8 @@ export default {
       color: "light",
       load: true,
       modal: false,
+      type: "send",
+      qrModal: false,
       columnas: [
         { key: "id", label: "ID" },
         { key: "addressee", label: "Paf que ordeno el servicio" },
@@ -218,16 +284,14 @@ export default {
         { key: "order", label: "Pedido" },
         { key: "typeOfService", label: "Tipo de servicio" },
         { key: "subType", label: "Sub Tipo" },
+        { key: "sendDate", label: "Enviado", date: true },
+        { key: "deadline", label: "Entregado", date: true },
         { key: "createdAt", label: "Creado", date: true },
       ],
       options: [
-        {
-          id: "revision",
-          name: "Revision",
-          icon: "fas fa-sign-in-alt",
-        },
         { id: "view", name: "Ver informacion", icon: "fas fa-folder" },
-        { id: "delete", name: "Eliminar", icon: "fas fa-x" },
+        { id: "send", name: "Recoger remesa", icon: "fas fa-sign-out-alt" },
+        { id: "receive", name: "Entregar remesa", icon: "fas fa-sign-in-alt" },
       ],
       remesa: {},
     };
@@ -235,6 +299,7 @@ export default {
   components: {
     Table,
     VueFinalModal,
+    QrcodeStream,
   },
   created() {
     this.loadData();
@@ -243,7 +308,7 @@ export default {
     async loadData() {
       this.load = true;
       try {
-        const res = await getRemesasIncompleteRequest();
+        const res = await getRemesasRouteRequest(this.$route.query.id);
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;
@@ -255,11 +320,15 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          item.addressee.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.addressee
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase()) ||
           item.sender.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.order.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.subType.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.typeOfService.toLowerCase().includes(this.searchQuery.toLowerCase())
+          item.typeOfService
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase())
       );
       this.itemsDisplay = filteredItems;
     },
@@ -277,19 +346,21 @@ export default {
       var dateFormat = ano + "-" + mes + "-" + dia + " " + hora + ":" + minuto;
       return dateFormat;
     },
+    async onDetect(qrCodeData) {
+      if (this.type === "send") await sendRemesaRequest(qrCodeData);
+      else await receiveRemesaRequest(qrCodeData);
+    },
     async action(action) {
-      if (action.action === "revision") {
-        this.$router.push({
-          path: "/admin/updateRemesa",
-          query: { id: action.id },
-        });
-      } else if (action.action === "view") {
+      if (action.action === "view") {
         this.modal = true;
         const res = await getRemesaRequest(action.id);
         this.remesa = res.data;
-      } else if (action.action === "delete") {
-        await deleteRemesaRequest(action.id);
-        this.loadData();
+      } else if (action.action == "send") {
+        this.type = "send";
+        this.qrModal = true;
+      } else if (action.action == "receive") {
+        this.type = "receive";
+        this.qrModal = true;
       }
     },
   },

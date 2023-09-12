@@ -14,7 +14,7 @@
                   color === 'light' ? 'text-blueGray-700' : 'text-white',
                 ]"
               >
-                Rutas asignadas
+                Rutas Completas
               </h3>
             </div>
           </div>
@@ -72,7 +72,7 @@
 </template>
 <script>
 import Table from "@/components/Tables/Table.vue";
-import { getRouteRequest, getRoutesDriverRequest } from "../../api/route";
+import { getRouteRequest, getRoutesCompleteRequest } from "../../api/route";
 import { VueFinalModal } from "vue-final-modal";
 
 export default {
@@ -110,7 +110,7 @@ export default {
     async loadData() {
       this.load = true;
       try {
-        const res = await getRoutesDriverRequest();
+        const res = await getRoutesCompleteRequest1();
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;

@@ -67,35 +67,6 @@
           v-if="$store.getters.type == 'administrador'"
           class="md:flex-col md:min-w-full flex flex-col list-none"
         >
-          <li class="items-center">
-            <router-link
-              to="/admin/dashboard"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="
-                  () => {
-                    navigate;
-                    collapseShow = 'hidden';
-                  }
-                "
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-green-600 hover:text-green-400'
-                    : 'text-gray-400 hover:text-white ',
-                ]"
-              >
-                <i
-                  class="fas fa-tv mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-                Dashboard
-              </a>
-            </router-link>
-          </li>
-
           <!-- Divider -->
           <hr class="my-4 md:min-w-full" />
           <!-- Heading -->
@@ -306,7 +277,7 @@
           </li>
           <li class="items-center">
             <router-link
-              to="/admin/remesaComplete"
+              to="/admin/remesa/complete"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -357,6 +328,34 @@
                   :class="[isActive ? 'opacity-75' : 'text-gray-400']"
                 ></i>
                 Rutas
+              </a>
+            </router-link>
+          </li>
+          <li class="items-center">
+            <router-link
+              to="/admin/route/complete"
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="
+                  () => {
+                    navigate;
+                    collapseShow = 'hidden';
+                  }
+                "
+                class="text-xs uppercase py-3 font-bold block"
+                :class="[
+                  isActive
+                    ? 'text-green-600 hover:text-green-400'
+                    : 'text-gray-400 hover:text-white ',
+                ]"
+              >
+                <i
+                  class="fas fa-check mr-2 text-sm"
+                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
+                ></i>
+                Rutas completas
               </a>
             </router-link>
           </li>
@@ -635,7 +634,7 @@
         >
           <li class="items-center">
             <router-link
-              to="/manager/remesa/send"
+              to="/manager/remesa/sender"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -663,7 +662,7 @@
           </li>
           <li class="items-center">
             <router-link
-              to="/manager/remesa/recieve"
+              to="/manager/remesa/receive"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -751,34 +750,7 @@
               </a>
             </router-link>
           </li>
-          <li class="items-center">
-            <router-link
-              to="/carrier/route/complete"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="
-                  () => {
-                    navigate;
-                    collapseShow = 'hidden';
-                  }
-                "
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-green-600 hover:text-green-400'
-                    : 'text-gray-400 hover:text-white ',
-                ]"
-              >
-                <i
-                  class="fas fa-check mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
-                ></i>
-                Rutas completas
-              </a>
-            </router-link>
-          </li>
+          
         </ul>
       </div>
     </div>

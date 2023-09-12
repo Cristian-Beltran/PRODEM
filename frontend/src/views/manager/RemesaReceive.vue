@@ -14,7 +14,7 @@
                   color === 'light' ? 'text-blueGray-700' : 'text-white',
                 ]"
               >
-                Remesas pendientes
+                Pedido de remesas
               </h3>
             </div>
           </div>
@@ -55,6 +55,15 @@
               class="px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pl-10"
             />
           </form>
+          <div class="relative flex flex-wrap items-stretch mb-3">
+            <button
+              @click="addRemesa"
+              class="bg-grayBlue-800 text-sm border border-gray-300 px-2 py-2 rounded-md"
+            >
+              Pedir remesa
+              <i class="fas fa-plus text-sm ml-2"></i>
+            </button>
+          </div>
         </div>
 
         <hr class="my-4 md:min-w-full border-gray-300" />
@@ -189,16 +198,56 @@
         </button>
       </div>
     </vue-final-modal>
+
+    <vue-final-modal
+      v-model="qrModal"
+      class="flex justify-center items-center"
+      content-class="w-2/3 max-h-3/4 p-4 bg-white rounded-lg shadow "
+    >
+      <!-- Modal header -->
+      <div class="flex items-start justify-between p-4 border-b rounded-t">
+        <h3 class="text-xl font-semibold text-gray-900">Codigo qr generado</h3>
+        <button
+          type="button"
+          @click="qrModal = false"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
+        >
+          <i class="fas fa-close"></i>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="p-6">
+        <div class="flex flex-wrap">
+          <div class="w-full flex justify-center m-auto p-2">
+            <qrcode-vue :value="qrCodeData" size="300" level="H" />
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b"
+      >
+        <button
+          type="button"
+          @click="qrModal = false"
+          class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+        >
+          Cerrar
+        </button>
+      </div>
+    </vue-final-modal>
   </div>
 </template>
 <script>
 import Table from "@/components/Tables/Table.vue";
-import {
-  getRemesasIncompleteRequest,
-  getRemesaRequest,
-  deleteRemesaRequest,
-} from "../../api/remesa";
+import QrcodeVue from "qrcode.vue";
 import { VueFinalModal } from "vue-final-modal";
+import {
+  createRemesaRequest,
+  getRemesasReceiveRequest,
+  getRemesaRequest,
+  generateHashRequest,
+} from "../../api/remesa";
 
 export default {
   data() {
@@ -211,6 +260,9 @@ export default {
       color: "light",
       load: true,
       modal: false,
+      remesa: {},
+      qrModal: false,
+      qrCodeData: "",
       columnas: [
         { key: "id", label: "ID" },
         { key: "addressee", label: "Paf que ordeno el servicio" },
@@ -221,20 +273,15 @@ export default {
         { key: "createdAt", label: "Creado", date: true },
       ],
       options: [
-        {
-          id: "revision",
-          name: "Revision",
-          icon: "fas fa-sign-in-alt",
-        },
         { id: "view", name: "Ver informacion", icon: "fas fa-folder" },
-        { id: "delete", name: "Eliminar", icon: "fas fa-x" },
+        { id: "qrCode", name: "Generar codigo QR", icon: "fas fa-qrcode" },
       ],
-      remesa: {},
     };
   },
   components: {
     Table,
     VueFinalModal,
+    QrcodeVue,
   },
   created() {
     this.loadData();
@@ -243,7 +290,7 @@ export default {
     async loadData() {
       this.load = true;
       try {
-        const res = await getRemesasIncompleteRequest();
+        const res = await getRemesasReceiveRequest();
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;
@@ -255,11 +302,15 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          item.addressee.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.addressee
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase()) ||
           item.sender.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.order.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.subType.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.typeOfService.toLowerCase().includes(this.searchQuery.toLowerCase())
+          item.typeOfService
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase())
       );
       this.itemsDisplay = filteredItems;
     },
@@ -278,19 +329,19 @@ export default {
       return dateFormat;
     },
     async action(action) {
-      if (action.action === "revision") {
-        this.$router.push({
-          path: "/admin/updateRemesa",
-          query: { id: action.id },
-        });
-      } else if (action.action === "view") {
-        this.modal = true;
+      if (action.action === "view") {
         const res = await getRemesaRequest(action.id);
         this.remesa = res.data;
-      } else if (action.action === "delete") {
-        await deleteRemesaRequest(action.id);
-        this.loadData();
+        this.modal = true;
+      } else if (action.action === "qrCode") {
+        const res = await generateHashRequest(action.id);
+        this.qrCodeData = res.data.hash;
+        this.qrModal = true;
       }
+    },
+    async addRemesa() {
+      await createRemesaRequest();
+      this.loadData();
     },
   },
 };
