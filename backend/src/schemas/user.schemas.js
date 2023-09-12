@@ -14,6 +14,12 @@ export const UserSchema = z.object({
     })
     .min(4, {
       message: "El nombre debe tener al menos 4 caracteres",
+    })
+    .max(15, {
+      message: "El nombre debe tener como máximo 15 caracteres",
+    })
+    .regex(/^[a-zA-ZÀÁÉÍÓÚÑ]+$/, {
+      message: "El nombre solo puede contener letras",
     }),
   last_name: z
     .string({
@@ -21,21 +27,51 @@ export const UserSchema = z.object({
     })
     .min(4, {
       message: "El apellido debe tener al menos 4 caracteres",
+    })
+    .max(15, {
+      message: "El apellido debe tener como máximo 15 caracteres",
+    })
+    .regex(/^[a-zA-ZÀÁÉÍÓÚÑ]+$/, {
+      message: "El apellido solo puede contener letras",
     }),
   ci: z
     .string({
-      required_error: "El ci es requerido",
+      required_error: "El CI es requerido",
     })
     .min(4, {
-      message: "El ci debe tener al menos 6 caracteres",
+      message: "El CI debe tener al menos 6 caracteres",
+    })
+    .max(15, {
+      message: "El CI debe tener como máximo 15 caracteres",
     }),
-  address: z.string(),
-  telf: z.number(),
-  type: z.string(),
+  address: z
+    .string({
+      required_error: "La direccion es requerida",
+    }),
+  telf: z
+    .number({
+      required_error: "El telefono es requerido",
+    })
+    .int()
+    .positive()
+    .max(999999999999, {
+      message: "El telefono debe tener como máximo 12 dígitos",
+    }),
+  type: z
+    .string({
+      required_error: "Se requiere un tipo de usuario",
+    }),
   username: z.string({
     required_error: "Se requiere un nombre de usuario",
-  }),
-  birthdate: z.string({
-    required_error: "Se requiere una fecha de nacimiento",
-  }),
+  })
+    .min(4, {
+      message: "El CI debe tener al menos 6 caracteres",
+    })
+    .max(15, {
+      message: "El CI debe tener como máximo 15 caracteres",
+    }),
+  birthdate: z
+    .string({
+      required_error: "Se requiere una fecha de nacimiento",
+    }),
 });
