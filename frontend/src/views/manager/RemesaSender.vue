@@ -132,7 +132,7 @@
               </p>
               <p>
                 <strong>Fecha de entraga:</strong>
-                {{ remesa.senderDate ? date(remesa.senderDate) : "Pendiente" }}
+                {{ remesa.deadline ? date(remesa.deadline) : "Pendiente" }}
               </p>
             </div>
           </div>
@@ -232,7 +232,11 @@
 import Table from "@/components/Tables/Table.vue";
 import QrcodeVue from "qrcode.vue";
 
-import { generateHashRequest,getRemesasSenderRequest, getRemesaRequest } from "../../api/remesa";
+import {
+  generateHashRequest,
+  getRemesasSenderRequest,
+  getRemesaRequest,
+} from "../../api/remesa";
 import { VueFinalModal } from "vue-final-modal";
 
 export default {

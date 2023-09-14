@@ -132,7 +132,7 @@
               </p>
               <p>
                 <strong>Fecha de entraga:</strong>
-                {{ remesa.senderDate ? date(remesa.senderDate) : "Pendiente" }}
+                {{ remesa.deadline ? date(remesa.deadline) : "Pendiente" }}
               </p>
             </div>
           </div>
@@ -255,11 +255,15 @@ export default {
       if (event) event.preventDefault();
       const filteredItems = this.items.filter(
         (item) =>
-          item.addressee.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.addressee
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase()) ||
           item.sender.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.order.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.subType.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.typeOfService.toLowerCase().includes(this.searchQuery.toLowerCase())
+          item.typeOfService
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase())
       );
       this.itemsDisplay = filteredItems;
     },

@@ -176,7 +176,7 @@ export default {
         },
         {
           id: "maintenance",
-          name: "Manteniemiento",
+          name: "Mantenimiento",
           icon: "fas fa-wrench",
         },
       ],

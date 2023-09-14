@@ -240,7 +240,10 @@
       <div class="p-6">
         <div class="flex flex-wrap justify-center">
           <div class="w-full lg:w-6/12 p-2">
-            <qrcode-stream @detect="onDetect"></qrcode-stream>
+            <p class="text-sm">
+              <strong class="font-bold">Codigo:</strong>{{ hash }}
+            </p>
+            <qrcode-stream :track="paintOutline"></qrcode-stream>
           </div>
         </div>
       </div>
@@ -260,7 +263,12 @@
 </template>
 <script>
 import Table from "@/components/Tables/Table.vue";
-import { getRemesasRouteRequest, getRemesaRequest } from "../../api/remesa";
+import {
+  getRemesasRouteRequest,
+  getRemesaRequest,
+  sendRemesaRequest,
+  receiveRemesaRequest,
+} from "../../api/remesa";
 import { VueFinalModal } from "vue-final-modal";
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from "vue-qrcode-reader";
 
@@ -271,12 +279,12 @@ export default {
       itemsDisplay: [],
       itemsPerPage: 10,
       searchQuery: "",
-      status: "all",
       color: "light",
       load: true,
       modal: false,
       type: "send",
       qrModal: false,
+      hash: "",
       columnas: [
         { key: "id", label: "ID" },
         { key: "addressee", label: "Paf que ordeno el servicio" },
@@ -300,6 +308,8 @@ export default {
     Table,
     VueFinalModal,
     QrcodeStream,
+    QrcodeCapture,
+    QrcodeDropZone,
   },
   created() {
     this.loadData();
@@ -346,9 +356,38 @@ export default {
       var dateFormat = ano + "-" + mes + "-" + dia + " " + hora + ":" + minuto;
       return dateFormat;
     },
-    async onDetect(qrCodeData) {
-      if (this.type === "send") await sendRemesaRequest(qrCodeData);
-      else await receiveRemesaRequest(qrCodeData);
+    async postValue() {
+      try {
+        if (this.hash) {
+          if (this.type === "send") await sendRemesaRequest(this.hash);
+          else await receiveRemesaRequest(this.hash);
+          this.qrModal = false;
+          alert("Codigo leido");
+          this.loadData();
+          this.hash = "";
+        }
+      } catch (error) {
+        alert(error.response.data.errors);
+      }
+    },
+    async paintOutline(detectedCodes, ctx) {
+      for (const detectedCode of detectedCodes) {
+        const [firstPoint, ...otherPoints] = detectedCode.cornerPoints;
+        ctx.strokeStyle = "red";
+        ctx.beginPath();
+        ctx.moveTo(firstPoint.x, firstPoint.y);
+        for (const { x, y } of otherPoints) {
+          ctx.lineTo(x, y);
+        }
+        ctx.lineTo(firstPoint.x, firstPoint.y);
+        ctx.closePath();
+        ctx.stroke();
+        this.hash = detectedCode.rawValue;
+        if (this.hash && !this.process) {
+          this.process = true;
+          await this.postValue();
+        }
+      }
     },
     async action(action) {
       if (action.action === "view") {
@@ -361,6 +400,7 @@ export default {
       } else if (action.action == "receive") {
         this.type = "receive";
         this.qrModal = true;
+        this.process = false;
       }
     },
   },

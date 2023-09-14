@@ -6,7 +6,7 @@
       >
         <div class="rounded-t bg-white mb-0 px-6 py-6">
           <div class="text-center flex justify-between">
-            <h6 class="text-blueGray-700 text-xl font-bold">Verificaión</h6>
+            <h6 class="text-blueGray-700 text-xl font-bold">Verificación</h6>
           </div>
         </div>
         <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
@@ -142,7 +142,7 @@
                     class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                   >
-                    Obervaciones
+                    Observaciones 
                   </label>
                   <div
                     class="p-1 mb-1"

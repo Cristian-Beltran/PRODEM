@@ -46,6 +46,8 @@ import RemesaComplete from "@/views/admin/RemesaComplete.vue";
 import Route from "@/views/admin/Route.vue";
 import RouteComplete from "@/views/admin/RouteComplete.vue";
 import RouteView from "@/views/admin/RouteView.vue";
+import RouteViewComplete from "@/views/admin/RemesaRouteComplete.vue";
+
 // Forms
 import UpdatePassword from "@/views/forms/UpdatePassword.vue";
 import Settings from "@/views/forms/Settings.vue";
@@ -306,6 +308,10 @@ const routes = [
       {
         path: "/admin/viewRoute",
         component: RouteView,
+      },
+      {
+        path: "/admin/viewRouteComplete",
+        component: RouteViewComplete,
       },
       // Path driver
       {

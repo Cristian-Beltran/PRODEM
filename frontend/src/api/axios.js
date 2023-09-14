@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: "http://localhost:3000/api",
-  //baseURL: "https://envibol.app.dexdserver.site/api",
+  baseURL: "https://prodem.app.dexdserver.site/api",
 });
 
 instance.defaults.headers.common["Authorization"] = getCookie("token");

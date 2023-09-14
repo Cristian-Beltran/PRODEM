@@ -14,7 +14,7 @@
                   color === 'light' ? 'text-blueGray-700' : 'text-white',
                 ]"
               >
-                Remesas completeas
+                Remesas de ruta
               </h3>
             </div>
           </div>
@@ -56,7 +56,6 @@
             />
           </form>
         </div>
-
         <hr class="my-4 md:min-w-full border-gray-300" />
         <Table
           :items="itemsDisplay"
@@ -97,6 +96,20 @@
             <div class="text-gray-800">
               <p><strong>Nombre:</strong> {{ remesa.Addressee.name }}</p>
               <p><strong>Direccion:</strong> {{ remesa.Addressee.address }}</p>
+              <p>
+                <strong>Ubicación: </strong>
+                <a
+                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  :href="
+                    'https://www.google.com/maps?q=' +
+                    remesa.Addressee.lat +
+                    ',' +
+                    remesa.Addressee.log
+                  "
+                  target="_blank"
+                  >link</a
+                >
+              </p>
             </div>
           </div>
           <div class="w-full lg:w-6/12 p-2">
@@ -104,6 +117,20 @@
             <div class="text-gray-800" v-if="remesa.Sender">
               <p><strong>Nombre:</strong> {{ remesa.Sender.name }}</p>
               <p><strong>Direccion:</strong> {{ remesa.Sender.address }}</p>
+              <p>
+                <strong>Ubicación: </strong>
+                <a
+                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  :href="
+                    'https://www.google.com/maps?q=' +
+                    remesa.Sender.lat +
+                    ',' +
+                    remesa.Sender.log
+                  "
+                  target="_blank"
+                  >link</a
+                >
+              </p>
             </div>
             <div v-else>
               <p class="text-red-500">No hay informacion</p>
@@ -193,10 +220,7 @@
 </template>
 <script>
 import Table from "@/components/Tables/Table.vue";
-import {
-  getRemesasManagerCompleteRequest,
-  getRemesaRequest,
-} from "../../api/remesa";
+import { getRemesasRouteCompleteRequest, getRemesaRequest } from "../../api/remesa";
 import { VueFinalModal } from "vue-final-modal";
 
 export default {
@@ -234,7 +258,7 @@ export default {
     async loadData() {
       this.load = true;
       try {
-        const res = await getRemesasManagerCompleteRequest();
+        const res = await getRemesasRouteCompleteRequest(this.$route.query.id);
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;

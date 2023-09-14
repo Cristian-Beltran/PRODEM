@@ -2,6 +2,7 @@ import { Remesa } from "../models/Remesa.js";
 import { Bag } from "../models/Bag.js";
 import { User } from "../models/User.js";
 import { Paf } from "../models/Paf.js";
+import { Route } from "../models/Route.js";
 import { Op } from "sequelize";
 import CryptoJS from "crypto-js";
 import { TOKEN_SECRET } from "../config.js";
@@ -16,7 +17,7 @@ export const getRemesasSender = async (req, res) => {
       return res.json({ errors: ["No tiene PAF asignada"] }).status(409);
 
     const remesas = await Remesa.findAll({
-      where: { sender: paf.id, senderDate: null },
+      where: { sender: paf.id, deadline: null },
       include: [
         { model: Paf, as: "Addressee" },
         { model: Paf, as: "Sender" },
@@ -31,6 +32,8 @@ export const getRemesasSender = async (req, res) => {
       typeOfService: remesa.typeOfService,
       subType: remesa.subType,
       createdAt: remesa.createdAt,
+      senderDate: remesa.senderDate,
+      deadline: remesa.deadline,
     }));
     res.json(data);
   } catch (error) {
@@ -48,7 +51,7 @@ export const getRemesasReceive = async (req, res) => {
     if (!paf)
       return res.json({ errors: ["No tiene PAF asignada"] }).status(409);
     const remesas = await Remesa.findAll({
-      where: { addressee: paf.id, senderDate: null },
+      where: { addressee: paf.id, deadline: null },
       include: [
         { model: Paf, as: "Addressee" },
         { model: Paf, as: "Sender" },
@@ -62,6 +65,8 @@ export const getRemesasReceive = async (req, res) => {
       typeOfService: remesa.typeOfService,
       subType: remesa.subType,
       createdAt: remesa.createdAt,
+      senderDate: remesa.senderDate,
+      deadline: remesa.deadline,
     }));
     res.json(data);
   } catch (error) {
@@ -83,7 +88,7 @@ export const getRemesasCompleteByManager = async (req, res) => {
 
     const remesas = await Remesa.findAll({
       where: {
-        senderDate: { [Op.not]: null },
+        deadline: { [Op.not]: null },
         [Op.or]: {
           sender: paf.id,
           addressee: paf.id,
@@ -102,6 +107,8 @@ export const getRemesasCompleteByManager = async (req, res) => {
       typeOfService: remesa.typeOfService,
       subType: remesa.subType,
       createdAt: remesa.createdAt,
+      senderDate: remesa.senderDate,
+      deadline: remesa.deadline,
     }));
     res.json(data);
   } catch (error) {
@@ -116,7 +123,7 @@ export const getRemesasComplete = async (req, res) => {
   try {
     const remesas = await Remesa.findAll({
       where: {
-        senderDate: { [Op.not]: null },
+        deadline: { [Op.not]: null },
       },
       include: [
         { model: Paf, as: "Addressee" },
@@ -143,7 +150,7 @@ export const getRemesasComplete = async (req, res) => {
 export const getRemesasIncomplete = async (req, res) => {
   try {
     const remesas = await Remesa.findAll({
-      where: { senderDate: null },
+      where: { deadline: null },
       include: [
         { model: Paf, as: "Addressee" },
         { model: Paf, as: "Sender" },
@@ -157,6 +164,8 @@ export const getRemesasIncomplete = async (req, res) => {
       typeOfService: remesa.typeOfService,
       subType: remesa.subType,
       createdAt: remesa.createdAt,
+      senderDate: remesa.senderDate,
+      deadline: remesa.deadline,
     }));
     res.json(data);
   } catch (error) {
@@ -294,7 +303,7 @@ export const getRemesasRoute = async (req, res) => {
     const { id } = req.params;
     const remesas = await Remesa.findAll({
       where: {
-        senderDate: null,
+        deadline: null,
         content: { [Op.or]: [{ [Op.not]: null }, { [Op.not]: "" }] },
         routeId: { [Op.or]: [id, null] },
       },
@@ -312,6 +321,41 @@ export const getRemesasRoute = async (req, res) => {
       typeOfService: remesa.typeOfService,
       subType: remesa.subType,
       createdAt: remesa.createdAt,
+      senderDate: remesa.senderDate,
+      deadline: remesa.deadline,
+      check: remesa.routeId == id,
+    }));
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ errors: [error] });
+  }
+};
+export const getRemesasRouteComplete = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const remesas = await Remesa.findAll({
+      where: {
+        deadline: { [Op.not]: null },
+        content: { [Op.or]: [{ [Op.not]: null }, { [Op.not]: "" }] },
+        routeId: { [Op.or]: [id, null] },
+      },
+      include: [
+        { model: Paf, as: "Addressee" },
+        { model: Paf, as: "Sender" },
+      ],
+    });
+
+    const data = remesas.map((remesa) => ({
+      id: remesa.id,
+      addressee: remesa?.Addressee?.name,
+      sender: remesa?.Sender?.name,
+      order: remesa.order,
+      typeOfService: remesa.typeOfService,
+      subType: remesa.subType,
+      createdAt: remesa.createdAt,
+      senderDate: remesa.senderDate,
+      deadline: remesa.deadline,
       check: remesa.routeId == id,
     }));
     res.json(data);
@@ -338,11 +382,14 @@ export const sendRemesa = async (req, res) => {
     const bytes = CryptoJS.AES.decrypt(hash, TOKEN_SECRET);
     const id = bytes.toString(CryptoJS.enc.Utf8);
     const remesa = await Remesa.findByPk(id);
+    if (!remesa)
+      return res.status(404).json({ errors: ["Remesa no encontrada"] });
     if (remesa.senderDate)
       return res.status(500).json({
         errors: ["Remesa ya enviada"],
       });
-    remesa.receiveDate = new Date();
+    remesa.senderDate = new Date();
+    remesa.save();
     return res.sendStatus(204);
   } catch (error) {
     console.log(error);
@@ -356,6 +403,8 @@ export const receiveRemesa = async (req, res) => {
     const bytes = CryptoJS.AES.decrypt(hash, TOKEN_SECRET);
     const id = bytes.toString(CryptoJS.enc.Utf8);
     const remesa = await Remesa.findByPk(id);
+    if (!remesa)
+      return res.status(404).json({ errors: ["Remesa no encontrada"] });
     if (!remesa.senderDate && remesa.deadline)
       return res.status(500).json({
         errors: ["Remesa aun no enviada"],
@@ -372,6 +421,7 @@ export const receiveRemesa = async (req, res) => {
       route.save();
     }
     remesa.deadline = new Date();
+    remesa.save();
     return res.sendStatus(204);
   } catch (error) {
     console.log(error);

@@ -74,9 +74,5 @@ export const profileSchema = z.object({
     .max(15, {
       message: "El CI debe tener como máximo 15 caracteres",
     }),
-  address: z.string(),
   telf: z.string().min(6, { message: "Ingrese un numero de telefono valido" }),
-  birthdate: z.date({
-    invalid_type_error: "No ingresaste una fecha",
-  }),
 });

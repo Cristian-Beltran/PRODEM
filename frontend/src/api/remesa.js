@@ -16,8 +16,9 @@ export const updateRemesaByManagerRequest = (id, remesa) =>
   axios.put(`/remesa/manager/${id}`, remesa);
 
 export const getRemesasRouteRequest = (id) => axios.get(`/remesa/route/${id}`);
+export const getRemesasRouteCompleteRequest = (id) => axios.get(`/remesa/routeComplete/${id}`);
 
 export const generateHashRequest = (id) => axios.get(`/remesa/hash/${id}`);
 export const sendRemesaRequest = (hash) => axios.put(`/remesa/send/${hash}`);
 export const receiveRemesaRequest = (hash) =>
-  axios.put(`/remesa/receive/${hash}`);
+  axios.put(`/remesa/received/${hash}`);

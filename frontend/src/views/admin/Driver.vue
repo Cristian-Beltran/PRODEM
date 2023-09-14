@@ -205,6 +205,7 @@ export default {
           await udpatePasswordRequest(action.id);
           this.items = [];
           this.loadData();
+          alert("Contraseña actualizada exitosamente");
         } catch (error) {
           console.log(error);
         }

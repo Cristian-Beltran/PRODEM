@@ -14,6 +14,7 @@ import {
   updateRemesaByManager,
   getRemesasCompleteByManager,
   getRemesasRoute,
+  getRemesasRouteComplete,
   sendRemesa,
   receiveRemesa,
   generateHash,
@@ -49,9 +50,10 @@ router.put(
   updateRemesaByManager
 );
 router.get("/remesa/route/:id", authRequired, getRemesasRoute);
+router.get("/remesa/routeComplete/:id", authRequired, getRemesasRouteComplete);
 
 router.put("/remesa/send/:hash", authRequired, sendRemesa);
-router.put("/remesa/receive/:hash", authRequired, receiveRemesa);
+router.put("/remesa/received/:hash", authRequired, receiveRemesa);
 router.get("/remesa/hash/:id", authRequired, generateHash)
 
 export default router;

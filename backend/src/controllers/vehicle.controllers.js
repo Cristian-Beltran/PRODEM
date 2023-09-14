@@ -102,7 +102,10 @@ export const uploadPhoto = async (req, res) => {
 //get vehicle by driver
 export const getVehicleByDriver = async (req, res) => {
   try {
-    const driver = await Driver.findOne({ userId: req.user.id });
+    const id = req.user.id;
+    console.log(id);
+    const driver = await Driver.findOne({ where: { userId: id } });
+    console.log(driver);
     const vehicle = await Vehicle.findOne({
       where: { driverId: driver.id },
       include: [{ model: Driver, include: [{ model: User }] }],

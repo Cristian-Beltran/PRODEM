@@ -110,7 +110,7 @@ export default {
     async loadData() {
       this.load = true;
       try {
-        const res = await getRoutesCompleteRequest1();
+        const res = await getRoutesCompleteRequest();
         this.items = res.data;
         this.itemsDisplay = this.items;
         this.load = false;
@@ -146,7 +146,7 @@ export default {
     async action(action) {
       if (action.action === "view") {
         this.$router.push({
-          path: "/admin/viewRoute",
+          path: "/admin/viewRouteComplete",
           query: { id: action.id },
         });
       }
