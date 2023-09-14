@@ -15,11 +15,11 @@ export const UserSchema = z.object({
     .min(4, {
       message: "El nombre debe tener al menos 4 caracteres",
     })
-    .max(15, {
-      message: "El nombre debe tener como máximo 15 caracteres",
+    .max(50, {
+      message: "El nombre debe tener como máximo 50 caracteres",
     })
-    .regex(/^[a-zA-ZÀÁÉÍÓÚÑ]+$/, {
-      message: "El nombre solo puede contener letras",
+    .regex(/^[a-zA-ZÀÁÉÍÓÚÑ ]+$/, {
+      message: "El nombre solo puede contener letras y un espacio",
     }),
   last_name: z
     .string({
@@ -28,11 +28,11 @@ export const UserSchema = z.object({
     .min(4, {
       message: "El apellido debe tener al menos 4 caracteres",
     })
-    .max(15, {
-      message: "El apellido debe tener como máximo 15 caracteres",
+    .max(50, {
+      message: "El apellido debe tener como máximo 50 caracteres",
     })
-    .regex(/^[a-zA-ZÀÁÉÍÓÚÑ]+$/, {
-      message: "El apellido solo puede contener letras",
+    .regex(/^[a-zA-ZÀÁÉÍÓÚÑ ]+$/, {
+      message: "El apellido solo puede contener letras y un espacio",
     }),
   ci: z
     .string({
