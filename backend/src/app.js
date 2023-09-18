@@ -16,6 +16,7 @@ import maintenanceRoutes from "./routes/maintenance.routes.js";
 import bagRoutes from "./routes/bag.routes.js";
 import remesaRoutes from "./routes/remesa.routes.js";
 import routeRoutes from "./routes/route.routes.js";
+import excelRoutes from "./routes/excel.routes.js";
 
 const app = express();
 //Config
@@ -52,4 +53,6 @@ app.use("/api", maintenanceRoutes);
 app.use("/api", bagRoutes);
 app.use("/api", remesaRoutes);
 app.use("/api", routeRoutes);
+app.use("/api", excelRoutes);
+
 export default app;
